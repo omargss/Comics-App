@@ -6,5 +6,5 @@ Mathis THUEL
 Benoit AUFFRET
 Arthur LECOCQ
 Valentin MARCON
-Anthony DE SOUSAg
+Anthony DE SOUSA
 Omar EL GRIBES
