@@ -4,10 +4,28 @@ import java.awt.Dimension;
 
 import javax.swing.*;
 
+import Listeners.Souris;
+
 public class Fenetre{
 	JFrame fenetre=null;
 	int largeur=800;
 	int hauteur=600;
+
+	JTextField saisie = new JTextField("Titre");
+	JButton rechercher = new JButton("Rechercher");
+	
+	public JButton get_button() {
+		return(rechercher);
+	}
+	public JTextField get_area() {
+		return(saisie);
+	}
+	public String get_text() {
+		return(saisie.getText());
+	}
+	public void set_text(String texte) {
+		saisie.setText(texte);
+	}
 	
 	public Fenetre() {
 		fenetre=new JFrame(); // permet de définir la var comme nouvelle Frame
@@ -21,10 +39,13 @@ public class Fenetre{
 		// Panels
 		JPanel recherches = new JPanel();
 		
+		// Listeners
+		Souris souris = new Souris(this);
+		
 		// Objets intéractifs
-		JTextField saisie = new JTextField("Titre");
 		saisie.setPreferredSize(new Dimension(200,30));
-		JButton rechercher = new JButton("Rechercher");
+		saisie.addMouseListener(souris);
+		rechercher.addMouseListener(souris);
 		
 		
 		
