@@ -19,7 +19,7 @@ public class GetComicsData {
 
 	}
 
-	public static void getComicsData(String name, String sort, String limit) {
+	public static List<Comic> getComicsData(String name, String sort, String limit) {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(
 		"https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name)).build();
@@ -46,13 +46,14 @@ public class GetComicsData {
 				// Problème sur les publishers, certains comics n'ont pas de publisher, à voir comment faire
 				list.add(comic);
 			}
-			for(int i=0;i<list.size();i++) {
-			System.out.println(list.get(i).getName());
-			System.out.println(list.get(i).getDate());
-			System.out.println(list.get(i).getPublisher());
-			System.out.println(list.get(i).getImage());
-			System.out.println(list.get(i).getUrl());
-			}
+			return(list);
+			/*for(int i=0;i<list.size();i++) {
+				System.out.println(list.get(i).getName());
+				System.out.println(list.get(i).getDate());
+				System.out.println(list.get(i).getPublisher());
+				System.out.println(list.get(i).getImage());
+				System.out.println(list.get(i).getUrl());
+			}*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +64,7 @@ public class GetComicsData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return(null);
 	}
 
 }

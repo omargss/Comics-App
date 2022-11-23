@@ -13,6 +13,7 @@ public class Fenetre{
 
 	JTextField saisie = new JTextField("Titre");
 	JButton rechercher = new JButton("Rechercher");
+	JTextArea retour = new JTextArea();
 	
 	public JButton get_button() {
 		return(rechercher);
@@ -27,6 +28,10 @@ public class Fenetre{
 		saisie.setText(texte);
 	}
 	
+	public void set_results(String resultats) {
+		retour.setText(resultats);
+	};
+	
 	public Fenetre() {
 		fenetre=new JFrame(); // permet de définir la var comme nouvelle Frame
 		JPanel contentPane = (JPanel) fenetre.getContentPane();
@@ -38,6 +43,9 @@ public class Fenetre{
 		
 		// Panels
 		JPanel recherches = new JPanel();
+		JPanel resultats = new JPanel();
+		resultats.setVisible(true);
+		resultats.setSize(new Dimension(largeur,hauteur-300));
 		
 		// Listeners
 		Souris souris = new Souris(this);
@@ -46,15 +54,17 @@ public class Fenetre{
 		saisie.setPreferredSize(new Dimension(200,30));
 		saisie.addMouseListener(souris);
 		rechercher.addMouseListener(souris);
-		
-		
+		retour.setEditable(false);
+		JScrollPane scroll = new JScrollPane (retour);
+		resultats.add(scroll);
 		
 		// Ajout dans le panel
 		recherches.add(saisie);
 		recherches.add(rechercher);
 		
 		// Ajout dans le panel principal
-		contentPane.add(recherches);
+		contentPane.add(recherches,BorderLayout.NORTH);
+		contentPane.add(scroll,BorderLayout.CENTER);
 		fenetre.pack();
 	}
 }
