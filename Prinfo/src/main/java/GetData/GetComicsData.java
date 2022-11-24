@@ -21,8 +21,9 @@ public class GetComicsData {
 
 	public static List<Comic> getComicsData(String name, String sort, String limit) {
 		HttpClient client = HttpClient.newHttpClient();
+		String name_formatted = name.replace(' ','+');
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(
-		"https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name)).build();
+		"https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
 
 		HttpResponse<String> response;
 		try {
