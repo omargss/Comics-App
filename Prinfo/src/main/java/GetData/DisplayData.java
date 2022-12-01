@@ -6,10 +6,8 @@ import java.util.*;
 
 
 public class DisplayData{
-	public static String DisplayDate(String recherche) {
+	public static String Display(List<Comic> listeData) {
 		String retour="";
-		List<Comic> listeData=new ArrayList<Comic>();
-		listeData=GetComicsData.getComicsData(recherche, null, null);
 		for(int i=0;i<listeData.size();i++) {
 			retour+="Nom : "+listeData.get(i).getName()+"\n";
 			retour+="Date : "+listeData.get(i).getDate()+"\n";

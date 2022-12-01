@@ -14,7 +14,7 @@ public class Fenetre{
 	
 	// Objets intéractifs définis dans le constructeur pour les utiliser dans des méthodes externes
 	JRadioButton radio_titre = new JRadioButton("Titre",true);
-	JRadioButton radio_auteur = new JRadioButton("Auteur");
+	JRadioButton radio_publieur = new JRadioButton("Publieur");
 	JTextField saisie = new JTextField("Recherche");
 	JButton rechercher = new JButton("Rechercher");
 	JTextArea retour = new JTextArea();
@@ -79,7 +79,7 @@ public class Fenetre{
 		
 		// Objets intéractifs
 			// Groupement des boutons radios
-		ensemble_radio.add(radio_auteur);
+		ensemble_radio.add(radio_publieur);
 		ensemble_radio.add(radio_titre);
 			// Zone de saisie pour la recherche
 		saisie.setPreferredSize(new Dimension(200,30));
@@ -94,7 +94,7 @@ public class Fenetre{
 		// Ajout dans le panel de la recherche
 		recherches.add(saisie);
 		recherches.add(radio_titre);
-		recherches.add(radio_auteur);
+		recherches.add(radio_publieur);
 		recherches.add(rechercher);
 		
 		// Ajout dans le panel principal
