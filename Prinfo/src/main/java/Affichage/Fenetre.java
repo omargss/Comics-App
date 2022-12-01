@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.*;
 
+import Listeners.Keyboard;
 import Listeners.Souris;
 
 public class Fenetre{
@@ -11,7 +12,7 @@ public class Fenetre{
 	int largeur=800;
 	int hauteur=600;
 
-	JTextField saisie = new JTextField("Titre");
+	JTextField saisie = new JTextField("");
 	JButton rechercher = new JButton("Rechercher");
 	JTextArea retour = new JTextArea();
 	
@@ -49,13 +50,16 @@ public class Fenetre{
 		
 		// Listeners
 		Souris souris = new Souris(this);
-		
+		Keyboard keyboard = new Keyboard(this);
+		saisie.setToolTipText("Titre");
 		// Objets intéractifs
 		saisie.setPreferredSize(new Dimension(200,30));
-		saisie.addMouseListener(souris);
+		saisie.addKeyListener(keyboard);
 		rechercher.addMouseListener(souris);
 		retour.setEditable(false);
 		JScrollPane scroll = new JScrollPane (retour);
+		JScrollPane scroll2 = new JScrollPane (retour);
+
 		resultats.add(scroll);
 		
 		// Ajout dans le panel
@@ -64,7 +68,7 @@ public class Fenetre{
 		
 		// Ajout dans le panel principal
 		contentPane.add(recherches,BorderLayout.NORTH);
-		contentPane.add(scroll,BorderLayout.CENTER);
+		contentPane.add(scroll2,BorderLayout.CENTER);
 		fenetre.pack();
 	}
 }

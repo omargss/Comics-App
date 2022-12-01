@@ -13,21 +13,18 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class GetComicsData {
-
-	public static void main(String[] args) {
-		getComicsData("hulk", "name:asc", "25"); // bizzare, on a 5 fois moins de résultats que prévu... à voir
-
-	}
+	private static String apiKey = "f6929d31c63612dd656e42295cc122010ac74c1c";
 
 	public static List<Comic> getComicsData(String name, String sort, String limit) {
 		HttpClient client = HttpClient.newHttpClient();
-		String name_formatted = name.replace(' ','+');
+		String name_formatted = name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
+		
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(
-		"https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
+		"https://comicvine.gamespot.com/api/volumes/?api_key="+apiKey+"&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
 
 		HttpResponse<String> response;
+		List<Comic> list = new ArrayList<Comic>();
 		try {
-			List<Comic> list = new ArrayList<Comic>();
 			response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
@@ -47,14 +44,6 @@ public class GetComicsData {
 				// Problème sur les publishers, certains comics n'ont pas de publisher, à voir comment faire
 				list.add(comic);
 			}
-			return(list);
-			/*for(int i=0;i<list.size();i++) {
-				System.out.println(list.get(i).getName());
-				System.out.println(list.get(i).getDate());
-				System.out.println(list.get(i).getPublisher());
-				System.out.println(list.get(i).getImage());
-				System.out.println(list.get(i).getUrl());
-			}*/
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,7 +54,7 @@ public class GetComicsData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return(null);
+		return list;
 	}
 
 }
