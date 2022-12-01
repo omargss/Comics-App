@@ -10,14 +10,21 @@ public class Fenetre{
 	JFrame fenetre=null;
 	int largeur=800;
 	int hauteur=600;
-
-	JTextField saisie = new JTextField("Titre");
+	
+	// Objets intéractifs définis dans le constructeur pour les utiliser dans des méthodes externes
+	JRadioButton radio_titre = new JRadioButton("Titre",true);
+	JRadioButton radio_auteur = new JRadioButton("Auteur");
+	JTextField saisie = new JTextField("Recherche");
 	JButton rechercher = new JButton("Rechercher");
 	JTextArea retour = new JTextArea();
-	
+	ButtonGroup ensemble_radio = new ButtonGroup();
+	// Méthodes
+		// Méthodes liées au bouton "rechercher"
 	public JButton get_button() {
 		return(rechercher);
 	}
+	
+		// Méthodes liées à la zone de saisie "titre"
 	public JTextField get_area() {
 		return(saisie);
 	}
@@ -27,22 +34,28 @@ public class Fenetre{
 	public void set_text(String texte) {
 		saisie.setText(texte);
 	}
+
 	
+		// Méthodes liées à la zone d'affichage des résultats
 	public void set_results(String resultats) {
 		retour.setText(resultats);
 	};
 	
+	
 	public Fenetre() {
+		// Définition de la fenetre d'affichage
 		fenetre=new JFrame(); // permet de définir la var comme nouvelle Frame
-		JPanel contentPane = (JPanel) fenetre.getContentPane();
+		JPanel contentPane = (JPanel) fenetre.getContentPane(); // Définition de la variable ContentPane en raccourci
 		fenetre.setVisible(true); // permet de savoir si elle est visible ou non
-		fenetre.setPreferredSize(new Dimension(largeur,hauteur));
-		fenetre.setSize(new Dimension(largeur,hauteur));
+		fenetre.setPreferredSize(new Dimension(largeur,hauteur)); // dimension de la fenetre
+		fenetre.setSize(new Dimension(largeur,hauteur)); // dimension de la fenetre
 		fenetre.setLocationRelativeTo(null); // permet de centrer par rapport à un component, si component = null, centre par rapport au bureau
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer le processus quand on quitte la fenetre java
 		
 		// Panels
-		JPanel recherches = new JPanel();
+			// Zone pour insérer tout objet lié aux recherches
+		JPanel recherches = new JPanel(); 
+			// Zone pour insérer tout objet lié aux résultats
 		JPanel resultats = new JPanel();
 		resultats.setVisible(true);
 		resultats.setSize(new Dimension(largeur,hauteur-300));
@@ -51,15 +64,23 @@ public class Fenetre{
 		Souris souris = new Souris(this);
 		
 		// Objets intéractifs
+			// Groupement des boutons radios
+		ensemble_radio.add(radio_auteur);
+		ensemble_radio.add(radio_titre);
+			// Zone de saisie pour la recherche
 		saisie.setPreferredSize(new Dimension(200,30));
 		saisie.addMouseListener(souris);
+			// Bouton de validation de la recherche
 		rechercher.addMouseListener(souris);
+			// Affichage des résultats
 		retour.setEditable(false);
-		JScrollPane scroll = new JScrollPane (retour);
+		JScrollPane scroll = new JScrollPane (retour); // Permet de faire défiler l'écran pour voir le reste des résultats
 		resultats.add(scroll);
 		
-		// Ajout dans le panel
+		// Ajout dans le panel de la recherche
 		recherches.add(saisie);
+		recherches.add(radio_titre);
+		recherches.add(radio_auteur);
 		recherches.add(rechercher);
 		
 		// Ajout dans le panel principal

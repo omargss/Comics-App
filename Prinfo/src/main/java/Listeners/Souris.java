@@ -30,6 +30,9 @@ public class Souris extends MouseAdapter {
 			//GetComicsData.getComicsData(ecran.get_text(),null,null);
 			ecran.set_results(DisplayData.DisplayDate(ecran.get_text()));
 			ecran.set_text("");
+			/*
+			 * Réussir à implémenter la fonction de focus et unfocus pour enlever le texte dessus
+			 * */
 		}
 		else if(e.getSource()==ecran.get_area()) {
 			//System.out.println(e);
