@@ -1,6 +1,7 @@
 package Affichage;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Enumeration;
 
 import javax.swing.*;
 
@@ -24,6 +25,20 @@ public class Fenetre{
 		return(rechercher);
 	}
 	
+		// Méthodes liées aux boutons radios
+	public String get_radio_value() { // Permet de savoir quel bouton radio est sélectionné
+		for(Enumeration<AbstractButton> iterator=ensemble_radio.getElements();iterator.hasMoreElements();) {
+			AbstractButton test_bouton=iterator.nextElement();
+			//System.out.println(test_bouton.isSelected());
+			if(test_bouton.isSelected()) {
+				return(test_bouton.getText());
+			}
+		}
+		
+		
+		return("");
+	}
+	
 		// Méthodes liées à la zone de saisie "titre"
 	public JTextField get_area() {
 		return(saisie);
@@ -34,7 +49,6 @@ public class Fenetre{
 	public void set_text(String texte) {
 		saisie.setText(texte);
 	}
-
 	
 		// Méthodes liées à la zone d'affichage des résultats
 	public void set_results(String resultats) {
