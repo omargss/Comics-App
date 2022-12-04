@@ -5,14 +5,14 @@ public class Comic {
 	private String url;
 	private String date;
 	private String image;
-	private String publisher;
+	private String volume;
 	
-	public String getPublisher() {
-		return publisher;
+	public String getVolume() {
+		return volume;
 	}
 
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
+	public void setVolume(String v) {
+		this.volume = v;
 	}
 
 	public String getName() {
