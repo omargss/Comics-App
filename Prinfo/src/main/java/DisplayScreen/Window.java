@@ -5,6 +5,7 @@ import java.util.Enumeration;
 
 import javax.swing.*;
 
+import Listeners.Keyboard;
 import Listeners.Mouse;
 
 public class Window{
@@ -74,6 +75,7 @@ public class Window{
 		
 		// Listeners
 		Mouse mouse = new Mouse(this);
+		Keyboard keyboard = new Keyboard(this);
 		
 		// Objets intéractifs
 			// Groupement des boutons radios
@@ -82,8 +84,9 @@ public class Window{
 			// Zone de saisie pour la recherche
 		entry.setPreferredSize(new Dimension(200,30));
 		entry.addMouseListener(mouse);
+		entry.addKeyListener(keyboard);
 			// Bouton de validation de la recherche
-		searches.addMouseListener(mouse);
+		search.addMouseListener(mouse);
 			// Affichage des résultats
 		APIReturn.setEditable(false);
 		JScrollPane scroll = new JScrollPane (APIReturn); // Permet de faire défiler l'écran pour voir le reste des résultats
@@ -93,7 +96,7 @@ public class Window{
 		searches.add(entry);
 		searches.add(radioTitle);
 		searches.add(radioPublisher);
-		searches.add(searches);
+		searches.add(search);
 		
 		// Ajout dans le panel principal
 		contentPane.add(searches,BorderLayout.NORTH);

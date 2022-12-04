@@ -21,20 +21,16 @@ public class GetComicsData {
 	}
 
 	public static List<Comic> getComicsData(String title, String publisher_name, String sort, String limit) {
-		HttpClient client = HttpClient.newHttpClient();
-		String name_formatted = name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
-		
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(
-		"https://comicvine.gamespot.com/api/volumes/?api_key="+apiKey+"&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
+		HttpClient client = HttpClient.newHttpClient();		
 		String APIRequest="https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit;
 		String title_formatted=null;
 		String publisher_formatted=null;
 		if(title!=null) {
-			title_formatted = title.replace(' ','+');
+			title_formatted = title.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 			APIRequest+="&filter=name:"+ title_formatted;
 		}
 		if(publisher_name!=null){
-			publisher_formatted = publisher_name.replace(' ','+');
+			publisher_formatted = publisher_name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 			APIRequest+="/publisher&filter=name:"+publisher_formatted;
 		}
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();

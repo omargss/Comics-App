@@ -2,28 +2,40 @@ package Listeners;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
-import Affichage.Fenetre;
+import java.util.List;
+import DisplayScreen.Window;
 import GetData.DisplayData;
-
+import GetData.GetComicsData;
+import Objects.Comic;
 
 public class Keyboard extends KeyAdapter {
-	Fenetre ecran = null;
+	Window screen = null;
 
 	@SuppressWarnings("unused")
 	private Keyboard() {
 	}
 
-	public Keyboard(Fenetre fenetre) {
+	public Keyboard(Window window) {
 		super();
-		this.ecran = fenetre;
+		this.screen = window;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER){
-			ecran.set_results(DisplayData.DisplayDate(ecran.get_text()));
-			ecran.set_text("");
-        }
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			String filter = screen.get_radio_value();
+			String search = screen.get_text();
+			List<Comic> dataList = null;
+			switch(filter) {
+			case "Title":
+				dataList=GetComicsData.getComicsData(search, null, null, null);
+				break;
+			case "Publisher":
+				dataList=GetComicsData.getComicsData(null, search, null, null);
+				break;
+			}
+			screen.set_results(DisplayData.Display(dataList));
+			screen.set_text("");
 		}
 	}
+}

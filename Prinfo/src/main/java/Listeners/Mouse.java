@@ -21,7 +21,6 @@ public class Mouse extends MouseAdapter {
 		this.screen = window;
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent e) {
 			if(e.getSource() == screen.get_button()) {
 				String filter = screen.get_radio_value();
