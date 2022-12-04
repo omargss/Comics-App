@@ -20,7 +20,7 @@ public class GetComicsData {
 		String name_formatted = name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 		
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(
-		"https://comicvine.gamespot.com/api/volumes/?api_key="+apiKey+"&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
+		"https://comicvine.gamespot.com/api/issues/?api_key="+apiKey+"&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
 
 		HttpResponse<String> response;
 		List<Comic> list = new ArrayList<Comic>();
@@ -39,8 +39,8 @@ public class GetComicsData {
 				comic.setUrl((String)iterator.next().get("site_detail_url"));
 				JSONObject image = (JSONObject)iterator.next().get("image");
 				comic.setImage((String)image.get("original_url"));
-				JSONObject publisher = (JSONObject)iterator.next().get("publisher");
-				comic.setPublisher((String)publisher.get("name"));
+				JSONObject volume= (JSONObject)iterator.next().get("volume");
+				comic.setVolume((String)volume.get("name"));
 				// Problème sur les publishers, certains comics n'ont pas de publisher, à voir comment faire
 				list.add(comic);
 			}

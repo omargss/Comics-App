@@ -3,11 +3,7 @@ package Listeners;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-
 import Affichage.Fenetre;
-import GetData.DisplayData;
-import GetData.GetComicsData;
 
 public class Souris extends MouseAdapter {
 	Fenetre ecran = null;
@@ -28,7 +24,7 @@ public class Souris extends MouseAdapter {
 			//System.out.println(e);
 			//System.out.println(ecran.get_text());
 			//GetComicsData.getComicsData(ecran.get_text(),null,null);
-			ecran.set_results(DisplayData.DisplayDate(ecran.get_text()));
+			ecran.set_results();
 			ecran.set_text("");
 		}
 		else if(e.getSource()==ecran.get_area()) {

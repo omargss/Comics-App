@@ -4,7 +4,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import Affichage.Fenetre;
-import GetData.DisplayData;
 
 
 public class Keyboard extends KeyAdapter {
@@ -22,7 +21,7 @@ public class Keyboard extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent e) {
         if (e.getKeyCode()==KeyEvent.VK_ENTER){
-			ecran.set_results(DisplayData.DisplayDate(ecran.get_text()));
+			ecran.set_results();
 			ecran.set_text("");
         }
 		}
