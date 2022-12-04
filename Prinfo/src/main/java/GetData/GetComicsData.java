@@ -15,12 +15,29 @@ import org.json.simple.parser.ParseException;
 public class GetComicsData {
 	private static String apiKey = "f6929d31c63612dd656e42295cc122010ac74c1c";
 
-	public static List<Comic> getComicsData(String name, String sort, String limit) {
+	public static void main(String[] args) {
+		//getComicsData("hulk", "name:asc", "25"); // bizzare, on a 5 fois moins de résultats que prévu... à voir
+
+	}
+
+	public static List<Comic> getComicsData(String title, String publisher_name, String sort, String limit) {
 		HttpClient client = HttpClient.newHttpClient();
 		String name_formatted = name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 		
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(
 		"https://comicvine.gamespot.com/api/volumes/?api_key="+apiKey+"&format=json&sort="+sort+"&limit="+limit+"&filter=name:"+ name_formatted)).build();
+		String APIRequest="https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit;
+		String title_formatted=null;
+		String publisher_formatted=null;
+		if(title!=null) {
+			title_formatted = title.replace(' ','+');
+			APIRequest+="&filter=name:"+ title_formatted;
+		}
+		if(publisher_name!=null){
+			publisher_formatted = publisher_name.replace(' ','+');
+			APIRequest+="/publisher&filter=name:"+publisher_formatted;
+		}
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
 
 		HttpResponse<String> response;
 		List<Comic> list = new ArrayList<Comic>();
@@ -44,6 +61,7 @@ public class GetComicsData {
 				// Problème sur les publishers, certains comics n'ont pas de publisher, à voir comment faire
 				list.add(comic);
 			}
+			return(list);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
