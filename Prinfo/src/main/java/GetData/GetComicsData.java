@@ -19,20 +19,20 @@ public class GetComicsData {
 
 	}
 
-	public static List<Comic> getComicsData(String titre, String publieur, String sort, String limit) {
+	public static List<Comic> getComicsData(String title, String publisher_name, String sort, String limit) {
 		HttpClient client = HttpClient.newHttpClient();
-		String requete_API="https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit;
-		String titre_formatted=null;
-		String publieur_formatted=null;
-		if(titre!=null) {
-			titre_formatted = titre.replace(' ','+');
-			requete_API+="&filter=name:"+ titre_formatted;
+		String APIRequest="https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit;
+		String title_formatted=null;
+		String publisher_formatted=null;
+		if(title!=null) {
+			title_formatted = title.replace(' ','+');
+			APIRequest+="&filter=name:"+ title_formatted;
 		}
-		if(publieur!=null){
-			publieur_formatted = publieur.replace(' ','+');
-			requete_API+="/publisher&filter=name:"+publieur_formatted;
+		if(publisher_name!=null){
+			publisher_formatted = publisher_name.replace(' ','+');
+			APIRequest+="/publisher&filter=name:"+publisher_formatted;
 		}
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(requete_API)).build();
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
 
 		HttpResponse<String> response;
 		try {
