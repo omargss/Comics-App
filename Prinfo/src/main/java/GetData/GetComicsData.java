@@ -33,6 +33,7 @@ public class GetComicsData {
 			publisher_formatted = publisher_name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 			APIRequest+="/publisher&filter=name:"+publisher_formatted;
 		}
+		System.out.println(APIRequest);
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
 
 		HttpResponse<String> response;
@@ -52,9 +53,11 @@ public class GetComicsData {
 				comic.setUrl((String)iterator.next().get("site_detail_url"));
 				JSONObject image = (JSONObject)iterator.next().get("image");
 				comic.setImage((String)image.get("original_url"));
-				JSONObject volume= (JSONObject)iterator.next().get("volume");
-				comic.setVolume((String)volume.get("name"));
+				//JSONObject volume= (JSONObject)iterator.next().get("volume");
+				//comic.setVolume((String)volume.get("name")); // peut engendrer des erreurs si c'est null
 				// Problème sur les publishers, certains comics n'ont pas de publisher, à voir comment faire
+				JSONObject publisher = (JSONObject)iterator.next().get("publisher");
+				comic.setPublisher((String)publisher.get("name"));
 				list.add(comic);
 			}
 			return(list);

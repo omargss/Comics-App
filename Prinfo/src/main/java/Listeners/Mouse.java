@@ -5,7 +5,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import DisplayScreen.Window;
-import GetData.DisplayData;
 import GetData.GetComicsData;
 import Objects.Comic;
 
@@ -26,6 +25,7 @@ public class Mouse extends MouseAdapter {
 				String filter = screen.get_radio_value();
 				String search = screen.get_text();
 				List<Comic> dataList = null;
+				System.out.println(filter);
 				switch(filter) {
 				case "Title":
 					dataList=GetComicsData.getComicsData(search, null, null, null);
@@ -34,7 +34,7 @@ public class Mouse extends MouseAdapter {
 					dataList=GetComicsData.getComicsData(null, search, null, null);
 					break;
 				}
-				screen.set_results(DisplayData.Display(dataList));
+				screen.set_results(dataList);
 				screen.set_text("");
 		}
 		else if(e.getSource()==screen.get_area()) {

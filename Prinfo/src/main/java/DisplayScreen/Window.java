@@ -2,11 +2,14 @@ package DisplayScreen;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.swing.*;
 
+import GetData.GetComicsData;
 import Listeners.Keyboard;
 import Listeners.Mouse;
+import Objects.Comic;
 
 public class Window{
 	JFrame window=null;
@@ -20,6 +23,9 @@ public class Window{
 	JButton search = new JButton("Search");
 	JTextArea APIReturn = new JTextArea();
 	ButtonGroup radioGroup = new ButtonGroup();
+	private JTable table;
+	JPanel searches = new JPanel();
+	JPanel results = new JPanel();
 	// Méthodes
 		// Méthodes liées au bouton "rechercher"
 	public JButton get_button() {
@@ -54,6 +60,31 @@ public class Window{
 		APIReturn.setText(results);
 	};
 	
+	public void set_results(List<Comic> dataList) {
+		String[] columnNames = {"Title", "date","Publisher", "Volume","Access page"};
+		String[][] list = new String[dataList.size()][5];
+		for(int i = 0; i< dataList.size(); i++) {
+			list[i][0] = dataList.get(i).getName();
+			list[i][1] = dataList.get(i).getDate();
+			list[i][2] = dataList.get(i).getVolume();
+			list[i][3] = dataList.get(i).getPublisher();
+			list[i][4] = "Details";
+		}
+		//APIReturn = new JTextArea();
+		//APIReturn.setEditable(false);
+		APIReturn.removeAll();
+
+		table = new JTable(list,columnNames);
+		table.setEnabled(false);
+		table.setBounds(0, 60, 800, 240);;
+		results.add(new JScrollPane(table));
+		table.setFillsViewportHeight(true);
+		JScrollBar scrollBar = new JScrollBar();
+		table.add(scrollBar);
+		APIReturn.add(table,BorderLayout.CENTER);
+		window.pack();
+
+	}
 	
 	public Window() {
 		// Définition de la fenetre d'affichage
@@ -66,10 +97,6 @@ public class Window{
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer le processus quand on quitte la fenetre java
 		
 		// Panels
-			// Zone pour insérer tout objet lié aux recherches
-		JPanel searches = new JPanel(); 
-			// Zone pour insérer tout objet lié aux résultats
-		JPanel results = new JPanel();
 		results.setVisible(true);
 		results.setSize(new Dimension(width,height-300));
 		

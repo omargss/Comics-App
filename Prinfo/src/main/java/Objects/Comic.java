@@ -6,13 +6,14 @@ public class Comic {
 	private String date;
 	private String image;
 	private String volume;
+	private String publisher;
 	
 	public String getVolume() {
 		return volume;
 	}
 
-	public void setVolume(String v) {
-		this.volume = v;
+	public void setVolume(String volume) {
+		this.volume = volume;
 	}
 
 	public String getName() {
@@ -40,6 +41,10 @@ public class Comic {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-
+	public void setPublisher(String publisher) {
+		this.publisher=publisher;
+	}
+	public String getPublisher() {
+		return publisher;
+	}
 }
