@@ -26,6 +26,8 @@ public class Window{
 	private JTable table;
 	JPanel searches = new JPanel();
 	JPanel results = new JPanel();
+	private final JComboBox filter_comboBox = new JComboBox();
+	
 	// Méthodes
 		// Méthodes liées au bouton "rechercher"
 	public JButton get_button() {
@@ -42,6 +44,11 @@ public class Window{
 			}
 		}
 		return("");
+	}
+	
+		// Méthodes liées à la combo box de filtrage (ordre croissant décroissant)
+	public String get_combobox_value() {
+		return filter_comboBox.getSelectedItem().toString();
 	}
 	
 		// Méthodes liées à la zone de saisie "titre"
@@ -117,12 +124,15 @@ public class Window{
 			// Affichage des résultats
 		APIReturn.setEditable(false);
 		JScrollPane scroll = new JScrollPane (APIReturn); // Permet de faire défiler l'écran pour voir le reste des résultats
-		results.add(scroll);
+		//results.add(scroll);
 		
 		// Ajout dans le panel de la recherche
 		searches.add(entry);
 		searches.add(radioTitle);
 		searches.add(radioPublisher);
+		filter_comboBox.setModel(new DefaultComboBoxModel(new String[] {"nom croissant", "nom decroissant", "date croissante", "date decroissante", "publisher croissant", "publisher decroissant"}));
+		
+		searches.add(filter_comboBox);
 		searches.add(search);
 		
 		// Ajout dans le panel principal
