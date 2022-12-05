@@ -26,6 +26,7 @@ public class Window{
 	private JTable table;
 	JPanel searches = new JPanel();
 	JPanel results = new JPanel();
+	Mouse mouse=null;
 	// Méthodes
 		// Méthodes liées au bouton "rechercher"
 	public JButton get_button() {
@@ -54,12 +55,13 @@ public class Window{
 	public void set_text(String text) {
 		entry.setText(text);
 	}
-	
 		// Méthodes liées à la zone d'affichage des résultats
 	public void set_results(String results) {
 		APIReturn.setText(results);
 	};
-	
+	public JTable get_jtable() {
+		return table;
+	}
 	public void set_results(List<Comic> dataList) {
 		String[] columnNames = {"Title", "date","Publisher", "Volume","Access page"};
 		String[][] list = new String[dataList.size()][5];
@@ -81,6 +83,7 @@ public class Window{
 		table.setFillsViewportHeight(true);
 		JScrollBar scrollBar = new JScrollBar();
 		table.add(scrollBar);
+		table.addMouseListener(this.mouse);
 		APIReturn.add(table,BorderLayout.CENTER);
 		window.pack();
 
@@ -101,7 +104,7 @@ public class Window{
 		results.setSize(new Dimension(width,height-300));
 		
 		// Listeners
-		Mouse mouse = new Mouse(this);
+		mouse = new Mouse(this);
 		Keyboard keyboard = new Keyboard(this);
 		
 		// Objets intéractifs
