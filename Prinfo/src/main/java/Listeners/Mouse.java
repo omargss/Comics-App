@@ -5,16 +5,14 @@ import java.awt.event.MouseEvent;
 import java.util.Collections;
 import java.util.List;
 
+import DisplayScreen.Details;
 import DisplayScreen.Window;
 import GetData.GetComicsData;
 import Objects.Comic;
 
 public class Mouse extends MouseAdapter {
 	Window screen = null;
-
-	@SuppressWarnings("unused")
-	private Mouse() {
-	}
+	List<Comic> dataList = null;
 
 	public Mouse(Window window) {
 		super();
@@ -64,6 +62,53 @@ public class Mouse extends MouseAdapter {
 		}
 		else if(e.getSource()==screen.get_area()) {
 			screen.set_text("");
+		} else if (e.getSource() == screen.get_jtable()) {
+			
+			int row = screen.get_jtable().rowAtPoint(e.getPoint());
+			int col = screen.get_jtable().columnAtPoint(e.getPoint());
+			System.out.println(col);
+			if (col == 4) {
+				Details details = new Details(this.dataList.get(row));
+
+			} else if (e.getSource() == screen.get_area()) {
+				if (e.getSource() == screen.get_button()) {
+					String filter = screen.get_radio_value();
+					String search = screen.get_text();
+
+					System.out.println(filter);
+					switch (filter) {
+					case "Title":
+						dataList = GetComicsData.getComicsData(search, null, null, null);
+						break;
+					case "Publisher":
+						dataList = GetComicsData.getComicsData(null, search, null, null);
+						break;
+					}
+					screen.set_results(dataList);
+					screen.set_text("");
+				} else if (e.getSource() == screen.get_area()) {
+					if (e.getSource() == screen.get_button()) {
+						String filter = screen.get_radio_value();
+						String search = screen.get_text();
+
+						System.out.println(filter);
+						switch (filter) {
+						case "Title":
+							dataList = GetComicsData.getComicsData(search, null, null, null);
+							break;
+						case "Publisher":
+							dataList = GetComicsData.getComicsData(null, search, null, null);
+							break;
+						}
+						screen.set_results(dataList);
+						screen.set_text("");
+					} else if (e.getSource() == screen.get_area()) {
+						screen.set_text("");
+					} else if (e.getSource() == screen.get_area()) {
+						screen.set_text("");
+					}
+				}
+			}
 		}
 	}
 }
