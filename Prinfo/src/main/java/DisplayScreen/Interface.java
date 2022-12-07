@@ -6,3 +6,4 @@ public class Interface{
 		Window app=new Window();
 	}
 }
+
