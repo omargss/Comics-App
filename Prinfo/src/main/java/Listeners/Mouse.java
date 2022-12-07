@@ -81,7 +81,7 @@ public class Mouse extends MouseAdapter {
 						dataList = GetComicsData.getComicsData(search, null, null, null, screen.getDropDownYearsMin(), screen.getDropDownYearsMax());
 						break;
 					case "Publisher":
-						dataList = GetComicsData.getComicsData(null, search, null, null), screen.getDropDownYearsMin(), screen.getDropDownYearsMax();
+						dataList = GetComicsData.getComicsData(null, search, null, null, screen.getDropDownYearsMin(), screen.getDropDownYearsMax());
 						break;
 					}
 					screen.set_results(dataList);
