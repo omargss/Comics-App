@@ -25,6 +25,7 @@ public class Mouse extends MouseAdapter {
 			String filter_title_publisher = screen.get_radio_value();
 			String search = screen.get_text();
 			String filter = screen.get_combobox_value();
+			
 			System.out.println(filter);
 			switch (filter_title_publisher) {
 			case "Title":
