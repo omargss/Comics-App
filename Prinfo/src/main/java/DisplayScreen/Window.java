@@ -1,6 +1,8 @@
 package DisplayScreen;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -23,11 +25,21 @@ public class Window{
 	JButton search = new JButton("Search");
 	JTextArea APIReturn = new JTextArea();
 	ButtonGroup radioGroup = new ButtonGroup();
+
+	public String getDropDownYearsMin() {
+		return dropDownYearsMin.toString();
+	}
+
+	public String getDropDownYearsMax() {
+		return dropDownYearsMax.toString();
+	}
+
+	private JComboBox dropDownYearsMin;
+	private JComboBox dropDownYearsMax;
 	private JTable table;
 	JPanel searches = new JPanel();
 	JPanel results = new JPanel();
 	private final JComboBox filter_comboBox = new JComboBox();
-	
 	// Méthodes
 		// Méthodes liées au bouton "rechercher"
 	public JButton get_button() {
@@ -102,7 +114,7 @@ public class Window{
 		window.setSize(new Dimension(width,height)); // dimension de la fenetre
 		window.setLocationRelativeTo(null); // permet de centrer par rapport à un component, si component = null, centre par rapport au bureau
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer le processus quand on quitte la fenetre java
-		
+
 		// Panels
 		results.setVisible(true);
 		results.setSize(new Dimension(width,height-300));
@@ -131,10 +143,35 @@ public class Window{
 		searches.add(radioTitle);
 		searches.add(radioPublisher);
 		filter_comboBox.setModel(new DefaultComboBoxModel(new String[] {"nom croissant", "nom decroissant", "date croissante", "date decroissante", "publisher croissant", "publisher decroissant"}));
-		
+
+		int currentYear = Year.now().getValue();
+		ArrayList<String> years = new ArrayList<String>();
+		String yearStr="1900";
+		for(Integer i=1900;i<=currentYear;i++)
+		{
+			yearStr = i.toString();
+			years.add(yearStr);
+		}
+
+		//Declaring Array with Equal Size to the List
+		String[] yearsArray = new String [years.size()];
+
+		//Converting List to Array
+		years.toArray(yearsArray);
+
+		dropDownYearsMin = new JComboBox(yearsArray);
+		dropDownYearsMax = new JComboBox(yearsArray);
+		// année max selectionnée par défaut : l'année actuelle
+		dropDownYearsMax.setSelectedItem(yearStr);
+
 		searches.add(filter_comboBox);
+		searches.add(dropDownYearsMin);
+		searches.add(dropDownYearsMax);
 		searches.add(search);
-		
+
+
+
+
 		// Ajout dans le panel principal
 		contentPane.add(searches,BorderLayout.NORTH);
 		contentPane.add(scroll,BorderLayout.CENTER);

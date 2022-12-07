@@ -20,15 +20,17 @@ public class GetComicsData {
 
 	}
 
-	public static List<Comic> getComicsData(String title, String publisher_name, String sort, String limit) {
+	public static List<Comic> getComicsData(String title, String publisher_name, String sort, String limit,String yearMin, String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();		
-		String APIRequest="https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit;
+		String APIRequest="https://comicvine.gamespot.com/api/issues/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&sort="+sort+"&limit="+limit;
 		String title_formatted=null;
 		String publisher_formatted=null;
 		if(title!=null) {
 			title_formatted = title.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 			APIRequest+="&filter=name:"+ title_formatted;
 		}
+
+		APIRequest+=",cover_date:"+yearMin+"-01-01%7C"+yearMax+"-01-01";
 		if(publisher_name!=null){
 			publisher_formatted = publisher_name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 			APIRequest+="/publisher&filter=name:"+publisher_formatted;
@@ -53,11 +55,11 @@ public class GetComicsData {
 				comic.setUrl((String)iterator.next().get("site_detail_url"));
 				JSONObject image = (JSONObject)iterator.next().get("image");
 				comic.setImage((String)image.get("original_url"));
-				//JSONObject volume= (JSONObject)iterator.next().get("volume");
-				//comic.setVolume((String)volume.get("name")); // peut engendrer des erreurs si c'est null
+				JSONObject volume= (JSONObject)iterator.next().get("volume");
+				comic.setVolume((String)volume.get("name")); // peut engendrer des erreurs si c'est null
 				// Problème sur les publishers, certains comics n'ont pas de publisher, à voir comment faire
-				JSONObject publisher = (JSONObject)iterator.next().get("publisher");
-				comic.setPublisher((String)publisher.get("name"));
+				//JSONObject publisher = (JSONObject)iterator.next().get("publisher");
+				//comic.setPublisher((String)publisher.get("name"));
 				list.add(comic);
 			}
 			return(list);

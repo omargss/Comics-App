@@ -26,14 +26,16 @@ public class Mouse extends MouseAdapter {
 				String filter_title_publisher = screen.get_radio_value();
 				String search = screen.get_text();
 				String filter = screen.get_combobox_value();
+				String yearMin= screen.getDropDownYearsMin();
+				String yearMax = screen.getDropDownYearsMax();
 				List<Comic> dataList = null;
 				System.out.println(filter);
 				switch(filter_title_publisher) {
 				case "Title":
-					dataList=GetComicsData.getComicsData(search, null, null, null);
+					dataList=GetComicsData.getComicsData(search,null,null,null,yearMin,yearMax);
 					break;
 				case "Publisher":
-					dataList=GetComicsData.getComicsData(null, search, null, null);
+					dataList=GetComicsData.getComicsData(null, search, null, null,yearMin,yearMax);
 					break;
 				}
 				// Tri croissant décroissant

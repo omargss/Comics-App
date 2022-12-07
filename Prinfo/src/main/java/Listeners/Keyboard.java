@@ -28,10 +28,10 @@ public class Keyboard extends KeyAdapter {
 			System.out.println(filter);
 			switch(filter) {
 			case "Title":
-				dataList=GetComicsData.getComicsData(search, null, null, null);
+				dataList=GetComicsData.getComicsData(search, null, null, null, screen.getDropDownYearsMin(), screen.getDropDownYearsMax());
 				break;
 			case "Publisher":
-				dataList=GetComicsData.getComicsData(null, search, null, null);
+				dataList=GetComicsData.getComicsData(null, search, null, null, screen.getDropDownYearsMin(), screen.getDropDownYearsMax() );
 				break;
 			}
 			screen.set_results(dataList);
