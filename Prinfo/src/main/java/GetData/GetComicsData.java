@@ -30,7 +30,7 @@ public class GetComicsData {
 			APIRequest+="&filter=name:"+ title_formatted;
 		}
 
-		APIRequest+=",cover_date:"+yearMin+"-01-01%7C"+yearMax+"-01-01";
+		APIRequest+=",cover_date:"+yearMin+"-01-01%7C"+yearMax+"-12-31";
 		if(publisher_name!=null){
 			publisher_formatted = publisher_name.replace(' ','+').replace("'", "%27").replace("?", "%3F").replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
 			APIRequest+="/publisher&filter=name:"+publisher_formatted;
@@ -50,7 +50,7 @@ public class GetComicsData {
 
 			while (iterator.hasNext()) {
 				Comic comic = new Comic();
-				comic.setDate((String)iterator.next().get("date_added"));
+				comic.setDate((String)iterator.next().get("cover_date"));
 				comic.setName((String)iterator.next().get("name"));
 				comic.setUrl((String)iterator.next().get("site_detail_url"));
 				JSONObject image = (JSONObject)iterator.next().get("image");

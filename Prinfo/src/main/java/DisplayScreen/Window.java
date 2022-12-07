@@ -27,11 +27,11 @@ public class Window{
 	ButtonGroup radioGroup = new ButtonGroup();
 
 	public String getDropDownYearsMin() {
-		return dropDownYearsMin.toString();
+		return dropDownYearsMin.getSelectedItem().toString();
 	}
 
 	public String getDropDownYearsMax() {
-		return dropDownYearsMax.toString();
+		return dropDownYearsMax.getSelectedItem().toString();
 	}
 
 	private JComboBox dropDownYearsMin;
