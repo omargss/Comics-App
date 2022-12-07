@@ -15,7 +15,7 @@ import Objects.Comic;
 
 public class Window{
 	JFrame window=null;
-	int width=800;
+	int width=1000;
 	int height=600;
 	
 	// Objets intéractifs définis dans le constructeur pour les utiliser dans des méthodes externes
