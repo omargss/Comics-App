@@ -20,6 +20,48 @@ public class ComicSearchPanel extends JPanel {
 	private JTextField textField;
 	private JButton search;
 
+	private JLabel sortByLabel = new JLabel("Sort by :");
+	private JComboBox dropDownSortFieldChoice;
+	private JComboBox dropDownSortOrder;
+
+	public String getDropDownSortFieldChoice()
+	{
+		String choice;
+		switch(dropDownSortFieldChoice.getSelectedIndex()){
+			case 1:
+				choice = "name";
+				break;
+
+			case 2:
+				choice = "date";
+				break;
+
+			default:
+				choice = "null";
+				break;
+		}
+		return choice;
+	}
+
+	public String getDropDownSortOrder()
+	{
+		String choice;
+		switch (dropDownSortOrder.getSelectedIndex()) {
+			case 1:
+				choice = "asc";
+				break;
+
+			case 2:
+				choice = "desc";
+				break;
+
+			default:
+				choice = "null";
+				break;
+		}
+		return choice;
+	}
+
 	private JComboBox dropDownYearsMin;
 	private JComboBox dropDownYearsMax;
 	public String getDropDownYearsMin() {
@@ -103,6 +145,18 @@ public class ComicSearchPanel extends JPanel {
 		dropDownYearsMax.setSelectedItem(yearStr);
 		add(dropDownYearsMin);
 		add(dropDownYearsMax);
+		add(sortByLabel);
+
+		dropDownSortFieldChoice = new JComboBox();
+		dropDownSortFieldChoice.addItem("");
+		dropDownSortFieldChoice.addItem("Name");
+		dropDownSortFieldChoice.addItem("Date");
+		add(dropDownSortFieldChoice);
+		dropDownSortOrder = new JComboBox();
+		dropDownSortOrder.addItem("");
+		dropDownSortOrder.addItem("Ascending order");
+		dropDownSortOrder.addItem("Descending order");
+		add(dropDownSortOrder);
 
 		// Listeners
 		ComicSearchListener csl = new ComicSearchListener(this);

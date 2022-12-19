@@ -18,13 +18,13 @@ public class MainWindowListener extends MouseAdapter {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if((((JButton) e.getSource()).getText()) == "Comic search") {
+		if((((JButton) e.getSource()).getText()).equals("Comic search")) {
 			window.setDisplayedPanel(0);
 		}
-		if((((JButton) e.getSource()).getText()) == "Character search") {
+		if((((JButton) e.getSource()).getText()).equals("Character search")) {
 			window.setDisplayedPanel(1);
 		}
-		if((((JButton) e.getSource()).getText()) == "Login") {
+		if((((JButton) e.getSource()).getText()).equals("Login")) {
 			window.setDisplayedPanel(2);
 		}
 	}

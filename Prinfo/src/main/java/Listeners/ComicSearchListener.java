@@ -30,13 +30,30 @@ public class ComicSearchListener extends MouseAdapter {
                 String search = cspanel.getTextField().getText();
                 String yearMin = cspanel.getDropDownYearsMin();
                 String yearMax = cspanel.getDropDownYearsMax();
+                String sort="";
+
+                if(cspanel.getDropDownSortFieldChoice().equals("null"))
+                {
+                    sort = null;
+                } else if(cspanel.getDropDownSortFieldChoice().equals("date") && cspanel.getRadioValue().equals("Title"))
+                {
+                    sort = "cover_date:" + cspanel.getDropDownSortOrder();
+                } else if (cspanel.getDropDownSortFieldChoice().equals("date") && cspanel.getRadioValue().equals("Publisher")) {
+                    sort = "start_year:" + cspanel.getDropDownSortOrder();
+                }
+                else
+                {
+                    sort= "name:" + cspanel.getDropDownSortOrder();
+                }
+                System.out.println(sort);
+
 
                 String titleOrPublisherChoice = cspanel.getRadioValue();
                 // ce string renvoie "Title" ou "Publisher" selon le choix
-                if (cspanel.getRadioValue() == "Title") {
-					dataList=GetComicsData.getComicsDataByName(search,null,null,yearMin,yearMax);
+                if (cspanel.getRadioValue().equals("Title")) {
+					dataList=GetComicsData.getComicsDataByName(search,sort,null,yearMin,yearMax);
                 } else {
-					dataList=GetComicsData.getComicsDataByPublisher(search,null,null,yearMin,yearMax);
+					dataList=GetComicsData.getComicsDataByPublisher(search,sort,null,yearMin,yearMax);
                 }
                 cspanel.updateResultTable(dataList);
             }
