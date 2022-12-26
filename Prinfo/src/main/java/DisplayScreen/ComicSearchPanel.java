@@ -12,6 +12,11 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe permettant de créer le panel qui permettra de réaliser des recherches
+ * de comics
+ *
+ */
 public class ComicSearchPanel extends JPanel {
 
 	private JTable resultTable = new JTable();

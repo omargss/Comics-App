@@ -111,25 +111,49 @@ public class GetComicsData {
 	public static List<Comic> getComicsDataByPublisher(String publisher_name, String sort, String limit, String yearMin,
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
-		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit=" + limit;
+		String APIRequest = "https://comicvine.gamespot.com/api/publishers/?api_key=" + apiKey
+				+ "&format=json&field_list=name&sort=" + sort + "&limit=" + limit;
 		String publisher_formatted = format(publisher_name); // permet de formatter le mot afin qu'il soit
 																// compréhensible par l'API pour la recherche
-		APIRequest += "&filter=publisher.name:" + publisher_formatted;
-		APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
+		APIRequest += "&filter=name:" + publisher_formatted;
+		// APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
 		System.out.println(APIRequest);
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
-		HttpResponse<String> response;
+		HttpRequest requestPublisher = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
+		HttpResponse<String> responsePublisher;
 		List<Comic> list = new ArrayList<Comic>();
 
 		try {
+			// On récupère la liste des publishers qui sont sorti de la requete
+			List<String> listPublisher = new ArrayList<String>();
+			responsePublisher = client.send(requestPublisher, HttpResponse.BodyHandlers.ofString());
+			JSONParser parserPublisher = new JSONParser();
+			JSONObject jsonObjectPublisher = (JSONObject) parserPublisher.parse(responsePublisher.body());
+			JSONArray resultsPublisher = (JSONArray) jsonObjectPublisher.get("results");
+
+			Iterator<JSONObject> iterator = resultsPublisher.iterator(); // Création d'un itérateur pour parcourir le
+																			// JSON
+			while (iterator.hasNext()) {
+				listPublisher.add((String) iterator.next().get("name"));
+			}
+			System.out.println(listPublisher);
+			// On effectue une recherche pour chaque élément de la liste, et on ajoute les
+			// comics obtenus à la liste
+			Iterator<String> iteratorPublisher = listPublisher.iterator();
+			while(iteratorPublisher.hasNext()) {
+				
+			}
+			APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
+					+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit=" + limit;
+			APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
+			HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
+			HttpResponse<String> response;
 			response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
+			// List<Comic> list = new ArrayList<Comic>();
 			JSONArray results = (JSONArray) jsonObject.get("results");
 
-			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
-
+			iterator = results.iterator();
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
 					Comic comic = new Comic(); // On crée un nouveau comic
@@ -154,7 +178,19 @@ public class GetComicsData {
 					comic.setPublisher((String) publisher.get("name")); // On récupère le publieur
 					// End of publisher subrequest
 
-					list.add(comic); // On ajoute le comic à la liste
+					/*
+					 * Faire une requete avec le nom
+					 * https://comicvine.gamespot.com/api/publishers/?api_key=
+					 * f6929d31c63612dd656e42295cc122010ac74c1c&format=json&field_list=name,id&
+					 * filter=name:marvel récupérer la liste des noms obtenus avec cette requete
+					 * faire une recherche normale avec comme filtre publisher in listPublisher on
+					 * ajoute les comics à la liste
+					 * 
+					 */
+					if (listPublisher.contains(comic.getPublisher())) {
+						list.add(comic);
+					}
+					// list.add(comic); // On ajoute le comic à la liste
 				} catch (NoSuchElementException nsee) {
 					nsee.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 				}
@@ -166,9 +202,9 @@ public class GetComicsData {
 		} catch (ParseException e) {
 			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 		}
-		return list; // On retourne la liste des comics trouvés
+		return (list); // On retourne la liste des comics trouvés
 	}
-	
+
 	/**
 	 * Permet de formatter un texte pour qu'il soit compréhensible par l'API lors
 	 * d'une recherche
