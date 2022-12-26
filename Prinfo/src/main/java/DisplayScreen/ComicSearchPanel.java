@@ -29,6 +29,7 @@ public class ComicSearchPanel extends JPanel {
 	private JComboBox dropDownYearsMax;
 
 	/**
+	 * Permet de retourner le contenu du champ de saisie pour les recherches
 	 * 
 	 * @return JTextField textField
 	 */
@@ -162,14 +163,15 @@ public class ComicSearchPanel extends JPanel {
 		radioTitle.setActionCommand("Title");
 		radioPublisher.setActionCommand("Publisher");
 		radioAuthor.setActionCommand("Author");
-		// On ajoute les boutons radio au groupement afin qu'un seul soit sélectionné à la fois
+		// On ajoute les boutons radio au groupement afin qu'un seul soit sélectionné à
+		// la fois
 		radioGroup.add(radioAuthor);
 		radioGroup.add(radioPublisher);
 		radioGroup.add(radioTitle);
 		// On ajoute les boutons radios au panel
 		add(radioTitle);
 		add(radioPublisher);
-		//add(radioAuthor);
+		// add(radioAuthor);
 
 		// On crée la liste des années entre 1900 et aujourd'hui
 		int currentYear = Year.now().getValue();

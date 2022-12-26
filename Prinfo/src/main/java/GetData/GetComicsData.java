@@ -1,7 +1,6 @@
 package GetData;
 
 import Objects.Comic;
-//f6929d31c63612dd656e42295cc122010ac74c1c
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -29,7 +28,7 @@ public class GetComicsData {
 	 *                comic
 	 * @param yearMax : String représentant une année maximale pour afficher un
 	 *                comic
-	 * @return
+	 * @return List<Comic> : liste de comics satisfaisant la recherche
 	 */
 	public static List<Comic> getComicsDataByName(String title, String sort, String limit, String yearMin,
 			String yearMax) {

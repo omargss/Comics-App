@@ -1,9 +1,11 @@
 package DisplayScreen;
 
-import Objects.Comic;
+import Objects.Character;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
+
+import Listeners.CharacterSearchListener;
 
 import java.awt.BorderLayout;
 import java.util.List;
@@ -15,32 +17,26 @@ import java.util.List;
  */
 public class CharacterSearchPanel extends JPanel {
 
-	private JTable resultTable = new JTable();
+	//private JTable resultTable = new JTable();
 	private JTextField textField;
 	private JButton search;
+	private JTable resultTable = new JTable();
 
 	/**
+	 * Permet de retourner le contenu du champ de saisie pour les recherches
 	 * 
 	 * @return JTextField textField
 	 */
 	public JTextField getTextField() {
 		return textField;
 	}
-
-	// METHOD that changes the results of the JTable
-	/**
-	 * 
-	 * @param dataList
-	 */
-	public void updateResultTable(List<Comic> dataList) {
-		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
-		String[][] list = new String[dataList.size()][5];
+	
+	public void updateResultTable(List<Character> dataList) {
+		String[] columnNames = { "Name", "Publisher", "Details"};
+		String[][] list = new String[dataList.size()][3];
 		for (int i = 0; i < dataList.size(); i++) {
 			list[i][0] = dataList.get(i).getName();
-			list[i][1] = dataList.get(i).getDate();
-			list[i][2] = dataList.get(i).getVolume();
-			list[i][3] = dataList.get(i).getPublisher();
-			list[i][4] = "Details";
+			list[i][2] = "Details";
 		}
 		resultTable = new JTable(list, columnNames);
 		resultTable.setEnabled(false);
@@ -49,7 +45,7 @@ public class CharacterSearchPanel extends JPanel {
 		columnModel.getColumn(0).setWidth(300);
 		columnModel.getColumn(1).setWidth(75);
 		columnModel.getColumn(2).setWidth(250);
-		columnModel.getColumn(3).setWidth(150);
+		//columnModel.getColumn(3).setWidth(150);
 
 		add(new JScrollPane(resultTable));
 		resultTable.setFillsViewportHeight(true);
@@ -63,12 +59,13 @@ public class CharacterSearchPanel extends JPanel {
 	 */
 	public CharacterSearchPanel() {
 		setBounds(150, 0, 1000, 600);
-
 		textField = new JTextField();
 		add(textField); // On ajoute la zone de recherche au panel
 		textField.setColumns(10);
 		search = new JButton("Search");
 		add(search); // On ajoute le bouton au panel
+		CharacterSearchListener csl = new CharacterSearchListener(this);
+		search.addMouseListener(csl);
 	}
 
 }

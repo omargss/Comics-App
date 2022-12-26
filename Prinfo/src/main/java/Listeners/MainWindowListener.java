@@ -26,18 +26,18 @@ public class MainWindowListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent e) {
 		if ((((JButton) e.getSource()).getText()).equals("Comic search")) {
 			this.window.setDisplayedPanel(0);
-			System.out.println("Mode 0");
-			System.out.println("Affichage de la recherche par comic");
+			//System.out.println("Mode 0");
+			//System.out.println("Affichage de la recherche par comic");
 		}
 		if ((((JButton) e.getSource()).getText()).equals("Character search")) {
 			this.window.setDisplayedPanel(1);
-			System.out.println("Mode 0");
-			System.out.println("Affichage de la recherche par personnage");
+			//System.out.println("Mode 0");
+			//System.out.println("Affichage de la recherche par personnage");
 		}
 		if ((((JButton) e.getSource()).getText()).equals("Login")) {
 			this.window.setDisplayedPanel(2);
-			System.out.println("Mode 2");
-			System.out.println("Affichage de la page de connexion");
+			//System.out.println("Mode 2");
+			//System.out.println("Affichage de la page de connexion");
 		}
 	}
 

@@ -1,5 +1,9 @@
 package Objects;
 
+/**
+ * Classe permettant de stocker les informations à propos d'un comic
+ *
+ */
 public class Comic {
 	private String name;
 	private String date;
