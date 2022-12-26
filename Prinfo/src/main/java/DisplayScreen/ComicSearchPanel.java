@@ -19,7 +19,7 @@ public class ComicSearchPanel extends JPanel {
 	private JTable resultTable = new JTable();
 	private JTextField textField;
 	private JButton search;
-
+	private JScrollPane scrollpane = new JScrollPane();
 	private JLabel sortByLabel = new JLabel("Sort by :");
 	private JComboBox dropDownSortFieldChoice;
 	private JComboBox dropDownSortOrder;
@@ -81,6 +81,9 @@ public class ComicSearchPanel extends JPanel {
 	}
 	// METHOD that changes the results of the JTable
 	public void updateResultTable(List<Comic> dataList) {
+		scrollpane.remove(resultTable);
+		remove(scrollpane);
+		remove(resultTable);
 		String[] columnNames = {"Title", "date","Publisher", "Volume","Access page"};
 		String[][] list = new String[dataList.size()][5];
 		for(int i = 0; i< dataList.size(); i++) {
@@ -92,18 +95,17 @@ public class ComicSearchPanel extends JPanel {
 		}
 		resultTable = new JTable(list,columnNames);
 		resultTable.setEnabled(false);
-		resultTable.setBounds(0,50, 1000, 600);
+		resultTable.setBounds(0,150, 1000, 600);
 		TableColumnModel columnModel = resultTable.getColumnModel();
 		columnModel.getColumn(0).setWidth(300);
 		columnModel.getColumn(1).setWidth(75);
 		columnModel.getColumn(2).setWidth(250);
 		columnModel.getColumn(3).setWidth(150);
-
-		add(new JScrollPane(resultTable));
+		scrollpane = new JScrollPane(resultTable);
+		add(scrollpane);
 		resultTable.setFillsViewportHeight(true);
-		JScrollBar scrollBar = new JScrollBar();
-		resultTable.add(scrollBar);
-		add(resultTable,BorderLayout.CENTER);
+		add(resultTable);
+
 	}
 
 	public ComicSearchPanel() {

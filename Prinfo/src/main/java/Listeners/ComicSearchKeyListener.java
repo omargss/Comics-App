@@ -29,8 +29,6 @@ public class ComicSearchKeyListener extends KeyAdapter {
             String yearMax = cspanel.getDropDownYearsMax();
 
 			String sort = cspanel.getDropDownSortFieldChoice() + ":" + cspanel.getDropDownSortOrder(); // ex : title:asc
-
-			System.out.println(sort);
             String titleOrPublisherChoice = cspanel.getRadioValue();
             // ce string renvoie "Title" ou "Publisher" selon le choix
             if (cspanel.getRadioValue().equals("Title")) {

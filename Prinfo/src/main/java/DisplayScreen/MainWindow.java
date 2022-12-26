@@ -12,7 +12,7 @@ public class MainWindow{
 	int width=1200;
 	int height=600;
 	ComicSearchPanel comicPanel;
-
+	CharacterSearchPanel characterPanel;
 	
 	public MainWindow() {
 		// Définition de la fenetre d'affichage
@@ -49,15 +49,21 @@ public class MainWindow{
 		comicPanel = new ComicSearchPanel();
 		comicPanel.setVisible(false);
 		window.getContentPane().add(comicPanel);
+		
+		characterPanel = new CharacterSearchPanel();
+		characterPanel.setVisible(false);
+		window.getContentPane().add(characterPanel);
 	}
 
 
 	public void setDisplayedPanel(int i) {
 		switch (i) {
 		case 0:
+			characterPanel.setVisible(false);
 			comicPanel.setVisible(true);
 			break;
 		case 1:
+			characterPanel.setVisible(true);
 			comicPanel.setVisible(false);
 		default:
 			break;

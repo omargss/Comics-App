@@ -21,7 +21,7 @@ public class GetComicsData {
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit="
+				+ "&format=json&field_list=description,name,cover_date,image,volume&sort=" + sort + "&limit="
 				+ limit;
 		String title_formatted = title.replace(' ', ',').replace("%", "%25").replace("'", "%27").replace("?", "%3F")
 				.replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
@@ -49,6 +49,7 @@ public class GetComicsData {
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) iterator.next().get("volume");
 					comic.setVolume((String) volume.get("name"));
+					comic.setDescription((String) iterator.next().get("description"));
 					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&filter=id:"
 							+ volume.get("id") + "&field_list=publisher";
@@ -84,7 +85,7 @@ public class GetComicsData {
 	public static List<Comic> getComicsDataByPublisher(String publisher_name, String sort, String limit,String yearMin, String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit="
+				+ "&format=json&field_list=description,name,cover_date,image,volume&sort=" + sort + "&limit="
 				+ limit;
 		String publisher_formatted = publisher_name.replace(' ', ',').replace("%", "%25").replace("'", "%27").replace("?", "%3F")
 				.replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
@@ -112,6 +113,7 @@ public class GetComicsData {
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) iterator.next().get("volume");
 					comic.setVolume((String) volume.get("name"));
+					comic.setDescription((String) iterator.next().get("description"));
 					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=f6929d31c63612dd656e42295cc122010ac74c1c&format=json&filter=id:"
 							+ volume.get("id") + "&field_list=publisher";
