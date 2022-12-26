@@ -28,7 +28,7 @@ public class GetCharactersData {
 		String title_formatted = format(name); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
 		APIRequest += "&filter=name:" + title_formatted;
-		System.out.println(APIRequest);
+		//System.out.println(APIRequest);
 
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
@@ -47,7 +47,7 @@ public class GetCharactersData {
 				try {
 					// On récupère la valeur à la pos de l'iterator
 					JSONObject tempCharacter = iterator.next();
-					System.out.println(tempCharacter);
+					//System.out.println(tempCharacter);
 					JSONObject tempPublisherCharacter = (JSONObject) tempCharacter.get("publisher");
 					// System.out.println(tempPublisherCharacter);
 					JSONObject tempImageCharacter = (JSONObject) tempCharacter.get("image");

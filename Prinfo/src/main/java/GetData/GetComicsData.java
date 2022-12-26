@@ -111,18 +111,18 @@ public class GetComicsData {
 	public static List<Comic> getComicsDataByPublisher(String publisher_name, String sort, String limit, String yearMin,
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
-		String APIRequest = "https://comicvine.gamespot.com/api/publishers/?api_key=" + apiKey
-				+ "&format=json&field_list=name&sort=" + sort + "&limit=" + limit;
+		String APIRequest = "https://comicvine.gamespot.com/api/issue/?api_key=" + apiKey
+				+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit=" + limit;
 		String publisher_formatted = format(publisher_name); // permet de formatter le mot afin qu'il soit
 																// compréhensible par l'API pour la recherche
-		APIRequest += "&filter=name:" + publisher_formatted;
-		// APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
+		APIRequest += "&filter=volume.publisher.name:" + publisher_formatted;
+		APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
 		System.out.println(APIRequest);
 		HttpRequest requestPublisher = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
 		HttpResponse<String> responsePublisher;
 		List<Comic> list = new ArrayList<Comic>();
 
-		try {
+		/*try {
 			// On récupère la liste des publishers qui sont sorti de la requete
 			List<String> listPublisher = new ArrayList<String>();
 			responsePublisher = client.send(requestPublisher, HttpResponse.BodyHandlers.ofString());
@@ -178,15 +178,6 @@ public class GetComicsData {
 					comic.setPublisher((String) publisher.get("name")); // On récupère le publieur
 					// End of publisher subrequest
 
-					/*
-					 * Faire une requete avec le nom
-					 * https://comicvine.gamespot.com/api/publishers/?api_key=
-					 * f6929d31c63612dd656e42295cc122010ac74c1c&format=json&field_list=name,id&
-					 * filter=name:marvel récupérer la liste des noms obtenus avec cette requete
-					 * faire une recherche normale avec comme filtre publisher in listPublisher on
-					 * ajoute les comics à la liste
-					 * 
-					 */
 					if (listPublisher.contains(comic.getPublisher())) {
 						list.add(comic);
 					}
@@ -201,7 +192,7 @@ public class GetComicsData {
 			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 		} catch (ParseException e) {
 			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
-		}
+		}*/
 		return (list); // On retourne la liste des comics trouvés
 	}
 
