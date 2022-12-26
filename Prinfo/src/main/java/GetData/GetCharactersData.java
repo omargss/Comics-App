@@ -45,25 +45,33 @@ public class GetCharactersData {
 
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
-					Character character = new Character(); // Création d'un personnage
-					character.setName((String) iterator.next().get("name")); // On récupère le nom du personnage
-					//System.out.println(character.getName());
+					// On récupère la valeur à la pos de l'iterator
+					JSONObject tempCharacter = iterator.next();
+					System.out.println(tempCharacter);
+					JSONObject tempPublisherCharacter = (JSONObject) tempCharacter.get("publisher");
+					// System.out.println(tempPublisherCharacter);
+					JSONObject tempImageCharacter = (JSONObject) tempCharacter.get("image");
 
+					Character character = new Character(); // Création d'un personnage qu'on ajoutera à la liste
+
+					// MàJ des informations du personnage
+					character.setName((String) tempCharacter.get("name")); // On récupère le nom du personnage
+					character.setImage((String) tempImageCharacter.get("original_url"));
+					if (tempPublisherCharacter == null) {
+						character.setPublisher("");
+					} else {
+						character.setPublisher((String) tempPublisherCharacter.get("name"));
+					}
+
+					// Verifications
 					/*
-					 * Erreur : java.util.NoSuchElementException dès qu'on utilise des JSONObject
-					 * pourtant, si on va sur la requete, on observe bien que publisher et image
-					 * sont des JSONObject et on doit pouvoir les parcourir, au même titre que
-					 * iterator
+					 * System.out.println(tempCharacter);
+					 * System.out.println("Nom :"+character.getName());
+					 * System.out.println("Publisher :"+character.getPublisher());
+					 * System.out.println("Image :"+character.getImage());
 					 */
-					
-					// JSONObject publisher = (JSONObject) iterator.next().get("publisher"); // On
-					// récupère le publisher
-					// character.setPublisher((String) publisher.get("name"));
-					// JSONObject image = (JSONObject) iterator.next().get("image"); // On récupère
-					// l'URL de l'image
-					// character.setImage((String) image.get("original_url"));
 
-					list.add(character); // On ajoute le comic à la liste
+					list.add(character); // On ajoute le personnage à la liste
 				} catch (NoSuchElementException nsee) {
 					nsee.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 				}

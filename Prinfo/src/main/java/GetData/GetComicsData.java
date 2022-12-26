@@ -39,7 +39,7 @@ public class GetComicsData {
 												// pour la recherche
 		APIRequest += "&filter=name:" + title_formatted;
 		APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
-
+		System.out.println(APIRequest);
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
 		List<Comic> list = new ArrayList<Comic>();
@@ -52,15 +52,16 @@ public class GetComicsData {
 																		// requete auprès de l'API
 
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
-
+			
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
 					Comic comic = new Comic(); // Création d'un comic
-					comic.setDate((String) iterator.next().get("cover_date")); // On récupère la date
-					comic.setName((String) iterator.next().get("name")); // On récupère le nom
-					JSONObject image = (JSONObject) iterator.next().get("image"); // On récupère l'URL de l'image
+					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
+					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
+					comic.setName((String) tempComic.get("name")); // On récupère le nom
+					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
 					comic.setImage((String) image.get("original_url"));
-					JSONObject volume = (JSONObject) iterator.next().get("volume"); // On récupère le volume
+					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
 
 					// Publisher subrequest

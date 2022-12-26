@@ -5,7 +5,7 @@ import Objects.Character;
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
-import Listeners.CharacterSearchListener;
+import Listeners.*;
 
 import java.awt.BorderLayout;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class CharacterSearchPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	//private JTable resultTable = new JTable();
 	private JTextField textField;
 	private JButton search;
@@ -28,7 +29,7 @@ public class CharacterSearchPanel extends JPanel {
 	 * @return JTextField textField
 	 */
 	public JTextField getTextField() {
-		return textField;
+		return this.textField;
 	}
 	
 	public void updateResultTable(List<Character> dataList) {
@@ -36,6 +37,7 @@ public class CharacterSearchPanel extends JPanel {
 		String[][] list = new String[dataList.size()][3];
 		for (int i = 0; i < dataList.size(); i++) {
 			list[i][0] = dataList.get(i).getName();
+			list[i][1] = dataList.get(i).getPublisher();
 			list[i][2] = "Details";
 		}
 		resultTable = new JTable(list, columnNames);
@@ -65,7 +67,9 @@ public class CharacterSearchPanel extends JPanel {
 		search = new JButton("Search");
 		add(search); // On ajoute le bouton au panel
 		CharacterSearchListener csl = new CharacterSearchListener(this);
-		search.addMouseListener(csl);
+		this.search.addMouseListener(csl);
+		CharacterSearchKeyListener cskl = new CharacterSearchKeyListener(this);
+		this.textField.addKeyListener(cskl);
 	}
 
 }
