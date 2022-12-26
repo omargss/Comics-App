@@ -31,7 +31,7 @@ public class ComicSearchListener extends MouseAdapter {
 		if (o instanceof JButton) { // S'il s'agit d'un JButton alors on peut continuer
 			JButton b = (JButton) o;
 			// Si on clique sur le bouton de recherche
-			if (b.getText().equals("Search")) {
+			if (b.getText().equals("Search by :")) {
 				String search = this.cspanel.getTextField().getText();
 				String yearMin = this.cspanel.getDropDownYearsMin();
 				String yearMax = this.cspanel.getDropDownYearsMax();
