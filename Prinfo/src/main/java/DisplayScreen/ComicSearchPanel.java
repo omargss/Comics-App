@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,19 @@ public class ComicSearchPanel extends JPanel {
 	private JTextField textField;
 	private JButton search;
 	private JLabel sortByLabel = new JLabel("Sort by :");
-	private JComboBox dropDownSortFieldChoice;
-	private JComboBox dropDownSortOrder;
-	private JComboBox dropDownYearsMin;
-	private JComboBox dropDownYearsMax;
+	private JScrollPane resultArea = new JScrollPane();
+	private JPanel searchArea = new JPanel();
+	private JComboBox<String> dropDownSortFieldChoice;
+	private JComboBox<String> dropDownSortOrder;
+	private JComboBox<Object> dropDownYearsMin;
+	private JComboBox<Object> dropDownYearsMax;
+	private JComboBox<String> dropItems;
+
+	private JRadioButton radioTitle = new JRadioButton("Title", true); // Bouton radio pour la recherche par titre, par
+																		// défaut activé en premier pour la recherche
+	private JRadioButton radioAuthor = new JRadioButton("Author"); // Bouton radio pour la recherche par auteur
+	private JRadioButton radioPublisher = new JRadioButton("Publisher"); // Bouton radio pour la recherche par publieur
+	private ButtonGroup radioGroup = new ButtonGroup(); // Groupement de boutons radio pour en avoir un seul sélectionné
 
 	/**
 	 * Permet de retourner le contenu du champ de saisie pour les recherches
@@ -101,12 +111,6 @@ public class ComicSearchPanel extends JPanel {
 		return dropDownYearsMax.getSelectedItem().toString();
 	}
 
-	JRadioButton radioTitle = new JRadioButton("Title", true); // Bouton radio pour la recherche par titre, par défaut
-																// activé en premier pour la recherche
-	JRadioButton radioAuthor = new JRadioButton("Author"); // Bouton radio pour la recherche par auteur
-	JRadioButton radioPublisher = new JRadioButton("Publisher"); // Bouton radio pour la recherche par publieur
-	ButtonGroup radioGroup = new ButtonGroup(); // Groupement de boutons radio pour en avoir un seul sélectionné
-
 	/**
 	 * Permet de savoir quel bouton radio est sélectionné
 	 * 
@@ -114,6 +118,15 @@ public class ComicSearchPanel extends JPanel {
 	 */
 	public String getRadioValue() {
 		return radioGroup.getSelection().getActionCommand();
+	}
+
+	/**
+	 * Permet de connaitre le nombre de résultats à afficher
+	 * 
+	 * @return String : nombre de résultats à afficher
+	 */
+	public String getDropItem() {
+		return (this.dropItems.getSelectedItem().toString());
 	}
 
 	// METHOD that changes the results of the JTable
@@ -140,26 +153,38 @@ public class ComicSearchPanel extends JPanel {
 		columnModel.getColumn(2).setWidth(250);
 		columnModel.getColumn(3).setWidth(150);
 
-		add(new JScrollPane(resultTable));
 		resultTable.setFillsViewportHeight(true);
-		JScrollBar scrollBar = new JScrollBar();
-		resultTable.add(scrollBar);
-		add(resultTable, BorderLayout.CENTER);
+
+		this.remove(resultArea);
+		this.resultArea = new JScrollPane(resultTable);
+		this.resultArea.setVisible(true);
+
+		this.add(resultArea, BorderLayout.CENTER);
+		this.validate();
+
+		// add(new JScrollPane(resultTable));
+		//
+		// JScrollBar scrollBar = new JScrollBar();
+		// resultTable.add(scrollBar);
+		// add(resultTable, BorderLayout.CENTER);
 	}
 
 	/**
 	 * Constructeur de la classe
 	 */
 	public ComicSearchPanel() {
+		this.resultArea.setVisible(false);
+		this.setLayout(new BorderLayout());
 		setBounds(150, 0, 1000, 600);
 
+		// Zone de recherche
 		textField = new JTextField();
-		add(textField); // On ajoute la zone de recherche au panel
 		textField.setColumns(10);
 
-		search = new JButton("Search");
-		add(search); // On ajoute le bouton au panel
+		// Bouton pour valider la recherche
+		search = new JButton("Search by :");
 
+		// Boutons radios pour valider le type de recherche
 		radioTitle.setActionCommand("Title");
 		radioPublisher.setActionCommand("Publisher");
 		radioAuthor.setActionCommand("Author");
@@ -169,10 +194,10 @@ public class ComicSearchPanel extends JPanel {
 		radioGroup.add(radioPublisher);
 		radioGroup.add(radioTitle);
 		// On ajoute les boutons radios au panel
-		add(radioTitle);
-		add(radioPublisher);
+
 		// add(radioAuthor);
 
+		// Liste des années
 		// On crée la liste des années entre 1900 et aujourd'hui
 		int currentYear = Year.now().getValue();
 		ArrayList<String> years = new ArrayList<String>();
@@ -187,24 +212,52 @@ public class ComicSearchPanel extends JPanel {
 
 		// Converting List to Array
 		years.toArray(yearsArray);
-		dropDownYearsMin = new JComboBox(yearsArray);
-		dropDownYearsMax = new JComboBox(yearsArray);
+		dropDownYearsMin = new JComboBox<Object>(yearsArray);
+		dropDownYearsMax = new JComboBox<Object>(yearsArray);
 		// année max selectionnée par défaut : l'année actuelle
 		dropDownYearsMax.setSelectedItem(yearStr);
-		add(dropDownYearsMin); // Ajout du bouton au panel
-		add(dropDownYearsMax); // Ajout du bouton au panel
-		add(sortByLabel); // Ajout du bouton au panel
 
-		dropDownSortFieldChoice = new JComboBox();
-		dropDownSortFieldChoice.addItem("");
-		dropDownSortFieldChoice.addItem("Name");
-		dropDownSortFieldChoice.addItem("Date");
-		add(dropDownSortFieldChoice); // Ajout du bouton au panel
-		dropDownSortOrder = new JComboBox();
-		dropDownSortOrder.addItem("");
-		dropDownSortOrder.addItem("Ascending order");
-		dropDownSortOrder.addItem("Descending order");
-		add(dropDownSortOrder); // Ajout du bouton au panel
+		// Sélecteur de l'option de tri
+		dropDownSortFieldChoice = new JComboBox<String>();
+		dropDownSortFieldChoice.addItem(""); // Ajout de l'option vide
+		dropDownSortFieldChoice.addItem("Name"); // Ajout de l'option "par nom"
+		dropDownSortFieldChoice.addItem("Date"); // Ajout de l'option "par date"
+
+		// Sélecteur de l'ordre de tri
+		dropDownSortOrder = new JComboBox<String>();
+		dropDownSortOrder.addItem(""); // Ajout de l'option vide
+		dropDownSortOrder.addItem("Ascending order"); // Ajout de l'option "croissant"
+		dropDownSortOrder.addItem("Descending order"); // Ajout de l'option "décroissant"
+
+		// Sélecteur du nombre de résultat à afficher
+		dropItems = new JComboBox<String>();
+		dropItems.addItem("All results"); // Ajout de l'option vide
+		dropItems.addItem("5 items"); // Ajout de l'option "5 résultats"
+		dropItems.addItem("10 items"); // Ajout de l'option "10 résultats"
+		dropItems.addItem("25 items"); // Ajout de l'option "25 résultats"
+		dropItems.addItem("50 items"); // Ajout de l'option "50 résultats"
+		dropItems.addItem("100 items"); // Ajout de l'option "100 résultats"
+		dropItems.setSelectedIndex(3); // Par défaut, on affichera que 25 items
+
+		// Zone d'ajout au panel de recherche
+		JPanel firstArea = new JPanel();
+		firstArea.add(textField); // On ajoute la zone de recherche au panel
+		firstArea.add(search); // On ajoute le bouton au panel
+		firstArea.add(radioTitle);
+		firstArea.add(radioPublisher);
+		JPanel secondArea = new JPanel();
+		secondArea.add(new JLabel("From"));
+		secondArea.add(dropDownYearsMin); // Ajout du bouton au panel
+		secondArea.add(new JLabel("to"));
+		secondArea.add(dropDownYearsMax); // Ajout du bouton au panel
+		secondArea.add(sortByLabel); // Ajout du label au panel
+		secondArea.add(dropDownSortFieldChoice); // Ajout du sélecteur au panel
+		secondArea.add(dropDownSortOrder); // Ajout du sélecteur au panel
+		secondArea.add(dropItems); // Ajout du sélecteur au panel
+		this.searchArea.setLayout(new BorderLayout());
+		this.searchArea.add(firstArea, BorderLayout.NORTH);
+		this.searchArea.add(secondArea, BorderLayout.SOUTH);
+		this.add(searchArea, BorderLayout.NORTH);
 
 		// Listeners
 		ComicSearchListener csl = new ComicSearchListener(this);
