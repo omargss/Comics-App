@@ -15,21 +15,27 @@ public class CharacterSearchListener extends MouseAdapter {
 
 	CharacterSearchPanel cspanel = null;
 
+	/**
+	 * Constructeur de la classe
+	 * 
+	 * @param csp : ComicSearchPanel
+	 */
 	public CharacterSearchListener(CharacterSearchPanel csp) {
 		super();
-		cspanel = csp;
+		this.cspanel = csp;
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		Object o = e.getSource();
-		if (o instanceof JButton) {
+		List<Character> dataList = null;
+		Object o = e.getSource(); // On récupère l'objet sur lequel l'utilisateur a cliqué
+		if (o instanceof JButton) { // S'il s'agit d'un JButton alors on peut continuer
 			JButton b = (JButton) o;
 			// Si on clique sur le bouton de recherche
 			if (b.getText().equals("Search")) {
-				List<Character> dataList = null;
-	            String search = cspanel.getTextField().getText();
-				dataList=GetCharactersData.GetCharacterData(search);
-	            cspanel.updateResults(dataList);
+				String name = cspanel.getTextField().getText();
+				//GetCharactersData.getCharacters(name);
+				dataList = GetCharactersData.getCharacters(name);
+				this.cspanel.updateResultTable(dataList);
 			}
 		}
 	}
