@@ -2,6 +2,7 @@ package DisplayScreen;
 
 import Listeners.ComicSearchKeyListener;
 import Listeners.ComicSearchListener;
+import Listeners.TableListener;
 import Objects.Comic;
 
 import javax.swing.*;
@@ -31,6 +32,11 @@ public class ComicSearchPanel extends JPanel {
 	private JComboBox<Object> dropDownYearsMin;
 	private JComboBox<Object> dropDownYearsMax;
 	private JComboBox<String> dropItems;
+	private List<Comic> dataList;
+
+	public List<Comic> getDataList() {
+		return dataList;
+	}
 
 	private JRadioButton radioTitle = new JRadioButton("Title", true); // Bouton radio pour la recherche par titre, par
 																		// défaut activé en premier pour la recherche
@@ -135,6 +141,7 @@ public class ComicSearchPanel extends JPanel {
 	 * @param dataList
 	 */
 	public void updateResultTable(List<Comic> dataList) {
+		this.dataList = dataList;
 		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
 		String[][] list = new String[dataList.size()][5];
 		for (int i = 0; i < dataList.size(); i++) {
@@ -146,6 +153,7 @@ public class ComicSearchPanel extends JPanel {
 		}
 		resultTable = new JTable(list, columnNames);
 		resultTable.setEnabled(false);
+		resultTable.addMouseListener(new TableListener(this));
 		resultTable.setBounds(0, 50, 1000, 600);
 		TableColumnModel columnModel = resultTable.getColumnModel();
 		columnModel.getColumn(0).setWidth(300);
@@ -161,12 +169,20 @@ public class ComicSearchPanel extends JPanel {
 
 		this.add(resultArea, BorderLayout.CENTER);
 		this.validate();
-
+		
 		// add(new JScrollPane(resultTable));
 		//
 		// JScrollBar scrollBar = new JScrollBar();
 		// resultTable.add(scrollBar);
 		// add(resultTable, BorderLayout.CENTER);
+	}
+
+	public JTable getResultTable() {
+		return resultTable;
+	}
+
+	public void setResultTable(JTable resultTable) {
+		this.resultTable = resultTable;
 	}
 
 	/**
