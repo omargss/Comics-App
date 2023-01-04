@@ -17,7 +17,7 @@ public class MainWindow {
 	LoginPanel loginPanel;
 	User user;
 	JLabel userLabel;
-
+	RegisterPanel registerPanel;
 	/**
 	 * Constructeur de la classe
 	 */
@@ -46,21 +46,29 @@ public class MainWindow {
 		JButton characterSearchButton = new JButton("Character search"); // Bouton pour accéder à la recherche pour les
 		characterSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		characterSearchButton.setBounds(10, 56, 130, 23);
-																			// personnages
+
 		JButton loginButton = new JButton("Login"); // Bouton pour accéder à la partie connexion au compte
 		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		loginButton.setBounds(10, 110, 130, 23);
 		panel.setLayout(null);
+		
+		JButton registerButton = new JButton("Register");
+		registerButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		registerButton.setBounds(10, 170, 130, 23);
+		
 
 		// Ajout des boutons de navigation au panel principal
 		panel.add(comicSearchButton); // ajout du bouton au panel
 		panel.add(characterSearchButton); // ajout du bouton au panel
 		panel.add(loginButton); // ajout du bouton au panel
+		panel.add(registerButton);
+
 		
 		userLabel = new JLabel("");
 		userLabel.setEnabled(false);
 		userLabel.setBounds(10, 525, 130, 15);
 		panel.add(userLabel);
+		
 
 		// LISTENERS:
 		MainWindowListener mouselistener = new MainWindowListener(this);
@@ -68,6 +76,7 @@ public class MainWindow {
 		comicSearchButton.addMouseListener(mouselistener);
 		characterSearchButton.addMouseListener(mouselistener);
 		loginButton.addMouseListener(mouselistener);
+		registerButton.addMouseListener(mouselistener);
 
 		// Création des panels de recherche
 		comicPanel = new ComicSearchPanel();
@@ -76,10 +85,14 @@ public class MainWindow {
 		charPanel.setVisible(false);
 		loginPanel = new LoginPanel(this);
 		loginPanel.setVisible(false);
+		registerPanel = new RegisterPanel(this);
+		registerPanel.setVisible(false);
 		// Ajout des panels de recherche au panel principal
 		window.getContentPane().add(comicPanel);
 		window.getContentPane().add(charPanel);
 		window.getContentPane().add(loginPanel);
+		window.getContentPane().add(registerPanel);
+
 	}
 
 	/**
@@ -93,21 +106,31 @@ public class MainWindow {
 			comicPanel.setVisible(true);
 			loginPanel.setVisible(false);
 			charPanel.setVisible(false);
+			registerPanel.setVisible(false);
 			break;
 		case 1:
 			comicPanel.setVisible(false);
 			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
 			charPanel.setVisible(true);
 			break;
 		case 2:
 			comicPanel.setVisible(false);
 			charPanel.setVisible(false);
 			loginPanel.setVisible(true);
+			registerPanel.setVisible(false);
+			break;
+		case 3:
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(true);
 			break;
 		default:
 			comicPanel.setVisible(false);
 			charPanel.setVisible(false);
 			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
 		}
 
 	}

@@ -14,32 +14,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class LoginButtonListener extends MouseAdapter {
+public class RegisterButtonListener extends MouseAdapter {
 
-	static LoginPanel lgpanel = null;
+	static RegisterPanel rgpanel = null;
 
 	/**
 	 * Constructeur de la classe
 	 * 
 	 */
-	public LoginButtonListener(LoginPanel lgp) {
+	public RegisterButtonListener(RegisterPanel rgp) {
 		super();
-		this.lgpanel = lgp;
+		this.rgpanel = rgp;
 	}
 
 	public void mouseClicked(MouseEvent e) {
 		Object o = e.getSource(); // On récupère l'objet sur lequel l'utilisateur a cliqué
 		if (o instanceof JButton) { // S'il s'agit d'un JButton alors on peut continuer
 			JButton b = (JButton) o;
-			if (b.getText().equals("Login")) {
-				checkLogin();
+			if (b.getText().equals("Register")) {
+				register();
 			}
 
 		}
 
 	}
 
-	public static boolean checkLogin() {
+	public static void register() {
 		Connection connection = null;
 		try {
 			// Chargement du pilote SQLite
@@ -49,26 +49,16 @@ public class LoginButtonListener extends MouseAdapter {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "SELECT * FROM Accounts WHERE Login = '" + lgpanel.getLogin() + "' AND Password = '"
-					+ lgpanel.getPassword() + "'";
+			String query = "INSERT INTO Accounts VALUES ('"+ rgpanel.getLogin() + "','" + rgpanel.getPassword() + "','0')";
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-
-			// Vérifier si l'utilisateur a été trouvé
-			if (resultSet.next()) {
-				// voir comment faire pour mettre un paramètre global de login
-				lgpanel.setConnectionSuccessful();
-				return true;
-			} else {
-				lgpanel.setConnectionFailed();
-				return false;
-			}
+			statement.executeUpdate(query);
+			rgpanel.setConnectionSuccessful();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return false;
+			rgpanel.setConnectionFailed();
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
-			return false;
+			rgpanel.setConnectionFailed();
 		} finally {
 			try {
 				if (connection != null) {
@@ -76,6 +66,7 @@ public class LoginButtonListener extends MouseAdapter {
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
+				rgpanel.setConnectionFailed();
 			}
 		}
 	}

@@ -7,11 +7,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Listeners.LoginButtonListener;
+import Listeners.RegisterButtonListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public class LoginPanel extends JPanel {
+public class RegisterPanel extends JPanel {
 	private JTextField loginTextField;
 	private JTextField passwordTextField;
 	private MainWindow mainWindow;
@@ -22,17 +23,17 @@ public class LoginPanel extends JPanel {
 		return passwordTextField.getText();
 	}
 	public void setConnectionFailed() {
-		JOptionPane.showMessageDialog(null, "Connection failed");
+		JOptionPane.showMessageDialog(null, "Registration failed");
 	}
 	public void setConnectionSuccessful() {
-		JOptionPane.showMessageDialog(null, "Connection successful");
+		JOptionPane.showMessageDialog(null, "Registration successful");
 		mainWindow.setUser(getLogin(), false);
 		mainWindow.setDisplayedPanel(-1);
 	}
 	/**
 	 * Create the panel.
 	 */
-	public LoginPanel(MainWindow mainframe) {
+	public RegisterPanel(MainWindow mainframe) {
 		mainWindow = mainframe;
 		setBounds(150, 0, 1000, 600);
 		setLayout(null);
@@ -55,11 +56,11 @@ public class LoginPanel extends JPanel {
 		passwordTextField.setBounds(475, 244, 157, 20);
 		add(passwordTextField);
 		
-		JButton submitButton = new JButton("Login");
+		JButton submitButton = new JButton("Register");
 		submitButton.setBounds(475, 290, 89, 23);
 		add(submitButton);
 		
-		LoginButtonListener lbl = new LoginButtonListener(this);
+		RegisterButtonListener lbl = new RegisterButtonListener(this);
 		submitButton.addMouseListener(lbl);
 	}
 }
