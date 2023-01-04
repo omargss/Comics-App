@@ -1,12 +1,9 @@
 package Objects;
 
-import java.util.List;
-
 public class User {
 	
 	private String login;
 	private boolean premium;
-	List<Comic> comicList;
 	
 	public User(String l, boolean p) {
 		login = l;
@@ -24,8 +21,5 @@ public class User {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	
-	public void addComic(Comic c) {
-		comicList.add(c);
-	}
+
 }

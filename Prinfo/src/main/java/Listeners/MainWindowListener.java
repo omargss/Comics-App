@@ -39,6 +39,11 @@ public class MainWindowListener extends MouseAdapter {
 			//System.out.println("Mode 2");
 			//System.out.println("Affichage de la page de connexion");
 		}
+		if ((((JButton) e.getSource()).getText()).equals("Register")) {
+			this.window.setDisplayedPanel(3);
+			// System.out.println("Mode 3");
+			//System.out.println("Affichage de la page d'enregistrement");
+		}
 	}
 
 }
