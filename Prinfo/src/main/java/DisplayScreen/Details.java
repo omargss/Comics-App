@@ -13,30 +13,205 @@ import javax.swing.JPanel;
 
 import Objects.Comic;
 
-public class Details {
-
+@SuppressWarnings("serial")
+public class Details extends JFrame {
+	
+	Comic comic;
 	public Details(Comic comic) {
-
-		JFrame frame = new JFrame(); // initialiser la fenetre 
-		JPanel panelImage = new JPanel(); // initialiser le panel pour l'image
-		JLabel image = new JLabel(); // le componant pour image
-		frame.setVisible(true); 
-		frame.setSize(550,600); // dimension de l'image
-		frame.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // nous permet de fermer une seule fenêtre de details à la fois
-	    frame.setResizable(false); // dimensions de la fenêtre ne sont pas changeable 
-		ImageIcon img;
-		try {
-			URL url_img = new URL(comic.getImage()); // récupérer l'url de l'image
-			BufferedImage imageBrute = ImageIO.read(url_img); 
-			Image imageResize = imageBrute.getScaledInstance(250, 350, Image.SCALE_DEFAULT);
-			img = new ImageIcon(imageResize);
-			// finalement en récupère l'image redimensionnée
-		} catch (IOException e) {
-			// url dans le cas si l'image ne se charge pas
-			img = new ImageIcon(comic.getImage());
-		}
-		image.setIcon(img);
-		panelImage.add(image); // ajout de l'image dans le paneau
-		frame.add(panelImage); // ajout du paneau dans la fenêtre
+		
+		 this.comic=comic;
+		 initComponents();
+		 
 	}
-}
+	
+	private void initComponents() {
+
+		jPanelDetails = new JPanel();
+	    jPanelDescription = new JPanel();
+	    jPanelPrice = new JPanel();
+	    jPanelPublisher = new JPanel();
+	    jTitle = new JLabel();
+	    jDate = new JLabel();
+	    jPublisher = new JLabel();
+	    jUrl = new JLabel();
+	    JPanel jPanelImage = new JPanel();
+	    JLabel jImage = new JLabel();
+
+	    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // nous permet de fermer une seule fenêtre de details à la fois
+	    setResizable(false);
+	    setVisible(true);
+
+	    jPanelDescription.setBackground(new java.awt.Color(204, 204, 204));
+
+//	    javax.swing.GroupLayout jPanelDescriptionLayout = new javax.swing.GroupLayout(jPanelDescription);
+//	    jPanelDescription.setLayout(jPanelDescriptionLayout);
+//	    jPanelDescriptionLayout.setHorizontalGroup(
+//	        jPanelDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//	        .addGap(0, 327, Short.MAX_VALUE)
+//	    );
+//	    jPanelDescriptionLayout.setVerticalGroup(
+//	        jPanelDescriptionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//	        .addGap(0, 265, Short.MAX_VALUE)
+//	    );
+//
+//	    jPanelPrice.setBackground(new java.awt.Color(204, 204, 204));
+//
+//	    javax.swing.GroupLayout jPanelPriceLayout = new javax.swing.GroupLayout(jPanelPrice);
+//	    jPanelPrice.setLayout(jPanelPriceLayout);
+//	    jPanelPriceLayout.setHorizontalGroup(
+//	        jPanelPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//	        .addGap(0, 159, Short.MAX_VALUE)
+//	    );
+//	    jPanelPriceLayout.setVerticalGroup(
+//	        jPanelPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//	        .addGap(0, 0, Short.MAX_VALUE)
+//	    );
+
+	    jPanelPublisher.setBackground(new java.awt.Color(204, 204, 204));
+	    jPanelPublisher.setLayout(new java.awt.GridLayout(4, 1, 0, 10));
+
+
+	    jTitle.setFont(new java.awt.Font("Sitka Heading", 0, 24)); // NOI18N
+	    jTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+	    jTitle.setText(comic.getName());
+	    jPanelPublisher.add(jTitle);
+	    
+	    
+	    jDate.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+	    jDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+	    jDate.setText("publié le : " + comic.getDate().split(" ")[0]);
+	    jPanelPublisher.add(jDate);
+
+	    jPublisher.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+	    jPublisher.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+	    jPublisher.setText("édition : " + comic.getPublisher());
+	    jPanelPublisher.add(jPublisher);
+
+	    jUrl.setFont(new java.awt.Font("Segoe UI Emoji", 0, 14)); // NOI18N
+	    jUrl.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+	    jUrl.setText("Volume : " + comic.getVolume() );
+	    jPanelPublisher.add(jUrl);
+	    
+	    
+
+	    javax.swing.GroupLayout jPanelPublisherLayout = new javax.swing.GroupLayout(jPanelPublisher);
+	    jPanelPublisher.setLayout(jPanelPublisherLayout);
+	    jPanelPublisherLayout.setHorizontalGroup(
+	        jPanelPublisherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addGroup(jPanelPublisherLayout.createSequentialGroup()
+	            .addContainerGap()
+	            .addGroup(jPanelPublisherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                .addComponent(jDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                .addComponent(jTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                .addComponent(jPublisher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                .addComponent(jUrl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	            .addContainerGap())
+	    );
+	    jPanelPublisherLayout.setVerticalGroup(
+	        jPanelPublisherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPublisherLayout.createSequentialGroup()
+	            .addContainerGap(30, Short.MAX_VALUE)
+	            .addComponent(jTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+	            .addGap(18, 18, 18)
+	            .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+	            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	            .addComponent(jPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+	            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	            .addComponent(jUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+	            .addGap(34, 34, 34))
+	    );
+
+	    jPanelImage.setBackground(new java.awt.Color(204, 204, 204)); 
+	    
+	    ImageIcon img;
+	    try {
+	        URL url = new URL(comic.getImage());       // pour afficher l'image ... faut voir la taille
+	        BufferedImage imageBrute = ImageIO.read(url);
+	        Image imageResize = imageBrute.getScaledInstance(250, 350, Image.SCALE_DEFAULT);
+	        img = new ImageIcon(imageResize);
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        img = new ImageIcon(comic.getImage());
+	    }
+	    
+	    jImage.setIcon(img);
+	    jPanelImage.add(jImage);
+	    
+	    javax.swing.GroupLayout jPanelImageLayout = new javax.swing.GroupLayout(jPanelImage);
+	    jPanelImage.setLayout(jPanelImageLayout);
+	    jPanelImageLayout.setHorizontalGroup(
+	        jPanelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImageLayout.createSequentialGroup()
+	            .addContainerGap()
+	            .addComponent(jImage, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+	            .addContainerGap())
+	    );
+	    jPanelImageLayout.setVerticalGroup(
+	        jPanelImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImageLayout.createSequentialGroup()
+	            .addContainerGap()
+	            .addComponent(jImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	            .addContainerGap())
+	    );
+
+	    javax.swing.GroupLayout jPanelDetailsLayout = new javax.swing.GroupLayout(jPanelDetails);
+	    jPanelDetails.setLayout(jPanelDetailsLayout);
+	    jPanelDetailsLayout.setHorizontalGroup(
+	        jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addGroup(jPanelDetailsLayout.createSequentialGroup()
+	            .addContainerGap()
+	            .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                .addGroup(jPanelDetailsLayout.createSequentialGroup()
+	                    .addComponent(jPanelPublisher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                    .addComponent(jPanelImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+	                .addGroup(jPanelDetailsLayout.createSequentialGroup()
+	                    .addComponent(jPanelDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	                    .addComponent(jPanelPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+	            .addContainerGap())
+	    );
+	    jPanelDetailsLayout.setVerticalGroup(
+	        jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addGroup(jPanelDetailsLayout.createSequentialGroup()
+	            .addGap(12, 12, 12)
+	            .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+	                .addComponent(jPanelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                .addComponent(jPanelPublisher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+	            .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	                .addComponent(jPanelPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	                .addComponent(jPanelDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	            .addGap(0, 0, 0))
+	    );
+
+	    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+	    getContentPane().setLayout(layout);
+	    layout.setHorizontalGroup(
+	        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addComponent(jPanelDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	    );
+	    layout.setVerticalGroup(
+	        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+	        .addComponent(jPanelDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	    );
+	    pack();
+
+	}
+
+	// Variables declaration - do not modify                     
+	private javax.swing.JLabel jDate;
+	private javax.swing.JPanel jPanelDescription;
+	private javax.swing.JPanel jPanelDetails;
+	private javax.swing.JPanel jPanelImage;
+	private javax.swing.JPanel jPanelPrice;
+	private javax.swing.JPanel jPanelPublisher;
+	private javax.swing.JLabel jPublisher;
+	private javax.swing.JLabel jTitle;
+	private javax.swing.JLabel jUrl;
+		
+		}
+
+
+

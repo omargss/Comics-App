@@ -20,7 +20,7 @@ public class TableListener extends MouseAdapter {
 		int row = searchPanel.getResultTable().rowAtPoint(e.getPoint());
 		int col = searchPanel.getResultTable().columnAtPoint(e.getPoint());
 		if (col == 4) {
-			new Details(searchPanel.getDataList().get(row));
+			Details details = new Details(searchPanel.getDataList().get(row));
 		}
 	}
 
