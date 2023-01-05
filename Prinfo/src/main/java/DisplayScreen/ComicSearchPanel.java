@@ -253,7 +253,7 @@ public class ComicSearchPanel extends JPanel {
 		dropItems.addItem("25 items"); // Ajout de l'option "25 résultats"
 		dropItems.addItem("50 items"); // Ajout de l'option "50 résultats"
 		dropItems.addItem("100 items"); // Ajout de l'option "100 résultats"
-		dropItems.setSelectedIndex(3); // Par défaut, on affichera que 25 items
+		dropItems.setSelectedIndex(2); // Par défaut, on n'affichera que 10 items
 
 		// Zone d'ajout au panel de recherche
 		JPanel firstArea = new JPanel();
