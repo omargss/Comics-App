@@ -94,8 +94,9 @@ public class GetCharactersData {
 	 * @return textFormatted : String formatté pour la recherche via l'API
 	 */
 	public static String format(String text) {
-		String textFormatted = text.replace(' ', ',').replace("%", "%25").replace("'", "%27").replace("?", "%3F")
-				.replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26");
+		String textFormatted = text.replace("%", "%25").replace("'", "%27").replace("?", "%3F")
+				.replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26").replace(" ", "+")
+				.replace("@","%60").replace("#","%23").replace("/","%2F");
 		return (textFormatted);
 	}
 }
