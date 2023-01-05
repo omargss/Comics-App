@@ -147,8 +147,8 @@ public class ComicSearchPanel extends JPanel {
 		for (int i = 0; i < dataList.size(); i++) {
 			list[i][0] = dataList.get(i).getName();
 			list[i][1] = dataList.get(i).getDate();
-			list[i][2] = dataList.get(i).getVolume();
-			list[i][3] = dataList.get(i).getPublisher();
+			list[i][2] = dataList.get(i).getPublisher();
+			list[i][3] = dataList.get(i).getVolume();
 			list[i][4] = "Details";
 		}
 		resultTable = new JTable(list, columnNames);
