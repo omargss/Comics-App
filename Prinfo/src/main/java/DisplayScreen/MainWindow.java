@@ -18,6 +18,12 @@ public class MainWindow {
 	User user;
 	JLabel userLabel;
 	RegisterPanel registerPanel;
+	JButton comicSearchButton;
+	JButton characterSearchButton;
+	JButton loginButton;
+	JButton registerButton;
+	JButton signOutButton;
+
 	/**
 	 * Constructeur de la classe
 	 */
@@ -37,32 +43,39 @@ public class MainWindow {
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(0, 0, 150, 600);
 		panel.setVisible(true);
+		panel.setLayout(null);
 		window.getContentPane().add(panel);
 
 		// Création des boutons de navigation
-		JButton comicSearchButton = new JButton("Comic search"); // Bouton pour accéder à la recherche pour les comics
+		comicSearchButton = new JButton("Comic search"); // Bouton pour accéder à la recherche pour les comics
 		comicSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		comicSearchButton.setBounds(10, 6, 130, 23);
-		JButton characterSearchButton = new JButton("Character search"); // Bouton pour accéder à la recherche pour les
+		comicSearchButton.setVisible(false);
+		
+		characterSearchButton = new JButton("Character search"); // Bouton pour accéder à la recherche pour les
 		characterSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		characterSearchButton.setBounds(10, 56, 130, 23);
-
-		JButton loginButton = new JButton("Login"); // Bouton pour accéder à la partie connexion au compte
+		characterSearchButton.setVisible(false);
+		
+		loginButton = new JButton("Login"); // Bouton pour accéder à la partie connexion au compte
 		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		loginButton.setBounds(10, 110, 130, 23);
-		panel.setLayout(null);
+		loginButton.setBounds(10, 6, 130, 23);
 		
-		JButton registerButton = new JButton("Register");
+		registerButton = new JButton("Register");
 		registerButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		registerButton.setBounds(10, 170, 130, 23);
+		registerButton.setBounds(10, 56, 130, 23);
 		
-
+		signOutButton = new JButton("Sign out");
+		signOutButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		signOutButton.setBounds(10, 480, 130, 23);
+		signOutButton.setVisible(false);
+		
 		// Ajout des boutons de navigation au panel principal
 		panel.add(comicSearchButton); // ajout du bouton au panel
 		panel.add(characterSearchButton); // ajout du bouton au panel
 		panel.add(loginButton); // ajout du bouton au panel
 		panel.add(registerButton);
-
+		panel.add(signOutButton);
 		
 		userLabel = new JLabel("");
 		userLabel.setEnabled(false);
@@ -137,5 +150,20 @@ public class MainWindow {
 	public void setUser(String login, boolean premium) {
 		user = new User(login, premium);
 		userLabel.setText(login);
+		registerButton.setVisible(false);
+		loginButton.setVisible(false);
+		comicSearchButton.setVisible(true);
+		characterSearchButton.setVisible(true);
+		signOutButton.setVisible(true);
+		
+	}
+	public void signOut() {
+		user = null;
+		userLabel.setText("");
+		registerButton.setVisible(true);
+		loginButton.setVisible(true);
+		comicSearchButton.setVisible(false);
+		characterSearchButton.setVisible(false);
+		setDisplayedPanel(-1);
 	}
 }
