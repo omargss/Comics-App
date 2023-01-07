@@ -44,6 +44,9 @@ public class MainWindowListener extends MouseAdapter {
 			// System.out.println("Mode 3");
 			//System.out.println("Affichage de la page d'enregistrement");
 		}
+		if ((((JButton) e.getSource()).getText()).equals("Sign out")) {
+			this.window.signOut();
+		}
 	}
 
 }
