@@ -12,6 +12,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Objects.Comic;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import Listeners.DetailsButtonLikeListener;
+import Listeners.DetailsButtonsListener;
+import Listeners.MainWindowListener;
+
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class Details extends JFrame {
@@ -27,8 +36,6 @@ public class Details extends JFrame {
 	private void initComponents() {
 
 		jPanelDetails = new JPanel();
-	    jPanelDescription = new JPanel();
-	    jPanelPrice = new JPanel();
 	    jPanelPublisher = new JPanel();
 	    jTitle = new JLabel();
 	    jDate = new JLabel();
@@ -40,8 +47,6 @@ public class Details extends JFrame {
 	    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // nous permet de fermer une seule fenêtre de details à la fois
 	    setResizable(false);
 	    setVisible(true);
-
-	    jPanelDescription.setBackground(new java.awt.Color(204, 204, 204));
 
 //	    javax.swing.GroupLayout jPanelDescriptionLayout = new javax.swing.GroupLayout(jPanelDescription);
 //	    jPanelDescription.setLayout(jPanelDescriptionLayout);
@@ -154,37 +159,60 @@ public class Details extends JFrame {
 	            .addComponent(jImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 	            .addContainerGap())
 	    );
+	    
+	    JButton btnLu = new JButton("Lu");
+	    
+	    JButton btnEnvieDeLire = new JButton("Envie de lire");
+	    
+	    JButton btnEnCoursLecture = new JButton("En cours de lecture");
+	    
+	    JButton btnLike = new JButton("J'aime");
+	    
+	    DetailsButtonsListener mouselistener = new DetailsButtonsListener(this);
+	    DetailsButtonLikeListener likelistener = new DetailsButtonLikeListener(this);
+	    
+	    btnLu.addMouseListener(mouselistener);
+	    btnEnvieDeLire.addMouseListener(mouselistener);
+	    btnEnCoursLecture.addMouseListener(mouselistener);
+	    
+	    btnLike.addMouseListener(likelistener);
 
 	    javax.swing.GroupLayout jPanelDetailsLayout = new javax.swing.GroupLayout(jPanelDetails);
-	    jPanelDetails.setLayout(jPanelDetailsLayout);
 	    jPanelDetailsLayout.setHorizontalGroup(
-	        jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	        .addGroup(jPanelDetailsLayout.createSequentialGroup()
-	            .addContainerGap()
-	            .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                .addGroup(jPanelDetailsLayout.createSequentialGroup()
-	                    .addComponent(jPanelPublisher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                    .addComponent(jPanelImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-	                .addGroup(jPanelDetailsLayout.createSequentialGroup()
-	                    .addComponent(jPanelDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-	                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	                    .addComponent(jPanelPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-	            .addContainerGap())
+	    	jPanelDetailsLayout.createParallelGroup(Alignment.LEADING)
+	    		.addGroup(jPanelDetailsLayout.createSequentialGroup()
+	    			.addContainerGap()
+	    			.addGroup(jPanelDetailsLayout.createParallelGroup(Alignment.TRAILING)
+	    				.addGroup(jPanelDetailsLayout.createSequentialGroup()
+	    					.addComponent(jPanelPublisher, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	    					.addPreferredGap(ComponentPlacement.RELATED)
+	    					.addComponent(jPanelImage, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+	    				.addGroup(jPanelDetailsLayout.createSequentialGroup()
+	    					.addComponent(btnEnCoursLecture)
+	    					.addPreferredGap(ComponentPlacement.RELATED)
+	    					.addComponent(btnEnvieDeLire)
+	    					.addPreferredGap(ComponentPlacement.RELATED)
+	    					.addComponent(btnLu))
+	    				.addComponent(btnLike))
+	    			.addContainerGap())
 	    );
 	    jPanelDetailsLayout.setVerticalGroup(
-	        jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	        .addGroup(jPanelDetailsLayout.createSequentialGroup()
-	            .addGap(12, 12, 12)
-	            .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-	                .addComponent(jPanelImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                .addComponent(jPanelPublisher, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-	            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-	            .addGroup(jPanelDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-	                .addComponent(jPanelPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-	                .addComponent(jPanelDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-	            .addGap(0, 0, 0))
+	    	jPanelDetailsLayout.createParallelGroup(Alignment.LEADING)
+	    		.addGroup(jPanelDetailsLayout.createSequentialGroup()
+	    			.addContainerGap()
+	    			.addComponent(btnLike)
+	    			.addPreferredGap(ComponentPlacement.RELATED)
+	    			.addGroup(jPanelDetailsLayout.createParallelGroup(Alignment.LEADING, false)
+	    				.addComponent(jPanelImage, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	    				.addComponent(jPanelPublisher, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+	    			.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+	    			.addGroup(jPanelDetailsLayout.createParallelGroup(Alignment.BASELINE)
+	    				.addComponent(btnEnCoursLecture)
+	    				.addComponent(btnEnvieDeLire)
+	    				.addComponent(btnLu))
+	    			.addContainerGap())
 	    );
+	    jPanelDetails.setLayout(jPanelDetailsLayout);
 
 	    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 	    getContentPane().setLayout(layout);
@@ -202,15 +230,12 @@ public class Details extends JFrame {
 
 	// Variables declaration - do not modify                     
 	private javax.swing.JLabel jDate;
-	private javax.swing.JPanel jPanelDescription;
 	private javax.swing.JPanel jPanelDetails;
 	private javax.swing.JPanel jPanelImage;
-	private javax.swing.JPanel jPanelPrice;
 	private javax.swing.JPanel jPanelPublisher;
 	private javax.swing.JLabel jPublisher;
 	private javax.swing.JLabel jTitle;
 	private javax.swing.JLabel jUrl;
-		
 		}
 
 
