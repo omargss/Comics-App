@@ -14,12 +14,14 @@ public class MainWindow {
 	int height = 600;
 	ComicSearchPanel comicPanel;
 	CharacterSearchPanel charPanel;
+	PublisherSearchPanel publPanel;
 	LoginPanel loginPanel;
 	User user;
 	JLabel userLabel;
 	RegisterPanel registerPanel;
 	JButton comicSearchButton;
 	JButton characterSearchButton;
+	JButton publisherSearchButton;
 	JButton loginButton;
 	JButton registerButton;
 	JButton signOutButton;
@@ -57,6 +59,11 @@ public class MainWindow {
 		characterSearchButton.setBounds(10, 56, 130, 23);
 		characterSearchButton.setVisible(false);
 		
+		publisherSearchButton = new JButton("Publisher search"); // Bouton pour accéder à la recherche pour les
+		publisherSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		publisherSearchButton.setBounds(10, 106, 130, 23);
+		publisherSearchButton.setVisible(false);
+		
 		loginButton = new JButton("Login"); // Bouton pour accéder à la partie connexion au compte
 		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		loginButton.setBounds(10, 6, 130, 23);
@@ -73,9 +80,10 @@ public class MainWindow {
 		// Ajout des boutons de navigation au panel principal
 		panel.add(comicSearchButton); // ajout du bouton au panel
 		panel.add(characterSearchButton); // ajout du bouton au panel
+		panel.add(publisherSearchButton); // ajout du bouton au panel
 		panel.add(loginButton); // ajout du bouton au panel
-		panel.add(registerButton);
-		panel.add(signOutButton);
+		panel.add(registerButton); // ajout du bouton panel
+		panel.add(signOutButton); // ajout du bouton au panel
 		
 		userLabel = new JLabel("");
 		userLabel.setEnabled(false);
@@ -88,14 +96,18 @@ public class MainWindow {
 		//
 		comicSearchButton.addMouseListener(mouselistener);
 		characterSearchButton.addMouseListener(mouselistener);
+		publisherSearchButton.addMouseListener(mouselistener);
 		loginButton.addMouseListener(mouselistener);
 		registerButton.addMouseListener(mouselistener);
+		signOutButton.addMouseListener(mouselistener);
 
 		// Création des panels de recherche
 		comicPanel = new ComicSearchPanel();
 		comicPanel.setVisible(false);
 		charPanel = new CharacterSearchPanel();
 		charPanel.setVisible(false);
+		publPanel = new PublisherSearchPanel();
+		publPanel.setVisible(false);
 		loginPanel = new LoginPanel(this);
 		loginPanel.setVisible(false);
 		registerPanel = new RegisterPanel(this);
@@ -103,6 +115,7 @@ public class MainWindow {
 		// Ajout des panels de recherche au panel principal
 		window.getContentPane().add(comicPanel);
 		window.getContentPane().add(charPanel);
+		window.getContentPane().add(publPanel);
 		window.getContentPane().add(loginPanel);
 		window.getContentPane().add(registerPanel);
 
@@ -115,33 +128,45 @@ public class MainWindow {
 	 */
 	public void setDisplayedPanel(int i) {
 		switch (i) {
-		case 0:
+		case 0: // Recherche des comics
 			comicPanel.setVisible(true);
 			loginPanel.setVisible(false);
 			charPanel.setVisible(false);
+			publPanel.setVisible(false);
 			registerPanel.setVisible(false);
 			break;
-		case 1:
+		case 1: // Recherche des perso
 			comicPanel.setVisible(false);
+			publPanel.setVisible(false);
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(false);
 			charPanel.setVisible(true);
 			break;
-		case 2:
+		case 2: // Login
 			comicPanel.setVisible(false);
 			charPanel.setVisible(false);
+			publPanel.setVisible(false);
 			loginPanel.setVisible(true);
 			registerPanel.setVisible(false);
 			break;
-		case 3:
+		case 3: // Register
 			comicPanel.setVisible(false);
 			charPanel.setVisible(false);
+			publPanel.setVisible(false);
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(true);
 			break;
-		default:
+		case 4: // Recherche des publishers
 			comicPanel.setVisible(false);
 			charPanel.setVisible(false);
+			publPanel.setVisible(true);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			break;
+		default: // Clear
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(false);
 		}
@@ -154,6 +179,7 @@ public class MainWindow {
 		loginButton.setVisible(false);
 		comicSearchButton.setVisible(true);
 		characterSearchButton.setVisible(true);
+		publisherSearchButton.setVisible(true);
 		signOutButton.setVisible(true);
 		
 	}
@@ -164,6 +190,7 @@ public class MainWindow {
 		loginButton.setVisible(true);
 		comicSearchButton.setVisible(false);
 		characterSearchButton.setVisible(false);
+		publisherSearchButton.setVisible(false);
 		setDisplayedPanel(-1);
 	}
 }
