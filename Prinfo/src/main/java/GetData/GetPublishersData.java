@@ -1,38 +1,38 @@
 package GetData;
 
-import Objects.Character;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class GetCharactersData {
+import Objects.Character;
+import Objects.Publisher;
+
+public class GetPublishersData {
 	private static String apiKey = "f6929d31c63612dd656e42295cc122010ac74c1c";
 
-	/**
-	 * Permet de récupérer une liste de personnages en recherchant via un nom
-	 * 
-	 * @param name : terme de la recherche
-	 * @return List<Character> : liste de personnages satisfaisant la recherche
-	 */
-	public static List<Character> getCharacters(String name) {
+	public static List<Publisher> getPublishers(String name) {
 		HttpClient client = HttpClient.newHttpClient();
-		String APIRequest = "https://comicvine.gamespot.com/api/characters/?api_key=" + apiKey
-				+ "&format=json&field_list=name,publisher,image,description&limit=null";
-		String title_formatted = format(name); // permet de formatter le mot afin qu'il soit compréhensible par l'API
+		String APIRequest = "https://comicvine.gamespot.com/api/publishers/?api_key=" + apiKey
+				+ "&format=json&field_list=name,image,description&limit=null";
+		String publisher_formatted = format(name); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
-		APIRequest += "&filter=name:" + title_formatted;
-		//System.out.println(APIRequest);
+		APIRequest += "&filter=name:" + publisher_formatted;
+		// System.out.println(APIRequest);
 
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
-		List<Character> list = new ArrayList<Character>();
+		List<Publisher> list = new ArrayList<Publisher>();
 
 		try {
 			response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -46,23 +46,16 @@ public class GetCharactersData {
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
 					// On récupère la valeur à la pos de l'iterator
-					JSONObject tempCharacter = iterator.next();
-					//System.out.println(tempCharacter);
-					JSONObject tempPublisherCharacter = (JSONObject) tempCharacter.get("publisher");
+					JSONObject tempPublisher = iterator.next();
 					// System.out.println(tempPublisherCharacter);
-					JSONObject tempImageCharacter = (JSONObject) tempCharacter.get("image");
+					JSONObject tempImagePublisher = (JSONObject) tempPublisher.get("image");
 
-					Character character = new Character(); // Création d'un personnage qu'on ajoutera à la liste
+					Publisher publisher = new Publisher(); // Création d'un personnage qu'on ajoutera à la liste
 
 					// MàJ des informations du personnage
-					character.setName((String) tempCharacter.get("name")); // On récupère le nom du personnage
-					character.setImage((String) tempImageCharacter.get("original_url"));
-					character.setDescription((String) tempCharacter.get("description"));
-					if (tempPublisherCharacter == null) {
-						character.setPublisher("");
-					} else {
-						character.setPublisher((String) tempPublisherCharacter.get("name"));
-					}
+					publisher.setName((String) tempPublisher.get("name")); // On récupère le nom du personnage
+					publisher.setImage((String) tempImagePublisher.get("original_url"));
+					publisher.setDescription((String) tempPublisher.get("description"));
 
 					// Verifications
 					/*
@@ -72,7 +65,7 @@ public class GetCharactersData {
 					 * System.out.println("Image :"+character.getImage());
 					 */
 
-					list.add(character); // On ajoute le personnage à la liste
+					list.add(publisher); // On ajoute le personnage à la liste
 				} catch (NoSuchElementException nsee) {
 					nsee.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 				}
@@ -87,17 +80,10 @@ public class GetCharactersData {
 		return (list);
 	}
 
-	/**
-	 * Permet de formatter un texte pour qu'il soit compréhensible par l'API lors
-	 * d'une recherche
-	 * 
-	 * @param text : String à formatter
-	 * @return textFormatted : String formatté pour la recherche via l'API
-	 */
 	public static String format(String text) {
-		String textFormatted = text.replace("%", "%25").replace("'", "%27").replace("?", "%3F")
-				.replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26").replace(" ", "+")
-				.replace("@","%60").replace("#","%23").replace("/","%2F");
+		String textFormatted = text.replace("%", "%25").replace("'", "%27").replace("?", "%3F").replace("!", "%21")
+				.replace(":", "%3A").replace(",", "%2C").replace("&", "%26").replace(" ", "+").replace("@", "%60")
+				.replace("#", "%23").replace("/", "%2F");
 		return (textFormatted);
 	}
 }

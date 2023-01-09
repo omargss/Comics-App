@@ -47,6 +47,11 @@ public class MainWindowListener extends MouseAdapter {
 		if ((((JButton) e.getSource()).getText()).equals("Sign out")) {
 			this.window.signOut();
 		}
+		if ((((JButton) e.getSource()).getText()).equals("Publisher search")) {
+			System.out.println("Blop");
+			this.window.setDisplayedPanel(4);
+		}
+		
 	}
 
 }

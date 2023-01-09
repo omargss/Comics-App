@@ -8,6 +8,7 @@ public class Character {
 	private String name;
 	private String publisher;
 	private String image;
+	private String description;
 
 	/**
 	 * Permet de connaitre le nom du personnage
@@ -61,5 +62,23 @@ public class Character {
 	 */
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	/**
+	 * Permet de définir la description du personnage
+	 * 
+	 * @param description : String contenant la description du personnage
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * Permet de connaitre la description du personnage
+	 * 
+	 * @return String description : String contenant la description du personnage
+	 */
+	public String getDescription() {
+		return (this.description);
 	}
 }
