@@ -28,6 +28,7 @@ public class DetailsComic extends JFrame {
 	String date;
 	String publisher;
 	String description = "null à plus tard";
+	Comic comic;
 
 	public DetailsComic(Comic comic) {
 		/*
@@ -43,6 +44,7 @@ public class DetailsComic extends JFrame {
 		// JPanel window = new JPanel(new BorderLayout());
 
 		// Construction des informations
+		this.comic=comic;
 		this.name = comic.getName();
 		this.imageURL = comic.getImage();
 		this.date = comic.getDate();
@@ -115,5 +117,9 @@ public class DetailsComic extends JFrame {
 		frame.add(image, BorderLayout.WEST);
 		frame.add(info, BorderLayout.CENTER);
 
+	}
+	
+	public long getIssue() {
+		return comic.getIssue();
 	}
 }

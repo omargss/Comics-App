@@ -173,7 +173,8 @@ public class MainWindow {
 
 	}
 	public void setUser(String login, boolean premium) {
-		user = new User(login, premium);
+		User.setLogin(login);
+		User.setPremium(premium);
 		userLabel.setText(login);
 		registerButton.setVisible(false);
 		loginButton.setVisible(false);
@@ -184,7 +185,8 @@ public class MainWindow {
 		
 	}
 	public void signOut() {
-		user = null;
+		User.setLogin(null);
+		User.setPremium(false);
 		userLabel.setText("");
 		registerButton.setVisible(true);
 		loginButton.setVisible(true);

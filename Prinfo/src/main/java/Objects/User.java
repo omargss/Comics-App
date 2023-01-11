@@ -2,24 +2,24 @@ package Objects;
 
 public class User {
 	
-	private String login;
-	private boolean premium;
+	private static String login;
+	private static boolean premium;
 	
 	public User(String l, boolean p) {
 		login = l;
 		premium = p;
 	}
-	public boolean isPremium() {
+	public static boolean isPremium() {
 		return premium;
 	}
-	public void setPremium(boolean premium) {
-		this.premium = premium;
+	public static void setPremium(boolean p) {
+		premium = p;
 	}
-	public String getLogin() {
+	public static String getLogin() {
 		return login;
 	}
-	public void setLogin(String login) {
-		this.login = login;
+	public static void setLogin(String l) {
+		login = l;
 	}
 
 }

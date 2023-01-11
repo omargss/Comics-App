@@ -1,7 +1,7 @@
 package Listeners;
 
 import DisplayScreen.*;
-
+import Objects.User;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -57,6 +57,7 @@ public class LoginButtonListener extends MouseAdapter {
 			// Vérifier si l'utilisateur a été trouvé
 			if (resultSet.next()) {
 				// voir comment faire pour mettre un paramètre global de login
+				User.setLogin(lgpanel.getLogin());
 				lgpanel.setConnectionSuccessful();
 				return true;
 			} else {
