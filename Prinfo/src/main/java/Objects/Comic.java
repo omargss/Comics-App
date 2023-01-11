@@ -10,6 +10,15 @@ public class Comic {
 	private String image; // Il s'agit d'une URL menant à l'image
 	private String volume;
 	private String publisher;
+	private String description;
+
+	public String getDescription() {
+		return (this.description);
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	/**
 	 * Permet de connaitre le volume du comic
