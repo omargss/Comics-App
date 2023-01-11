@@ -34,7 +34,7 @@ public class GetComicsData {
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit=" + limit;
+				+ "&format=json&field_list=id,name,cover_date,image,volume&sort=" + sort + "&limit=" + limit;
 		String title_formatted = format(title); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
 		APIRequest += "&filter=name:" + title_formatted;
@@ -59,12 +59,11 @@ public class GetComicsData {
 					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
 					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
 					comic.setName((String) tempComic.get("name")); // On récupère le nom
+					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic					// Publisher subrequest
 					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
-
-					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey
 							+ "&format=json&filter=id:" + volume.get("id") + "&field_list=publisher";
 					HttpRequest publisherRequest = HttpRequest.newBuilder().uri(URI.create(APIPublisherRequest))
@@ -159,7 +158,7 @@ public class GetComicsData {
 		// 2ème étape : récupérer les comics
 		
 		APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=name,cover_date,image,volume&sort=" + sort + "&limit=1000";
+				+ "&format=json&field_list=name,id,cover_date,image,volume&sort=" + sort + "&limit=1000";
 		APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
 		request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
 		
@@ -181,6 +180,8 @@ public class GetComicsData {
 					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
 					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
 					comic.setName((String) tempComic.get("name")); // On récupère le nom
+					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic					
+					// Publisher subrequest
 					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume

@@ -32,6 +32,9 @@ public class Details extends JFrame {
 		 initComponents();
 		 
 	}
+	public long getIssue() {
+		return comic.getIssue();
+	}
 	
 	private void initComponents() {
 

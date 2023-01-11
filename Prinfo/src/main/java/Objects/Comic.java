@@ -5,6 +5,7 @@ package Objects;
  *
  */
 public class Comic {
+	private long issue;
 	private String name;
 	private String date;
 	private String image; // Il s'agit d'une URL menant à l'image
@@ -99,5 +100,13 @@ public class Comic {
 	 */
 	public String getPublisher() {
 		return this.publisher;
+	}
+
+	public long getIssue() {
+		return issue;
+	}
+
+	public void setIssue(long issue) {
+		this.issue = issue;
 	}
 }
