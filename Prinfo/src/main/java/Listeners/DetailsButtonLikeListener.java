@@ -5,17 +5,16 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
-import DisplayScreen.Details;
-import DisplayScreen.MainWindow;
+import DisplayScreen.DetailsComic;
 
 public class DetailsButtonLikeListener extends MouseAdapter{
-	Details detailspanel = null;
+	DetailsComic detailspanel = null;
 	
 	@SuppressWarnings("unused")
 	private DetailsButtonLikeListener() {
 	}
 	
-	public DetailsButtonLikeListener(Details details) {
+	public DetailsButtonLikeListener(DetailsComic details) {
 		super();
 		this.detailspanel = details;
 	}
