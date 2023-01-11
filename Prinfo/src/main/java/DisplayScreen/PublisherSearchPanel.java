@@ -12,6 +12,8 @@ import javax.swing.table.TableColumnModel;
 
 import Listeners.PublisherSearchKeyListener;
 import Listeners.PublisherSearchListener;
+import Listeners.TableListener;
+import Objects.Comic;
 import Objects.Publisher;
 
 public class PublisherSearchPanel extends JPanel {
@@ -21,6 +23,7 @@ public class PublisherSearchPanel extends JPanel {
 	private JButton search;
 	private JTable resultTable = new JTable();
 	private JScrollPane resultArea = new JScrollPane(); // Zone de résultat
+	private List<Publisher> dataList;
 
 	/**
 	 * Permet de retourner le contenu du champ de saisie pour les recherches
@@ -30,8 +33,13 @@ public class PublisherSearchPanel extends JPanel {
 	public JTextField getTextField() {
 		return this.textField;
 	}
+	
+	public List<Publisher> getDataList() {
+		return dataList;
+	}
 
 	public void updateResultTable(List<Publisher> dataList) {
+		this.dataList = dataList;
 		String[] columnNames = { "Name", "Details" }; // Permet de nommer les colonnes
 		String[][] list = new String[dataList.size()][2]; // Création de la matrice de résultats pour afficher les infos
 		for (int i = 0; i < dataList.size(); i++) {
@@ -41,6 +49,7 @@ public class PublisherSearchPanel extends JPanel {
 		}
 		resultTable = new JTable(list, columnNames); // Permet la mise en forme sous forme de tableau
 		resultTable.setEnabled(false); // Enlève la possibilité à l'utilisateur de la modifier
+		resultTable.addMouseListener(new TableListener(this));
 		resultTable.setBounds(0, 50, 1000, 600);
 		TableColumnModel columnModel = resultTable.getColumnModel(); // Permet de définir les colonnes
 		columnModel.getColumn(0).setWidth(300);
@@ -83,6 +92,15 @@ public class PublisherSearchPanel extends JPanel {
 		this.search.addMouseListener(psl); // Lorsqu'on clique sur le bouton pour rechercher
 		PublisherSearchKeyListener pskl = new PublisherSearchKeyListener(this); // Listener lorsqu'on appuie sur entrée
 		this.textField.addKeyListener(pskl); // Lorsqu'on appuie sur entrée dans la barre de saisie
+	}
+
+	/**
+	 * Permet de récupérer la table des résultats
+	 * 
+	 * @return JTable
+	 */
+	public JTable getResultTable() {
+		return resultTable;
 	}
 
 }
