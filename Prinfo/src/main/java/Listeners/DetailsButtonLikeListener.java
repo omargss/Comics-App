@@ -26,7 +26,7 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		if ((((JButton) e.getSource()).getText()).equals("J'aime")) {
+		if ((((JButton) e.getSource()).getText()).equals("Like")) {
 			like();
 		}
 	}

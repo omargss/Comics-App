@@ -26,16 +26,19 @@ public class DetailsButtonsListener extends MouseAdapter{
 	}
 	
 	public void mouseClicked(MouseEvent e) {
-		if ((((JButton) e.getSource()).getText()).equals("Lu")) {
-			insertComic("lu");
+		if ((((JButton) e.getSource()).getText()).equals("Read")) {
+			insertComic("Read");
+			System.out.println("read");
 		}
 		
-		if ((((JButton) e.getSource()).getText()).equals("Envie de lire")) {
-			insertComic("envie de lire");
+		if ((((JButton) e.getSource()).getText()).equals("Want to read")) {
+			insertComic("Want to read");
+			System.out.println("want to read");
 		}
 		
-		if ((((JButton) e.getSource()).getText()).equals("En cours de lecture")) {
-			insertComic("en cours de lecture");
+		if ((((JButton) e.getSource()).getText()).equals("In progress")) {
+			insertComic("In progress");
+			System.out.println("in progress");
 		}
 	}
 	public void insertComic(String etat) {
