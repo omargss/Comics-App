@@ -37,7 +37,7 @@ public class DetailsComic extends JFrame {
 
 		// Définition de la fenetre à afficher
 		JFrame frame = new JFrame();
-		frame.setLayout(new BorderLayout());
+		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setVisible(true);
 
 		// Définition des panels pour afficher les infos
@@ -54,7 +54,7 @@ public class DetailsComic extends JFrame {
 		// Création de l'image
 		try {
 			BufferedImage temp = ImageIO.read(new URL(this.imageURL));
-			frame.setSize(temp.getWidth() + 500, temp.getHeight() + 50);
+			frame.setSize(631, 371);
 			this.image = temp.getScaledInstance(temp.getWidth(), temp.getHeight(), Image.SCALE_DEFAULT);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -91,31 +91,31 @@ public class DetailsComic extends JFrame {
 		
 		// Boutons
 			// Création des boutons
-		JButton btnLu = new JButton("Lu");
-		JButton btnEnvieDeLire = new JButton("Envie de lire");
-		JButton btnEnCoursLecture = new JButton("En cours de lecture");
-		JButton btnLike = new JButton("J'aime");
+		JButton btnRead = new JButton("Read");
+		JButton btnWantToRead = new JButton("Want to read");
+		JButton btnInProgress = new JButton("In progress");
+		JButton btnLike = new JButton("Like");
 			// Création des listeners
 		DetailsButtonsListener mouselistener = new DetailsButtonsListener(this);
 		DetailsButtonLikeListener likelistener = new DetailsButtonLikeListener(this);
 			//Ajout des listeners
-		btnLu.addMouseListener(mouselistener);
-		btnEnvieDeLire.addMouseListener(mouselistener);
-		btnEnCoursLecture.addMouseListener(mouselistener);
+		btnRead.addMouseListener(mouselistener);
+		btnWantToRead.addMouseListener(mouselistener);
+		btnInProgress.addMouseListener(mouselistener);
 		btnLike.addMouseListener(likelistener);
 		
 		JPanel btn = new JPanel();
-		btn.add(btnLu);
-		btn.add(btnEnvieDeLire);
-		btn.add(btnEnCoursLecture);
+		btn.add(btnRead);
+		btn.add(btnWantToRead);
+		btn.add(btnInProgress);
 		btn.add(btnLike);
 		
 		info.add(header, BorderLayout.NORTH);
 		info.add(description, BorderLayout.CENTER);
 		info.add(btn,BorderLayout.SOUTH);
 
-		frame.add(image, BorderLayout.WEST);
-		frame.add(info, BorderLayout.CENTER);
+		frame.getContentPane().add(image, BorderLayout.WEST);
+		frame.getContentPane().add(info, BorderLayout.CENTER);
 
 	}
 	
