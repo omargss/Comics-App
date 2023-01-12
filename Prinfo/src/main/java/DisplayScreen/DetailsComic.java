@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 
 import Listeners.DetailsButtonLikeListener;
 import Listeners.DetailsButtonsListener;
+import Listeners.FollowingListener;
 import Objects.Comic;
 import Objects.User;
 
@@ -61,7 +62,7 @@ public class DetailsComic extends JFrame {
 		// Création de l'image
 		try {
 			BufferedImage temp = ImageIO.read(new URL(this.imageURL));
-			frame.setSize(631, 371);
+			frame.setSize(temp.getWidth() + 800, temp.getHeight() + 50);
 			this.image = temp.getScaledInstance(temp.getWidth(), temp.getHeight(), Image.SCALE_DEFAULT);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -123,9 +124,26 @@ public class DetailsComic extends JFrame {
 			btn.add(btnLike);
 		}
 		
+
+		JPanel buttonFollow = new JPanel();
+		buttonFollow.setLayout(new BorderLayout());
+		FollowingListener fl =new FollowingListener(this,this.comic);
+		JButton next = new JButton("Next in the volume");
+		JButton previous = new JButton("Previously in the volume");
+		next.addMouseListener(fl);
+		previous.addMouseListener(fl);
+		buttonFollow.add(next,BorderLayout.NORTH);
+		buttonFollow.add(previous,BorderLayout.SOUTH);
+		
+		JPanel bottom = new JPanel();
+		bottom.setLayout(new BorderLayout());
+		bottom.add(btn,BorderLayout.WEST);
+		bottom.add(buttonFollow,BorderLayout.EAST);
+		
+		
 		info.add(header, BorderLayout.NORTH);
 		info.add(description, BorderLayout.CENTER);
-		info.add(btn,BorderLayout.SOUTH);
+		info.add(bottom,BorderLayout.SOUTH);
 
 		frame.getContentPane().add(image, BorderLayout.WEST);
 		frame.getContentPane().add(info, BorderLayout.CENTER);
