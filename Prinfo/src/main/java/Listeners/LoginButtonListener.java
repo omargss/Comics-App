@@ -58,6 +58,7 @@ public class LoginButtonListener extends MouseAdapter {
 			if (resultSet.next()) {
 				// voir comment faire pour mettre un paramètre global de login
 				User.setLogin(lgpanel.getLogin());
+				User.setPremium(resultSet.getBoolean("premium"));
 				lgpanel.setConnectionSuccessful();
 				return true;
 			} else {

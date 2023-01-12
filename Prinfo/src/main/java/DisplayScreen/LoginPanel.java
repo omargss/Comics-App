@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Listeners.LoginButtonListener;
+import Objects.User;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,7 +27,7 @@ public class LoginPanel extends JPanel {
 	}
 	public void setConnectionSuccessful() {
 		JOptionPane.showMessageDialog(null, "Connection successful");
-		mainWindow.setUser(getLogin(), false);
+		mainWindow.setUser(User.getLogin(), User.isPremium());
 		mainWindow.setDisplayedPanel(-1);
 	}
 	/**

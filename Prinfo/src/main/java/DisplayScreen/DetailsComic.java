@@ -6,6 +6,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,9 +24,10 @@ import javax.swing.JScrollPane;
 import Listeners.DetailsButtonLikeListener;
 import Listeners.DetailsButtonsListener;
 import Objects.Comic;
+import Objects.User;
 
 public class DetailsComic extends JFrame {
-
+	long issue;
 	String name;
 	String imageURL;
 	Image image;
@@ -29,8 +35,9 @@ public class DetailsComic extends JFrame {
 	String publisher;
 	String description = "null à plus tard";
 	Comic comic;
-
+	JButton btnLike;
 	public DetailsComic(Comic comic) {
+		System.out.println("premium"+User.isPremium());
 		/*
 		 * Contenu d'un comic : - volume
 		 */
@@ -50,7 +57,7 @@ public class DetailsComic extends JFrame {
 		this.date = comic.getDate();
 		this.description = comic.getDescription();
 		this.publisher = comic.getPublisher();
-
+		this.issue = comic.getIssue();
 		// Création de l'image
 		try {
 			BufferedImage temp = ImageIO.read(new URL(this.imageURL));
@@ -94,7 +101,7 @@ public class DetailsComic extends JFrame {
 		JButton btnRead = new JButton("Read");
 		JButton btnWantToRead = new JButton("Want to read");
 		JButton btnInProgress = new JButton("In progress");
-		JButton btnLike = new JButton("Like");
+		btnLike = new JButton("Like");
 			// Création des listeners
 		DetailsButtonsListener mouselistener = new DetailsButtonsListener(this);
 		DetailsButtonLikeListener likelistener = new DetailsButtonLikeListener(this);
@@ -105,10 +112,16 @@ public class DetailsComic extends JFrame {
 		btnLike.addMouseListener(likelistener);
 		
 		JPanel btn = new JPanel();
-		btn.add(btnRead);
-		btn.add(btnWantToRead);
-		btn.add(btnInProgress);
-		btn.add(btnLike);
+		
+		if(User.isPremium()) {
+			if(checkIfLiked()) {
+				btnLike.setText("Liked");
+			}
+			btn.add(btnRead);
+			btn.add(btnWantToRead);
+			btn.add(btnInProgress);
+			btn.add(btnLike);
+		}
 		
 		info.add(header, BorderLayout.NORTH);
 		info.add(description, BorderLayout.CENTER);
@@ -118,8 +131,45 @@ public class DetailsComic extends JFrame {
 		frame.getContentPane().add(info, BorderLayout.CENTER);
 
 	}
-	
+	public void setLikeBtn(String like) {
+		btnLike.setText(like);
+	}
 	public long getIssue() {
 		return comic.getIssue();
+	}
+	public boolean checkIfLiked() {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "SELECT * FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "+this.issue;
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			if (resultSet.next()) {
+
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 }
