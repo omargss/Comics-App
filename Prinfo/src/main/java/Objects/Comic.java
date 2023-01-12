@@ -12,15 +12,6 @@ public class Comic {
 	private String volume;
 	private String publisher;
 	private String description;
-	private long issue;
-
-	public long getIssue() {
-		return(this.issue);
-	}
-	
-	public void setIssue(long issue) {
-		this.issue=issue;
-	}
 	
 	public String getDescription() {
 		return (this.description);
