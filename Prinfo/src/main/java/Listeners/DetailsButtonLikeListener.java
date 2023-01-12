@@ -9,18 +9,18 @@ import java.sql.Statement;
 
 import javax.swing.JButton;
 
-import DisplayScreen.Details;
-import DisplayScreen.MainWindow;
+import DisplayScreen.DetailsComic;
 import Objects.User;
+import DisplayScreen.MainWindow;
 
 public class DetailsButtonLikeListener extends MouseAdapter{
-	Details detailspanel = null;
+	DetailsComic detailspanel = null;
 	
 	@SuppressWarnings("unused")
 	private DetailsButtonLikeListener() {
 	}
 	
-	public DetailsButtonLikeListener(Details details) {
+	public DetailsButtonLikeListener(DetailsComic details) {
 		super();
 		this.detailspanel = details;
 	}

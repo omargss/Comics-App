@@ -34,7 +34,8 @@ public class GetComicsData {
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=id,name,cover_date,image,volume&sort=" + sort + "&limit=" + limit;
+				+ "&format=json&field_list=id,name,cover_date,image,volume,description&sort=" + sort + "&limit="
+				+ limit;
 		String title_formatted = format(title); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
 		APIRequest += "&filter=name:" + title_formatted;
@@ -64,6 +65,10 @@ public class GetComicsData {
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
+					comic.setDescription((String) tempComic.get("description"));
+					comic.setIssue((long) tempComic.get("id"));
+
+					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey
 							+ "&format=json&filter=id:" + volume.get("id") + "&field_list=publisher";
 					HttpRequest publisherRequest = HttpRequest.newBuilder().uri(URI.create(APIPublisherRequest))
@@ -119,11 +124,10 @@ public class GetComicsData {
 		// pour la recherche
 		APIRequest += "&filter=name:" + publisher_formatted;
 		System.out.println(APIRequest);
-		
+
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
-		
-		
+
 		List<Comic> list = new ArrayList<Comic>(); // Liste finale des comics obtenus
 		List<String> listPublisher = new ArrayList<String>(); // Liste des publishers obtenus
 
@@ -152,16 +156,16 @@ public class GetComicsData {
 		} catch (ParseException e) {
 			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 		}
-		
+
 		System.out.println(listPublisher);
 
 		// 2ème étape : récupérer les comics
-		
+
 		APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
 				+ "&format=json&field_list=name,id,cover_date,image,volume&sort=" + sort + "&limit=1000";
 		APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
 		request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build();
-		
+
 		try {
 			response = client.send(request, HttpResponse.BodyHandlers.ofString());
 			JSONParser parser = new JSONParser();
@@ -170,11 +174,11 @@ public class GetComicsData {
 																		// requete auprès de l'API
 
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
-			if(limit=="null") {
-				limit="1000";
+			if (limit == "null") {
+				limit = "1000";
 			}
-			Integer i=1;
-			while (iterator.hasNext() && list.size()<Float.valueOf(limit)) { // Tant qu'on trouve un résultat
+			Integer i = 1;
+			while (iterator.hasNext() && list.size() < Float.valueOf(limit)) { // Tant qu'on trouve un résultat
 				try {
 					Comic comic = new Comic(); // Création d'un comic
 					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
@@ -200,16 +204,15 @@ public class GetComicsData {
 					JSONObject publisher = (JSONObject) ((JSONObject) publisherResults.get(0)).get("publisher");
 					comic.setPublisher((String) publisher.get("name")); // On récupère le publieur
 					// End of publisher subrequest
-					System.out.println("Comic n°"+i+" : "+comic);
-					if(listPublisher.contains(comic.getPublisher())) {
+					System.out.println("Comic n°" + i + " : " + comic);
+					if (listPublisher.contains(comic.getPublisher())) {
 						list.add(comic); // On ajoute le comic à la liste
 						System.out.println("        ajouté à la liste");
-					}
-					else {
+					} else {
 						System.out.println("        pas ajouté à la liste");
 					}
 					i++;
-					System.out.println("Taille de la liste : "+list.size());
+					System.out.println("Taille de la liste : " + list.size());
 				} catch (NoSuchElementException nsee) {
 					nsee.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
 				}
