@@ -27,7 +27,13 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 	
 	public void mouseClicked(MouseEvent e) {
 		if ((((JButton) e.getSource()).getText()).equals("Like")) {
+			System.out.println("like");
 			like();
+		} else {
+			if ((((JButton) e.getSource()).getText()).equals("Liked")) {
+				System.out.println("dislike");
+				disLike();
+		}
 		}
 	}
 	
@@ -42,9 +48,37 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 
 			// Création d'une requête
 			String query = "INSERT INTO Account_comic_like VALUES ('"+ User.getLogin() + "','" + detailspanel.getIssue() + "')";
-			System.out.println(query);
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
+			detailspanel.setLikeBtn("Liked");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	public void disLike() {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "DELETE FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "+detailspanel.getIssue();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+			detailspanel.setLikeBtn("Like");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} catch (ClassNotFoundException e) {

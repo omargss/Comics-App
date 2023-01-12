@@ -173,9 +173,10 @@ public class MainWindow {
 
 	}
 	public void setUser(String login, boolean premium) {
-		User.setLogin(login);
-		User.setPremium(premium);
 		userLabel.setText(login);
+		if(premium) {
+			userLabel.setText(userLabel.getText() + " - Premium");
+		}
 		registerButton.setVisible(false);
 		loginButton.setVisible(false);
 		comicSearchButton.setVisible(true);
