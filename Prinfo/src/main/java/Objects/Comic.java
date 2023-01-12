@@ -5,7 +5,6 @@ package Objects;
  *
  */
 public class Comic {
-	private long issue;
 	private String name;
 	private String date;
 	private String image; // Il s'agit d'une URL menant à l'image
@@ -30,14 +29,6 @@ public class Comic {
 
 	public void setIdVolume(long idVolume) {
 		this.idVolume = idVolume;
-	}
-
-	public long getIssue() {
-		return (this.issue);
-	}
-
-	public void setIssue(long issue) {
-		this.issue = issue;
 	}
 
 	public String getDescription() {
