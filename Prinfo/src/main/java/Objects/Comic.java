@@ -13,23 +13,32 @@ public class Comic {
 	private String description;
 	private long issue;
 	private long idVolume;
+	private long issueNumber;
+
+	public long getIssueNumber() {
+		return (this.issueNumber);
+	}
+
+	public void setIssueNumber(long issueNumber) {
+		this.issueNumber = issueNumber;
+	}
 
 	public long getIdVolume() {
-		return(this.idVolume);
+		return (this.idVolume);
 	}
-	
+
 	public void setIdVolume(long idVolume) {
-		this.idVolume=idVolume;
+		this.idVolume = idVolume;
 	}
-	
+
 	public long getIssue() {
-		return(this.issue);
+		return (this.issue);
 	}
-	
+
 	public void setIssue(long issue) {
-		this.issue=issue;
+		this.issue = issue;
 	}
-	
+
 	public String getDescription() {
 		return (this.description);
 	}

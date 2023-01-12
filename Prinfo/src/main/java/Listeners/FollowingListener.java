@@ -25,14 +25,14 @@ public class FollowingListener extends MouseAdapter{
 	public void mouseClicked(MouseEvent e) {
 		if((((JButton) e.getSource()).getText()).equals("Previously in the volume")) {
 			try {
-				this.comic=GetFollowingData.previousComic(this.comic.getIdVolume(), this.comic.getIssue());
+				this.comic=GetFollowingData.previousComic(this.comic.getIdVolume(), this.comic.getIssueNumber());
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
 		}
 		else if((((JButton) e.getSource()).getText()).equals("Next in the volume")) {
 			try {
-				this.comic=GetFollowingData.nextComic(this.comic.getIdVolume(), this.comic.getIssue());
+				this.comic=GetFollowingData.nextComic(this.comic.getIdVolume(), this.comic.getIssueNumber());
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 			}
