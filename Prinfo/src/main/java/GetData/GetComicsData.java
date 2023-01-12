@@ -12,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import Listeners.ComicSearchKeyListener;
+
 public class GetComicsData {
 	private static String apiKey = "f6929d31c63612dd656e42295cc122010ac74c1c";
 
@@ -34,13 +36,13 @@ public class GetComicsData {
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=id,name,cover_date,image,volume,description,issue_number&sort=" + sort + "&limit="
+				+ "&format=json&field_list=id,name,cover_date,image,volume,description&sort=" + sort + "&limit="
 				+ limit;
 		String title_formatted = format(title); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
 		APIRequest += "&filter=name:" + title_formatted;
 		APIRequest += ",cover_date:" + yearMin + "-01-01%7C" + yearMax + "-12-31";
-		//System.out.println(APIRequest);
+		System.out.println(APIRequest);
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
 		List<Comic> list = new ArrayList<Comic>();
@@ -53,6 +55,7 @@ public class GetComicsData {
 																		// requete auprès de l'API
 
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
+
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
 					Comic comic = new Comic(); // Création d'un comic
@@ -66,13 +69,10 @@ public class GetComicsData {
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
 					comic.setDescription((String) tempComic.get("description"));
 					comic.setIssue((long) tempComic.get("id"));
-					comic.setIdVolume((long) volume.get("id"));
-					comic.setIssueNumber((long) Long.parseLong((String) tempComic.get("issue_number")));
 
 					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey
 							+ "&format=json&filter=id:" + volume.get("id") + "&field_list=publisher";
-					//System.out.println(APIPublisherRequest);
 					HttpRequest publisherRequest = HttpRequest.newBuilder().uri(URI.create(APIPublisherRequest))
 							.build();
 					HttpResponse<String> publisherResponse = client.send(publisherRequest,
@@ -229,6 +229,74 @@ public class GetComicsData {
 		return list; // On retourne la liste des comics trouvés
 	}
 
+	public static List<Comic> getComicsDataByID(List<Long> ComicIDlist) {
+		String comicsIDs = "";
+		for(int i = 0;i<ComicIDlist.size();i++) {
+			comicsIDs = comicsIDs + ComicIDlist.get(i) + "%7C";
+		}
+		System.out.println(comicsIDs);
+		HttpClient client = HttpClient.newHttpClient();
+		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
+				+ "&format=json&field_list=id,name,cover_date,image,volume,description&sort=";
+		APIRequest += "&filter=id:" + comicsIDs;
+		System.out.println(APIRequest);
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
+		HttpResponse<String> response;
+		List<Comic> list = new ArrayList<Comic>();
+
+		try {
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			JSONParser parser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
+			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
+																		// requete auprès de l'API
+
+			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
+
+			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
+				try {
+					Comic comic = new Comic(); // Création d'un comic
+					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
+					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
+					comic.setName((String) tempComic.get("name")); // On récupère le nom
+					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic					// Publisher subrequest
+					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
+					comic.setImage((String) image.get("original_url"));
+					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume
+					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
+					comic.setDescription((String) tempComic.get("description"));
+					comic.setIssue((long) tempComic.get("id"));
+
+					// Publisher subrequest
+					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey
+							+ "&format=json&filter=id:" + volume.get("id") + "&field_list=publisher";
+					HttpRequest publisherRequest = HttpRequest.newBuilder().uri(URI.create(APIPublisherRequest))
+							.build();
+					HttpResponse<String> publisherResponse = client.send(publisherRequest,
+							HttpResponse.BodyHandlers.ofString());
+					JSONParser publisherParser = new JSONParser();
+					JSONObject publisherjsonObject = (JSONObject) publisherParser.parse(publisherResponse.body());
+					JSONArray publisherResults = (JSONArray) publisherjsonObject.get("results");
+					JSONObject publisher = (JSONObject) ((JSONObject) publisherResults.get(0)).get("publisher");
+					comic.setPublisher((String) publisher.get("name")); // On récupère le publieur
+					// End of publisher subrequest
+
+					list.add(comic); // On ajoute le comic à la liste
+				} catch (NoSuchElementException nsee) {
+					nsee.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
+		} catch (InterruptedException e) {
+			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
+		} catch (ParseException e) {
+			e.printStackTrace(); // En cas d'erreur, on affiche le problème dans la console
+		}
+		return list; // On retourne la liste des comics trouvés
+	}
+
+	
 	/**
 	 * Permet de formatter un texte pour qu'il soit compréhensible par l'API lors
 	 * d'une recherche

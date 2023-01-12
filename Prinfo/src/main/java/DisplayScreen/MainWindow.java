@@ -7,6 +7,7 @@ import java.awt.Color;
 import Listeners.*;
 import Objects.User;
 import java.awt.Font;
+import java.awt.BorderLayout;
 
 public class MainWindow {
 	JFrame window = null;
@@ -15,6 +16,7 @@ public class MainWindow {
 	ComicSearchPanel comicPanel;
 	CharacterSearchPanel charPanel;
 	PublisherSearchPanel publPanel;
+	LikedMenuPanel likedPanel;
 	LoginPanel loginPanel;
 	User user;
 	JLabel userLabel;
@@ -25,6 +27,7 @@ public class MainWindow {
 	JButton loginButton;
 	JButton registerButton;
 	JButton signOutButton;
+	JButton LikedMenuButton;
 
 	/**
 	 * Constructeur de la classe
@@ -53,30 +56,35 @@ public class MainWindow {
 		comicSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		comicSearchButton.setBounds(10, 6, 130, 23);
 		comicSearchButton.setVisible(false);
-		
+
 		characterSearchButton = new JButton("Character search"); // Bouton pour accéder à la recherche pour les
 		characterSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		characterSearchButton.setBounds(10, 56, 130, 23);
 		characterSearchButton.setVisible(false);
-		
+
 		publisherSearchButton = new JButton("Publisher search"); // Bouton pour accéder à la recherche pour les
 		publisherSearchButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		publisherSearchButton.setBounds(10, 106, 130, 23);
 		publisherSearchButton.setVisible(false);
-		
+
 		loginButton = new JButton("Login"); // Bouton pour accéder à la partie connexion au compte
 		loginButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		loginButton.setBounds(10, 6, 130, 23);
-		
+
 		registerButton = new JButton("Register");
 		registerButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		registerButton.setBounds(10, 56, 130, 23);
-		
+
 		signOutButton = new JButton("Sign out");
 		signOutButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		signOutButton.setBounds(10, 480, 130, 23);
 		signOutButton.setVisible(false);
-		
+
+		LikedMenuButton = new JButton("Liked"); // Bouton pour accéder à la page des
+		LikedMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		LikedMenuButton.setBounds(10, 156, 130, 23);
+		LikedMenuButton.setVisible(false);
+
 		// Ajout des boutons de navigation au panel principal
 		panel.add(comicSearchButton); // ajout du bouton au panel
 		panel.add(characterSearchButton); // ajout du bouton au panel
@@ -84,12 +92,12 @@ public class MainWindow {
 		panel.add(loginButton); // ajout du bouton au panel
 		panel.add(registerButton); // ajout du bouton panel
 		panel.add(signOutButton); // ajout du bouton au panel
-		
+		panel.add(LikedMenuButton); // ajout du bouton menu
+
 		userLabel = new JLabel("");
 		userLabel.setEnabled(false);
 		userLabel.setBounds(10, 525, 130, 15);
 		panel.add(userLabel);
-		
 
 		// LISTENERS:
 		MainWindowListener mouselistener = new MainWindowListener(this);
@@ -100,6 +108,7 @@ public class MainWindow {
 		loginButton.addMouseListener(mouselistener);
 		registerButton.addMouseListener(mouselistener);
 		signOutButton.addMouseListener(mouselistener);
+		LikedMenuButton.addMouseListener(mouselistener);
 
 		// Création des panels de recherche
 		comicPanel = new ComicSearchPanel();
@@ -108,6 +117,8 @@ public class MainWindow {
 		charPanel.setVisible(false);
 		publPanel = new PublisherSearchPanel();
 		publPanel.setVisible(false);
+		likedPanel = new LikedMenuPanel();
+		likedPanel.setVisible(false);
 		loginPanel = new LoginPanel(this);
 		loginPanel.setVisible(false);
 		registerPanel = new RegisterPanel(this);
@@ -116,6 +127,7 @@ public class MainWindow {
 		window.getContentPane().add(comicPanel);
 		window.getContentPane().add(charPanel);
 		window.getContentPane().add(publPanel);
+		window.getContentPane().add(likedPanel);
 		window.getContentPane().add(loginPanel);
 		window.getContentPane().add(registerPanel);
 
@@ -133,12 +145,14 @@ public class MainWindow {
 			loginPanel.setVisible(false);
 			charPanel.setVisible(false);
 			publPanel.setVisible(false);
+			likedPanel.setVisible(false);
 			registerPanel.setVisible(false);
 			break;
 		case 1: // Recherche des perso
 			comicPanel.setVisible(false);
 			publPanel.setVisible(false);
 			loginPanel.setVisible(false);
+			likedPanel.setVisible(false);
 			registerPanel.setVisible(false);
 			charPanel.setVisible(true);
 			break;
@@ -148,6 +162,7 @@ public class MainWindow {
 			publPanel.setVisible(false);
 			loginPanel.setVisible(true);
 			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
 			break;
 		case 3: // Register
 			comicPanel.setVisible(false);
@@ -155,6 +170,7 @@ public class MainWindow {
 			publPanel.setVisible(false);
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(true);
+			likedPanel.setVisible(false);
 			break;
 		case 4: // Recherche des publishers
 			comicPanel.setVisible(false);
@@ -162,6 +178,16 @@ public class MainWindow {
 			publPanel.setVisible(true);
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			break;
+		case 5: // Recherche des publishers
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			likedPanel.updateResultTable();
+			likedPanel.setVisible(true);
 			break;
 		default: // Clear
 			comicPanel.setVisible(false);
@@ -169,12 +195,14 @@ public class MainWindow {
 			publPanel.setVisible(false);
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
 		}
 
 	}
+
 	public void setUser(String login, boolean premium) {
 		userLabel.setText(login);
-		if(premium) {
+		if (premium) {
 			userLabel.setText(userLabel.getText() + " - Premium");
 		}
 		registerButton.setVisible(false);
@@ -183,8 +211,10 @@ public class MainWindow {
 		characterSearchButton.setVisible(true);
 		publisherSearchButton.setVisible(true);
 		signOutButton.setVisible(true);
-		
+		LikedMenuButton.setVisible(true);
+
 	}
+
 	public void signOut() {
 		User.setLogin(null);
 		User.setPremium(false);
@@ -194,6 +224,7 @@ public class MainWindow {
 		comicSearchButton.setVisible(false);
 		characterSearchButton.setVisible(false);
 		publisherSearchButton.setVisible(false);
+		LikedMenuButton.setVisible(true);
 		setDisplayedPanel(-1);
 	}
 }
