@@ -53,7 +53,6 @@ public class GetComicsData {
 																		// requete auprès de l'API
 
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
-
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
 					Comic comic = new Comic(); // Création d'un comic
@@ -66,10 +65,12 @@ public class GetComicsData {
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
 					comic.setDescription((String) tempComic.get("description"));
 					comic.setIssue((long) tempComic.get("id"));
+					comic.setIdVolume((long) volume.get("id"));
 
 					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey
 							+ "&format=json&filter=id:" + volume.get("id") + "&field_list=publisher";
+					System.out.println(APIPublisherRequest);
 					HttpRequest publisherRequest = HttpRequest.newBuilder().uri(URI.create(APIPublisherRequest))
 							.build();
 					HttpResponse<String> publisherResponse = client.send(publisherRequest,

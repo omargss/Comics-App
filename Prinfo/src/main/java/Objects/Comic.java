@@ -12,7 +12,16 @@ public class Comic {
 	private String publisher;
 	private String description;
 	private long issue;
+	private long idVolume;
 
+	public long getIdVolume() {
+		return(this.idVolume);
+	}
+	
+	public void setIdVolume(long idVolume) {
+		this.idVolume=idVolume;
+	}
+	
 	public long getIssue() {
 		return(this.issue);
 	}
