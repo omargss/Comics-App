@@ -214,7 +214,7 @@ public class MainWindow {
 			loginPanel.setVisible(false);
 			registerPanel.setVisible(false);
 			likedPanel.setVisible(false);
-			StatePanel.updateResultTable();
+			StatePanel.updateResultTable("Read");
 			StatePanel.setVisible(true);
 			break;
 		default: // Clear
