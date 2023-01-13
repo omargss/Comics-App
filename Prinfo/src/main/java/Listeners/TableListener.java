@@ -11,6 +11,7 @@ import DisplayScreen.ComicSearchPanel;
 import DisplayScreen.DetailsCharacter;
 import DisplayScreen.DetailsComic;
 import DisplayScreen.DetailsPublisher;
+import DisplayScreen.LikedMenuPanel;
 import DisplayScreen.PublisherSearchPanel;
 import Objects.Comic;
 import Objects.Publisher;
@@ -35,6 +36,15 @@ public class TableListener extends MouseAdapter {
 			if (col == 4) {
 				//System.out.println("Détails comic");
 				Comic comic = ((ComicSearchPanel) searchPanel).getDataList().get(row);
+				details = new DetailsComic(comic);
+			}
+		} else if(searchPanel instanceof LikedMenuPanel){ // Bouton détail dans le menu liked
+			int row = ((LikedMenuPanel) searchPanel).getResultTable().rowAtPoint(e.getPoint());
+			int col = ((LikedMenuPanel) searchPanel).getResultTable().columnAtPoint(e.getPoint());
+			//System.out.println(row);
+			if (col == 4) {
+				//System.out.println("Détails comic");
+				Comic comic = ((LikedMenuPanel) searchPanel).getDataList().get(row);
 				details = new DetailsComic(comic);
 			}
 		} else if (searchPanel instanceof CharacterSearchPanel) {

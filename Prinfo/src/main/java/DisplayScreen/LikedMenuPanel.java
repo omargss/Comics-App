@@ -2,6 +2,7 @@ package DisplayScreen;
 
 import GetData.GetComicsData;
 import Listeners.TableListener;
+import Objects.Character;
 import Objects.Comic;
 import Objects.User;
 
@@ -28,9 +29,10 @@ public class LikedMenuPanel extends JPanel {
 
 	private JTable resultTable = new JTable();
 	private JScrollPane resultArea = new JScrollPane();
+	private List<Comic> dataList;
 
 	public void updateResultTable() {
-		List<Comic> dataList = new ArrayList<Comic>();
+		dataList = new ArrayList<Comic>();
 		dataList = getLikedComics();
 		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
 		String[][] list = new String[dataList.size()][5];
@@ -129,5 +131,8 @@ public class LikedMenuPanel extends JPanel {
 			}
 		}
 	}
-
+	
+	public List<Comic> getDataList() {
+		return dataList;
+	}
 }
