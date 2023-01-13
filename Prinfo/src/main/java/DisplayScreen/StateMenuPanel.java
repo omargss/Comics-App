@@ -1,6 +1,8 @@
 package DisplayScreen;
 
 import GetData.GetComicsData;
+import Listeners.ComicSearchListener;
+import Listeners.StateMenuChoiceListener;
 import Listeners.TableListener;
 import Objects.Character;
 import Objects.Comic;
@@ -31,9 +33,9 @@ public class StateMenuPanel extends JPanel {
 	private JScrollPane resultArea = new JScrollPane();
 	private List<Comic> dataList;
 
-	public void updateResultTable() {
+	public void updateResultTable(String filter) {
 		dataList = new ArrayList<Comic>();
-		dataList = getReadComics();
+		dataList = getReadComics(filter);
 		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
 		String[][] list = new String[dataList.size()][5];
 		for (int i = 0; i < dataList.size(); i++) {
@@ -61,7 +63,7 @@ public class StateMenuPanel extends JPanel {
 
 		this.add(resultArea, BorderLayout.CENTER);
 		this.validate();
-		
+
 		// add(new JScrollPane(resultTable));
 		//
 		// JScrollBar scrollBar = new JScrollBar();
@@ -69,9 +71,10 @@ public class StateMenuPanel extends JPanel {
 		// add(resultTable, BorderLayout.CENTER);
 	}
 
-	private List<Comic> getReadComics() {
+	private List<Comic> getReadComics(String filter) {
 		List<Comic> datalist = new ArrayList<Comic>();
-		List<Long> comicIdList = getIssues();
+		List<Long> comicIdList = new ArrayList<Long>();
+		comicIdList = getIssues(filter);
 		datalist = GetComicsData.getComicsDataByID(comicIdList);
 		return datalist;
 	}
@@ -91,9 +94,26 @@ public class StateMenuPanel extends JPanel {
 		this.resultArea.setVisible(false);
 		this.setLayout(new BorderLayout());
 		setBounds(150, 0, 1000, 600);
+
+		JPanel selectArea = new JPanel();
+		add(selectArea, BorderLayout.NORTH);
+
+		JButton readButton = new JButton("Read");
+		selectArea.add(readButton);
+
+		JButton InProgressButton = new JButton("In progress");
+		selectArea.add(InProgressButton);
+
+		JButton WantToReadButton = new JButton("Want to read");
+		selectArea.add(WantToReadButton);
+
+		StateMenuChoiceListener listener = new StateMenuChoiceListener(this);
+		readButton.addMouseListener(listener);
+		InProgressButton.addMouseListener(listener);
+		WantToReadButton.addMouseListener(listener);
 	}
-	
-	public static List<Long> getIssues() {
+
+	public static List<Long> getIssues(String filter) {
 		Connection connection = null;
 		try {
 			// Chargement du pilote SQLite
@@ -103,17 +123,18 @@ public class StateMenuPanel extends JPanel {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "SELECT * FROM account_comic_state WHERE Login = '" + User.getLogin() + "'";
+			String query = "SELECT * FROM account_comic_state WHERE Login = '" + User.getLogin() + "' AND State = '"
+					+ filter + "'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 
 			List<Long> ComicID = new ArrayList<Long>();
 
 			// Vérifier si l'utilisateur a été trouvé
-				while(resultSet.next()) {
-					ComicID.add(resultSet.getLong("ComicId"));
-				}
-				return ComicID;
+			while (resultSet.next()) {
+				ComicID.add(resultSet.getLong("ComicId"));
+			}
+			return ComicID;
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -131,7 +152,7 @@ public class StateMenuPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	public List<Comic> getDataList() {
 		return dataList;
 	}
