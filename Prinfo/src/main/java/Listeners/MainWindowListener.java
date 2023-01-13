@@ -53,6 +53,9 @@ public class MainWindowListener extends MouseAdapter {
 		if ((((JButton) e.getSource()).getText()).equals("Liked")) {
 			this.window.setDisplayedPanel(5);
 		}
+		if ((((JButton) e.getSource()).getText()).equals("State")) {
+			this.window.setDisplayedPanel(6);
+		}
 		
 	}
 

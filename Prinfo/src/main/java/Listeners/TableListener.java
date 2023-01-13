@@ -13,6 +13,7 @@ import DisplayScreen.DetailsComic;
 import DisplayScreen.DetailsPublisher;
 import DisplayScreen.LikedMenuPanel;
 import DisplayScreen.PublisherSearchPanel;
+import DisplayScreen.StateMenuPanel;
 import Objects.Comic;
 import Objects.Publisher;
 import Objects.Character;
@@ -47,7 +48,16 @@ public class TableListener extends MouseAdapter {
 				Comic comic = ((LikedMenuPanel) searchPanel).getDataList().get(row);
 				details = new DetailsComic(comic);
 			}
-		} else if (searchPanel instanceof CharacterSearchPanel) {
+		} else if(searchPanel instanceof StateMenuPanel){
+			int row = ((StateMenuPanel) searchPanel).getResultTable().rowAtPoint(e.getPoint());
+			int col = ((StateMenuPanel) searchPanel).getResultTable().columnAtPoint(e.getPoint());
+			//System.out.println(row);
+			if (col == 4) {
+				//System.out.println("Détails comic");
+				Comic comic = ((StateMenuPanel) searchPanel).getDataList().get(row);
+				details = new DetailsComic(comic);
+			}
+		}else  if (searchPanel instanceof CharacterSearchPanel) {
 			//System.out.println("Character");
 			int row = ((CharacterSearchPanel) searchPanel).getResultTable().rowAtPoint(e.getPoint());
 			int col = ((CharacterSearchPanel) searchPanel).getResultTable().columnAtPoint(e.getPoint());
