@@ -36,7 +36,7 @@ public class GetComicsData {
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=id,name,cover_date,image,volume,description&sort=" + sort + "&limit="
+				+ "&format=json&field_list=id,name,cover_date,image,volume,description,issue_number&sort=" + sort + "&limit="
 				+ limit;
 		String title_formatted = format(title); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
@@ -69,6 +69,10 @@ public class GetComicsData {
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
 					comic.setDescription((String) tempComic.get("description"));
 					comic.setIssue((long) tempComic.get("id"));
+					//System.out.println("Id comic : "+tempComic.get("id"));
+					comic.setIdVolume((long)volume.get("id"));
+					//System.out.println("Id volume : "+volume.get("id"));
+					comic.setIssueNumber((long)Long.parseLong((String) tempComic.get("issue_number")));
 
 					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey

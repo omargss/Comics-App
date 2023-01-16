@@ -21,6 +21,7 @@ public class FollowingListener extends MouseAdapter{
 		super();
 		this.details=detailsComic;
 		this.comic=comic;
+		//System.out.println(comic);
 	}
 	public void mouseClicked(MouseEvent e) {
 		if((((JButton) e.getSource()).getText()).equals("Previously in the volume")) {
