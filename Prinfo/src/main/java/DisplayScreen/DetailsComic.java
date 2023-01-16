@@ -62,8 +62,8 @@ public class DetailsComic extends JFrame {
 		// Création de l'image
 		try {
 			BufferedImage temp = ImageIO.read(new URL(this.imageURL));
-			frame.setSize(temp.getWidth() + 800, temp.getHeight() + 50);
-			this.image = temp.getScaledInstance(temp.getWidth(), temp.getHeight(), Image.SCALE_DEFAULT);
+			frame.setSize(1000, 700);
+			this.image = temp.getScaledInstance(400, 650, Image.SCALE_DEFAULT);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
