@@ -255,6 +255,7 @@ public class MainWindow {
 		publisherSearchButton.setVisible(false);
 		LikedMenuButton.setVisible(false);
 		StateMenuButton.setVisible(false);
+		signOutButton.setVisible(false);
 		setDisplayedPanel(-1);
 	}
 }
