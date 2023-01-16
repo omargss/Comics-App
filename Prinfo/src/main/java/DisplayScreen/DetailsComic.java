@@ -1,6 +1,8 @@
 package DisplayScreen;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 import Listeners.DetailsButtonLikeListener;
 import Listeners.DetailsButtonsListener;
@@ -38,14 +41,16 @@ public class DetailsComic extends JFrame {
 	Comic comic;
 	JButton btnLike;
 	public DetailsComic(Comic comic) {
-		System.out.println("premium"+User.isPremium());
+		System.out.println("premium "+User.isPremium());
 		/*
 		 * Contenu d'un comic : - volume
 		 */
 
 		// Définition de la fenetre à afficher
 		JFrame frame = new JFrame();
-		frame.getContentPane().setLayout(new BorderLayout());
+		BorderLayout frameBorder = new BorderLayout();
+		frameBorder.setHgap(10);
+		frame.getContentPane().setLayout(frameBorder);
 		frame.setVisible(true);
 
 		// Définition des panels pour afficher les infos
@@ -71,14 +76,22 @@ public class DetailsComic extends JFrame {
 		}
 
 		JLabel image = new JLabel(new ImageIcon(this.image));
+		image.setBorder(new EmptyBorder(0, 10, 0, 10));
 
 		// Création de la zone d'information
 		JPanel info = new JPanel();
-		info.setLayout(new BorderLayout());
+		BorderLayout panelBorder = new BorderLayout();
+		panelBorder.setVgap(10);
+		info.setBorder(new EmptyBorder(0,0,0,10));
+		info.setLayout(panelBorder);
 
 		JLabel name = new JLabel(this.name);
+		name.setFont(new Font("Verdana", Font.BOLD, 24));
+		name.setHorizontalAlignment(JLabel.CENTER);
 		JLabel date = new JLabel("Published in " + this.date);
+		date.setFont(new Font("Verdana", Font.PLAIN, 16));
 		JLabel publisher = new JLabel("Publisher : " + this.publisher);
+		publisher.setFont(new Font("Verdana", Font.PLAIN, 16));
 
 		// Création de la description
 		JPanel description = new JPanel();
@@ -92,7 +105,9 @@ public class DetailsComic extends JFrame {
 		description.add(scroll);
 
 		JPanel header = new JPanel();
-		header.setLayout(new BorderLayout());
+		BorderLayout headerBorder = new BorderLayout();
+		headerBorder.setVgap(10);
+		header.setLayout(headerBorder);
 		header.add(name, BorderLayout.NORTH);
 		header.add(date, BorderLayout.CENTER);
 		header.add(publisher, BorderLayout.SOUTH);
@@ -139,6 +154,7 @@ public class DetailsComic extends JFrame {
 		bottom.setLayout(new BorderLayout());
 		bottom.add(btn,BorderLayout.WEST);
 		bottom.add(buttonFollow,BorderLayout.EAST);
+		bottom.setBorder(new EmptyBorder(0, 0,10,10));
 		
 		
 		info.add(header, BorderLayout.NORTH);
