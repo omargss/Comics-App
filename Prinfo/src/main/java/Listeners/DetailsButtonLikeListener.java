@@ -12,18 +12,18 @@ import javax.swing.JButton;
 import DisplayScreen.DetailsComic;
 import Objects.User;
 
-public class DetailsButtonLikeListener extends MouseAdapter{
+public class DetailsButtonLikeListener extends MouseAdapter {
 	DetailsComic detailspanel = null;
-	
+
 	@SuppressWarnings("unused")
 	private DetailsButtonLikeListener() {
 	}
-	
+
 	public DetailsButtonLikeListener(DetailsComic details) {
 		super();
 		this.detailspanel = details;
 	}
-	
+
 	public void mouseClicked(MouseEvent e) {
 		if ((((JButton) e.getSource()).getText()).equals("Like")) {
 			System.out.println("like");
@@ -32,10 +32,10 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 			if ((((JButton) e.getSource()).getText()).equals("Liked")) {
 				System.out.println("dislike");
 				disLike();
-		}
+			}
 		}
 	}
-	
+
 	public void like() {
 		Connection connection = null;
 		try {
@@ -46,7 +46,8 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "INSERT INTO Account_comic_like VALUES ('"+ User.getLogin() + "','" + detailspanel.getIssue() + "')";
+			String query = "INSERT INTO Account_comic_like VALUES ('" + User.getLogin() + "','"
+					+ detailspanel.getIssue() + "')";
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 			detailspanel.setLikeBtn("Liked");
@@ -64,6 +65,7 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 			}
 		}
 	}
+
 	public void disLike() {
 		Connection connection = null;
 		try {
@@ -74,7 +76,8 @@ public class DetailsButtonLikeListener extends MouseAdapter{
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "DELETE FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "+detailspanel.getIssue();
+			String query = "DELETE FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "
+					+ detailspanel.getIssue();
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 			detailspanel.setLikeBtn("Like");

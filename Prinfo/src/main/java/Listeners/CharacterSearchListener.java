@@ -32,7 +32,7 @@ public class CharacterSearchListener extends MouseAdapter {
 			// Si on clique sur le bouton de recherche
 			if (b.getText().equals("Search")) {
 				String name = cspanel.getTextField().getText();
-				//GetCharactersData.getCharacters(name);
+				// GetCharactersData.getCharacters(name);
 				dataList = GetCharactersData.getCharacters(name);
 				this.cspanel.updateResultTable(dataList);
 			}

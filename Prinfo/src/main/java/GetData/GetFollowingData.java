@@ -8,7 +8,6 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -40,7 +39,7 @@ public class GetFollowingData {
 			// System.out.println(issues);
 			JSONArray results = (JSONArray) issues.get("issues");
 			// System.out.println(results);
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator();
 
 			// Permet de récupérer les résultats de la
@@ -63,14 +62,14 @@ public class GetFollowingData {
 		}
 
 		boolean test = false;
-		Comic comicReturn = new Comic();
+		//Comic comicReturn = new Comic();
 
 		for (int i = 0; i < list.size(); i++) {
 			long idIssue = list.get(i).getIssueNumber();
 			if (idIssue == issueNumber - 1) {
 				Comic comic = getComicFromId(list.get(i).getIssue());
 				test = true;
-				comicReturn = getComicFromId(list.get(i).getIssue());
+				//comicReturn = getComicFromId(list.get(i).getIssue());
 				return (comic);
 			}
 		}
@@ -79,7 +78,7 @@ public class GetFollowingData {
 		} else {
 			System.out.println("Comic non trouvé");
 		}
-		return (comicReturn);
+		return (null);
 
 	}
 
@@ -88,7 +87,7 @@ public class GetFollowingData {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/volume/4050-" + idVolume + "/?api_key=" + apiKey
 				+ "&format=json&field_list=issues";
-		//System.out.println(APIRequest);
+		// System.out.println(APIRequest);
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
 
@@ -99,7 +98,7 @@ public class GetFollowingData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONObject issues = (JSONObject) jsonObject.get("results");
 			JSONArray results = (JSONArray) issues.get("issues");
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator();
 
 			// Permet de récupérer les résultats de la
@@ -122,14 +121,14 @@ public class GetFollowingData {
 		}
 
 		boolean test = false;
-		Comic comicReturn = new Comic();
+		//Comic comicReturn = new Comic();
 
 		for (int i = 0; i < list.size(); i++) {
 			long idIssue = list.get(i).getIssueNumber();
 			if (idIssue == issueNumber + 1) {
 				Comic comic = getComicFromId(list.get(i).getIssue());
 				test = true;
-				comicReturn = getComicFromId(list.get(i).getIssue());
+				//comicReturn = getComicFromId(list.get(i).getIssue());
 				return (comic);
 			}
 		}
@@ -138,7 +137,7 @@ public class GetFollowingData {
 		} else {
 			System.out.println("Comic non trouvé");
 		}
-		return (comicReturn);
+		return (null);
 	}
 
 	public static Comic getComicFromId(long id) throws ParseException {
@@ -158,7 +157,7 @@ public class GetFollowingData {
 
 			comic.setDate((String) results.get("cover_date")); // On récupère la date
 			comic.setName((String) results.get("name")); // On récupère le nom
-			//System.out.println(results.get("name"));
+			// System.out.println(results.get("name"));
 			JSONObject image = (JSONObject) results.get("image"); // On récupère l'URL de l'image
 			comic.setImage((String) image.get("original_url"));
 			JSONObject volume = (JSONObject) results.get("volume"); // On récupère le volume
@@ -167,7 +166,7 @@ public class GetFollowingData {
 			comic.setIssue((long) results.get("id"));
 			comic.setIdVolume((long) volume.get("id"));
 			comic.setIssueNumber((long) Long.parseLong((String) results.get("issue_number")));
-			//System.out.println("Issue number : " + results.get("issue_number"));
+			// System.out.println("Issue number : " + results.get("issue_number"));
 
 			// Publisher subrequest
 			String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey

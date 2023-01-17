@@ -24,8 +24,9 @@ public class GetPublishersData {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/publishers/?api_key=" + apiKey
 				+ "&format=json&field_list=name,image,description&limit=null";
-		String publisher_formatted = format(name); // permet de formatter le mot afin qu'il soit compréhensible par l'API
-												// pour la recherche
+		String publisher_formatted = format(name); // permet de formatter le mot afin qu'il soit compréhensible par
+													// l'API
+													// pour la recherche
 		APIRequest += "&filter=name:" + publisher_formatted;
 		// System.out.println(APIRequest);
 
@@ -39,7 +40,7 @@ public class GetPublishersData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
 																		// requete auprès de l'API
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
 
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat

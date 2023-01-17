@@ -68,7 +68,7 @@ public class CharacterSearchPanel extends JPanel {
 	public List<Character> getDataList() {
 		return dataList;
 	}
-	
+
 	/**
 	 * Permet de mettre à jour la table des résultats
 	 * 

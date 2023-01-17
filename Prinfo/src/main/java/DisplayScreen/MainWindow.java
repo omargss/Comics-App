@@ -41,6 +41,7 @@ public class MainWindow {
 		window.setSize(new Dimension(width, height)); // dimension de la fenetre
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // permet de terminer le processus quand on quitte la
 																// fenetre java
+		window.setTitle("Comic Vine Project");
 		window.pack();
 		window.getContentPane().setLayout(null);
 
@@ -85,7 +86,7 @@ public class MainWindow {
 		LikedMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		LikedMenuButton.setBounds(10, 156, 130, 23);
 		LikedMenuButton.setVisible(false);
-		
+
 		StateMenuButton = new JButton("State"); // Bouton pour accéder à la page des
 		StateMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		StateMenuButton.setBounds(10, 206, 130, 23);
@@ -142,6 +143,11 @@ public class MainWindow {
 		window.getContentPane().add(loginPanel);
 		window.getContentPane().add(registerPanel);
 
+		// Ajout d'une icône à la fenêtre principale de l'application
+		URL iconUrl = getClass().getResource("../res/icon.png");
+		ImageIcon icon = new ImageIcon(iconUrl);
+		window.setIconImage(icon.getImage());
+
 	}
 
 	/**
@@ -151,79 +157,79 @@ public class MainWindow {
 	 */
 	public void setDisplayedPanel(int i) {
 		switch (i) {
-		case 0: // Recherche des comics
-			comicPanel.setVisible(true);
-			loginPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(false);
-			likedPanel.setVisible(false);
-			registerPanel.setVisible(false);
-			StatePanel.setVisible(false);
-			break;
-		case 1: // Recherche des perso
-			comicPanel.setVisible(false);
-			publPanel.setVisible(false);
-			loginPanel.setVisible(false);
-			likedPanel.setVisible(false);
-			registerPanel.setVisible(false);
-			charPanel.setVisible(true);
-			StatePanel.setVisible(false);
-			break;
-		case 2: // Login
-			comicPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(false);
-			loginPanel.setVisible(true);
-			registerPanel.setVisible(false);
-			likedPanel.setVisible(false);
-			StatePanel.setVisible(false);
-			break;
-		case 3: // Register
-			comicPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(false);
-			loginPanel.setVisible(false);
-			registerPanel.setVisible(true);
-			likedPanel.setVisible(false);
-			StatePanel.setVisible(false);
-			break;
-		case 4: // Recherche des publishers
-			comicPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(true);
-			loginPanel.setVisible(false);
-			registerPanel.setVisible(false);
-			likedPanel.setVisible(false);
-			StatePanel.setVisible(false);
-			break;
-		case 5: // Recherche des publishers
-			comicPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(false);
-			loginPanel.setVisible(false);
-			registerPanel.setVisible(false);
-			likedPanel.updateResultTable();
-			likedPanel.setVisible(true);
-			StatePanel.setVisible(false);
-			break;
-		case 6: // Recherche des publishers
-			comicPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(false);
-			loginPanel.setVisible(false);
-			registerPanel.setVisible(false);
-			likedPanel.setVisible(false);
-			StatePanel.updateResultTable("Read");
-			StatePanel.setVisible(true);
-			break;
-		default: // Clear
-			comicPanel.setVisible(false);
-			charPanel.setVisible(false);
-			publPanel.setVisible(false);
-			loginPanel.setVisible(false);
-			registerPanel.setVisible(false);
-			likedPanel.setVisible(false);
-			StatePanel.setVisible(false);
+			case 0: // Recherche des comics
+				comicPanel.setVisible(true);
+				loginPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(false);
+				likedPanel.setVisible(false);
+				registerPanel.setVisible(false);
+				StatePanel.setVisible(false);
+				break;
+			case 1: // Recherche des perso
+				comicPanel.setVisible(false);
+				publPanel.setVisible(false);
+				loginPanel.setVisible(false);
+				likedPanel.setVisible(false);
+				registerPanel.setVisible(false);
+				charPanel.setVisible(true);
+				StatePanel.setVisible(false);
+				break;
+			case 2: // Login
+				comicPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(false);
+				loginPanel.setVisible(true);
+				registerPanel.setVisible(false);
+				likedPanel.setVisible(false);
+				StatePanel.setVisible(false);
+				break;
+			case 3: // Register
+				comicPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(false);
+				loginPanel.setVisible(false);
+				registerPanel.setVisible(true);
+				likedPanel.setVisible(false);
+				StatePanel.setVisible(false);
+				break;
+			case 4: // Recherche des publishers
+				comicPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(true);
+				loginPanel.setVisible(false);
+				registerPanel.setVisible(false);
+				likedPanel.setVisible(false);
+				StatePanel.setVisible(false);
+				break;
+			case 5: // Recherche des publishers
+				comicPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(false);
+				loginPanel.setVisible(false);
+				registerPanel.setVisible(false);
+				likedPanel.updateResultTable();
+				likedPanel.setVisible(true);
+				StatePanel.setVisible(false);
+				break;
+			case 6: // Recherche des publishers
+				comicPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(false);
+				loginPanel.setVisible(false);
+				registerPanel.setVisible(false);
+				likedPanel.setVisible(false);
+				StatePanel.updateResultTable("Read");
+				StatePanel.setVisible(true);
+				break;
+			default: // Clear
+				comicPanel.setVisible(false);
+				charPanel.setVisible(false);
+				publPanel.setVisible(false);
+				loginPanel.setVisible(false);
+				registerPanel.setVisible(false);
+				likedPanel.setVisible(false);
+				StatePanel.setVisible(false);
 		}
 
 	}
@@ -241,7 +247,7 @@ public class MainWindow {
 		signOutButton.setVisible(true);
 		LikedMenuButton.setVisible(true);
 		StateMenuButton.setVisible(true);
-		}
+	}
 
 	public void signOut() {
 		User.setLogin(null);

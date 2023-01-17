@@ -9,26 +9,34 @@ import javax.swing.JTextField;
 import Listeners.LoginButtonListener;
 import Objects.User;
 
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class LoginPanel extends JPanel {
 	private JTextField loginTextField;
 	private JTextField passwordTextField;
 	private MainWindow mainWindow;
+
 	public String getLogin() {
 		return loginTextField.getText();
 	}
+
 	public String getPassword() {
 		return passwordTextField.getText();
 	}
+
 	public void setConnectionFailed() {
 		JOptionPane.showMessageDialog(null, "Connection failed");
 	}
+
 	public void setConnectionSuccessful() {
 		JOptionPane.showMessageDialog(null, "Connection successful");
 		mainWindow.setUser(User.getLogin(), User.isPremium());
 		mainWindow.setDisplayedPanel(-1);
 	}
+
 	/**
 	 * Create the panel.
 	 */
@@ -36,29 +44,35 @@ public class LoginPanel extends JPanel {
 		mainWindow = mainframe;
 		setBounds(150, 0, 1000, 600);
 		setLayout(null);
-		
+
+		URL iconUrl = getClass().getResource("../res/icon.png");
+		ImageIcon icon = new ImageIcon(iconUrl);
+		JLabel logo = new JLabel(icon);
+		logo.setBounds(360, 30, 300, 160);
+		add(logo);
+
 		JLabel loginLabel = new JLabel("Login");
 		loginLabel.setBounds(400, 200, 58, 30);
 		add(loginLabel);
-		
+
 		JLabel passwordLabel = new JLabel("Password");
 		passwordLabel.setBounds(400, 239, 58, 30);
 		add(passwordLabel);
-		
+
 		loginTextField = new JTextField();
 		loginTextField.setBounds(475, 205, 157, 20);
 		add(loginTextField);
 		loginTextField.setColumns(10);
-		
+
 		passwordTextField = new JPasswordField();
 		passwordTextField.setColumns(10);
 		passwordTextField.setBounds(475, 244, 157, 20);
 		add(passwordTextField);
-		
+
 		JButton submitButton = new JButton("Login");
 		submitButton.setBounds(475, 290, 89, 23);
 		add(submitButton);
-		
+
 		LoginButtonListener lbl = new LoginButtonListener(this);
 		submitButton.addMouseListener(lbl);
 	}

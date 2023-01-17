@@ -59,24 +59,24 @@ public class ComicSearchListener extends MouseAdapter {
 					}
 					String resultsNumber = this.cspanel.getDropItem();
 					switch (resultsNumber) {
-					case "All results":
-						limit = "null";
-						break;
-					case "5 items":
-						limit = "5";
-						break;
-					case "10 items":
-						limit = "10";
-						break;
-					case "25 items":
-						limit = "25";
-						break;
-					case "50 items":
-						limit = "50";
-						break;
-					case "100 items":
-						limit = "100";
-						break;
+						case "All results":
+							limit = "null";
+							break;
+						case "5 items":
+							limit = "5";
+							break;
+						case "10 items":
+							limit = "10";
+							break;
+						case "25 items":
+							limit = "25";
+							break;
+						case "50 items":
+							limit = "50";
+							break;
+						case "100 items":
+							limit = "100";
+							break;
 
 					}
 					System.out.println(sort);

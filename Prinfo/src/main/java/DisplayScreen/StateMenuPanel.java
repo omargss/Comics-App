@@ -96,30 +96,31 @@ public class StateMenuPanel extends JPanel {
 
 		JPanel selectArea = new JPanel();
 		add(selectArea, BorderLayout.NORTH);
-		
+
 		rdbtnRead = new JRadioButton("Read");
 		rdbtnRead.setSelected(true);
 		selectArea.add(rdbtnRead);
-		
+
 		rdbtnInProgress = new JRadioButton("In progress");
 		selectArea.add(rdbtnInProgress);
-		
+
 		rdbtnWantToRead = new JRadioButton("Want to read");
 		selectArea.add(rdbtnWantToRead);
 
-		//JButton readButton = new JButton("Read");
-		//selectArea.add(readButton);
+		// JButton readButton = new JButton("Read");
+		// selectArea.add(readButton);
 
-		//		JButton InProgressButton = new JButton("In progress");
-		//selectArea.add(InProgressButton);
+		// JButton InProgressButton = new JButton("In progress");
+		// selectArea.add(InProgressButton);
 
-		//JButton WantToReadButton = new JButton("Want to read");
-		//selectArea.add(WantToReadButton);
+		// JButton WantToReadButton = new JButton("Want to read");
+		// selectArea.add(WantToReadButton);
 
-		StateMenuChoiceListener listener = new StateMenuChoiceListener(this, rdbtnRead, rdbtnInProgress,rdbtnWantToRead);
-		//readButton.addMouseListener(listener);
-		//InProgressButton.addMouseListener(listener);
-		//WantToReadButton.addMouseListener(listener);
+		StateMenuChoiceListener listener = new StateMenuChoiceListener(this, rdbtnRead, rdbtnInProgress,
+				rdbtnWantToRead);
+		// readButton.addMouseListener(listener);
+		// InProgressButton.addMouseListener(listener);
+		// WantToReadButton.addMouseListener(listener);
 		rdbtnRead.addMouseListener(listener);
 		rdbtnInProgress.addMouseListener(listener);
 		rdbtnWantToRead.addMouseListener(listener);

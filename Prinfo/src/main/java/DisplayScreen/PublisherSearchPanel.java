@@ -32,7 +32,7 @@ public class PublisherSearchPanel extends JPanel {
 	public JTextField getTextField() {
 		return this.textField;
 	}
-	
+
 	public List<Publisher> getDataList() {
 		return dataList;
 	}

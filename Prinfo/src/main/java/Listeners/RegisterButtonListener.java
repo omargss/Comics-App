@@ -2,7 +2,6 @@ package Listeners;
 
 import DisplayScreen.*;
 
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -48,13 +47,14 @@ public class RegisterButtonListener extends MouseAdapter {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "INSERT INTO Accounts VALUES ('"+ rgpanel.getLogin() + "','" + rgpanel.getPassword() + "','0')";
+			String query = "INSERT INTO Accounts VALUES ('" + rgpanel.getLogin() + "','" + rgpanel.getPassword()
+					+ "','0')";
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 			rgpanel.setConnectionSuccessful();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			rgpanel.setConnectionFailed();
+			rgpanel.setUserAlreadyExists();
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 			rgpanel.setConnectionFailed();

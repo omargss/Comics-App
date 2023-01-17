@@ -33,8 +33,6 @@ public class ComicSearchPanel extends JPanel {
 	private JComboBox<String> dropItems;
 	private List<Comic> dataList;
 
-	
-
 	private JRadioButton radioTitle = new JRadioButton("Title", true); // Bouton radio pour la recherche par titre, par
 																		// défaut activé en premier pour la recherche
 	private JRadioButton radioAuthor = new JRadioButton("Author"); // Bouton radio pour la recherche par auteur
@@ -49,7 +47,7 @@ public class ComicSearchPanel extends JPanel {
 	public JTextField getTextField() {
 		return textField;
 	}
-	
+
 	public List<Comic> getDataList() {
 		return dataList;
 	}
@@ -62,17 +60,17 @@ public class ComicSearchPanel extends JPanel {
 	public String getDropDownSortFieldChoice() {
 		String choice;
 		switch (dropDownSortFieldChoice.getSelectedIndex()) {
-		case 1:
-			choice = "name";
-			break;
+			case 1:
+				choice = "name";
+				break;
 
-		case 2:
-			choice = "date";
-			break;
+			case 2:
+				choice = "date";
+				break;
 
-		default:
-			choice = "null";
-			break;
+			default:
+				choice = "null";
+				break;
 		}
 		return choice;
 	}
@@ -85,17 +83,17 @@ public class ComicSearchPanel extends JPanel {
 	public String getDropDownSortOrder() {
 		String choice;
 		switch (dropDownSortOrder.getSelectedIndex()) {
-		case 1:
-			choice = "asc";
-			break;
+			case 1:
+				choice = "asc";
+				break;
 
-		case 2:
-			choice = "desc";
-			break;
+			case 2:
+				choice = "desc";
+				break;
 
-		default:
-			choice = "null";
-			break;
+			default:
+				choice = "null";
+				break;
 		}
 		return choice;
 	}
@@ -163,14 +161,13 @@ public class ComicSearchPanel extends JPanel {
 		columnModel.getColumn(3).setWidth(150);
 
 		resultTable.setFillsViewportHeight(true);
-
 		this.remove(resultArea);
 		this.resultArea = new JScrollPane(resultTable);
 		this.resultArea.setVisible(true);
 
 		this.add(resultArea, BorderLayout.CENTER);
 		this.validate();
-		
+
 		// add(new JScrollPane(resultTable));
 		//
 		// JScrollBar scrollBar = new JScrollBar();
@@ -281,7 +278,7 @@ public class ComicSearchPanel extends JPanel {
 		search.addMouseListener(csl);
 		ComicSearchKeyListener cskl = new ComicSearchKeyListener(this);
 		textField.addKeyListener(cskl);
-		
+
 	}
 
 }

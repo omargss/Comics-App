@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -39,8 +40,9 @@ public class DetailsComic extends JFrame {
 	String description = "null à plus tard";
 	Comic comic;
 	JButton btnLike;
+	
 	public DetailsComic(Comic comic) {
-		System.out.println("premium "+User.isPremium());
+		System.out.println("premium " + User.isPremium());
 		/*
 		 * Contenu d'un comic : - volume
 		 */
@@ -56,7 +58,7 @@ public class DetailsComic extends JFrame {
 		// JPanel window = new JPanel(new BorderLayout());
 
 		// Construction des informations
-		this.comic=comic;
+		this.comic = comic;
 		this.name = comic.getName();
 		this.imageURL = comic.getImage();
 		this.date = comic.getDate();
@@ -81,7 +83,7 @@ public class DetailsComic extends JFrame {
 		JPanel info = new JPanel();
 		BorderLayout panelBorder = new BorderLayout();
 		panelBorder.setVgap(10);
-		info.setBorder(new EmptyBorder(0,0,0,10));
+		info.setBorder(new EmptyBorder(0, 0, 0, 10));
 		info.setLayout(panelBorder);
 
 		JLabel name = new JLabel(this.name);
@@ -110,26 +112,26 @@ public class DetailsComic extends JFrame {
 		header.add(name, BorderLayout.NORTH);
 		header.add(date, BorderLayout.CENTER);
 		header.add(publisher, BorderLayout.SOUTH);
-		
+
 		// Boutons
-			// Création des boutons
+		// Création des boutons
 		JButton btnRead = new JButton("Read");
 		JButton btnWantToRead = new JButton("Want to read");
 		JButton btnInProgress = new JButton("In progress");
 		btnLike = new JButton("Like");
-			// Création des listeners
+		// Création des listeners
 		DetailsButtonsListener mouselistener = new DetailsButtonsListener(this);
 		DetailsButtonLikeListener likelistener = new DetailsButtonLikeListener(this);
-			//Ajout des listeners
+		// Ajout des listeners
 		btnRead.addMouseListener(mouselistener);
 		btnWantToRead.addMouseListener(mouselistener);
 		btnInProgress.addMouseListener(mouselistener);
 		btnLike.addMouseListener(likelistener);
-		
+
 		JPanel btn = new JPanel();
-		
-		if(User.isPremium()) {
-			if(checkIfLiked()) {
+
+		if (User.isPremium()) {
+			if (checkIfLiked()) {
 				btnLike.setText("Liked");
 			}
 			btn.add(btnRead);
@@ -137,39 +139,40 @@ public class DetailsComic extends JFrame {
 			btn.add(btnInProgress);
 			btn.add(btnLike);
 		}
-		
 
 		JPanel buttonFollow = new JPanel();
 		buttonFollow.setLayout(new BorderLayout());
-		FollowingListener fl =new FollowingListener(this,this.comic);
+		FollowingListener fl = new FollowingListener(this, this.comic);
 		JButton next = new JButton("Next in the volume");
 		JButton previous = new JButton("Previously in the volume");
 		next.addMouseListener(fl);
 		previous.addMouseListener(fl);
-		buttonFollow.add(next,BorderLayout.NORTH);
-		buttonFollow.add(previous,BorderLayout.SOUTH);
-		
+		buttonFollow.add(next, BorderLayout.NORTH);
+		buttonFollow.add(previous, BorderLayout.SOUTH);
+
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new BorderLayout());
-		bottom.add(btn,BorderLayout.WEST);
-		bottom.add(buttonFollow,BorderLayout.EAST);
-		bottom.setBorder(new EmptyBorder(0, 0,10,10));
-		
-		
+		bottom.add(btn, BorderLayout.WEST);
+		bottom.add(buttonFollow, BorderLayout.EAST);
+		bottom.setBorder(new EmptyBorder(0, 0, 10, 10));
+
 		info.add(header, BorderLayout.NORTH);
 		info.add(description, BorderLayout.CENTER);
-		info.add(bottom,BorderLayout.SOUTH);
+		info.add(bottom, BorderLayout.SOUTH);
 
 		frame.getContentPane().add(image, BorderLayout.WEST);
 		frame.getContentPane().add(info, BorderLayout.CENTER);
 
 	}
+
 	public void setLikeBtn(String like) {
 		btnLike.setText(like);
 	}
+
 	public long getIssue() {
 		return comic.getIssue();
 	}
+
 	public boolean checkIfLiked() {
 		Connection connection = null;
 		try {
@@ -180,7 +183,8 @@ public class DetailsComic extends JFrame {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "SELECT * FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "+this.issue;
+			String query = "SELECT * FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "
+					+ this.issue;
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			if (resultSet.next()) {

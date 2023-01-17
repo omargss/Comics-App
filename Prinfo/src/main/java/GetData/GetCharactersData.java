@@ -28,7 +28,7 @@ public class GetCharactersData {
 		String title_formatted = format(name); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
 		APIRequest += "&filter=name:" + title_formatted;
-		//System.out.println(APIRequest);
+		// System.out.println(APIRequest);
 
 		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(APIRequest)).build(); // Création de la requete
 		HttpResponse<String> response;
@@ -40,14 +40,14 @@ public class GetCharactersData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
 																		// requete auprès de l'API
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
 
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
 				try {
 					// On récupère la valeur à la pos de l'iterator
 					JSONObject tempCharacter = iterator.next();
-					//System.out.println(tempCharacter);
+					// System.out.println(tempCharacter);
 					JSONObject tempPublisherCharacter = (JSONObject) tempCharacter.get("publisher");
 					// System.out.println(tempPublisherCharacter);
 					JSONObject tempImageCharacter = (JSONObject) tempCharacter.get("image");
@@ -97,7 +97,7 @@ public class GetCharactersData {
 	public static String format(String text) {
 		String textFormatted = text.replace("%", "%25").replace("'", "%27").replace("?", "%3F")
 				.replace("!", "%21").replace(":", "%3A").replace(",", "%2C").replace("&", "%26").replace(" ", "+")
-				.replace("@","%60").replace("#","%23").replace("/","%2F");
+				.replace("@", "%60").replace("#", "%23").replace("/", "%2F");
 		return (textFormatted);
 	}
 }
