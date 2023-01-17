@@ -10,7 +10,6 @@ import Listeners.LoginButtonListener;
 import Objects.User;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 public class LoginPanel extends JPanel {
 	private JTextField loginTextField;

@@ -13,7 +13,6 @@ import javax.swing.table.TableColumnModel;
 import Listeners.PublisherSearchKeyListener;
 import Listeners.PublisherSearchListener;
 import Listeners.TableListener;
-import Objects.Comic;
 import Objects.Publisher;
 
 public class PublisherSearchPanel extends JPanel {

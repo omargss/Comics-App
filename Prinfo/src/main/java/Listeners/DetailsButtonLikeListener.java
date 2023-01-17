@@ -11,7 +11,6 @@ import javax.swing.JButton;
 
 import DisplayScreen.DetailsComic;
 import Objects.User;
-import DisplayScreen.MainWindow;
 
 public class DetailsButtonLikeListener extends MouseAdapter{
 	DetailsComic detailspanel = null;

@@ -1,7 +1,6 @@
 package DisplayScreen;
 
 import Objects.Character;
-import Objects.Comic;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;

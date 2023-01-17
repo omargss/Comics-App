@@ -1,13 +1,8 @@
 package Listeners;
 
 import DisplayScreen.*;
-import GetData.GetComicsData;
-import Objects.Comic;
-
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.*;
 

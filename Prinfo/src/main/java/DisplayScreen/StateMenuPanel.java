@@ -1,10 +1,8 @@
 package DisplayScreen;
 
 import GetData.GetComicsData;
-import Listeners.ComicSearchListener;
 import Listeners.StateMenuChoiceListener;
 import Listeners.TableListener;
-import Objects.Character;
 import Objects.Comic;
 import Objects.User;
 
@@ -12,13 +10,11 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -10,7 +10,6 @@ import javax.swing.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -24,7 +23,7 @@ public class RegisterButtonListener extends MouseAdapter {
 	 */
 	public RegisterButtonListener(RegisterPanel rgp) {
 		super();
-		this.rgpanel = rgp;
+		RegisterButtonListener.rgpanel = rgp;
 	}
 
 	public void mouseClicked(MouseEvent e) {

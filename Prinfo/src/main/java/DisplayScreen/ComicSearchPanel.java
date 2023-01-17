@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -282,7 +281,6 @@ public class ComicSearchPanel extends JPanel {
 		search.addMouseListener(csl);
 		ComicSearchKeyListener cskl = new ComicSearchKeyListener(this);
 		textField.addKeyListener(cskl);
-		TableListener tb = new TableListener(this);
 		
 	}
 

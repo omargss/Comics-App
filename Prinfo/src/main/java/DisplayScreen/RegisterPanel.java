@@ -6,11 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import Listeners.LoginButtonListener;
 import Listeners.RegisterButtonListener;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 
 public class RegisterPanel extends JPanel {
 	private JTextField loginTextField;
