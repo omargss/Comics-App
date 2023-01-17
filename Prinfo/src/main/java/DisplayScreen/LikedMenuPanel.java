@@ -2,7 +2,6 @@ package DisplayScreen;
 
 import GetData.GetComicsData;
 import Listeners.TableListener;
-import Objects.Character;
 import Objects.Comic;
 import Objects.User;
 
@@ -10,13 +9,11 @@ import javax.swing.*;
 import javax.swing.table.TableColumnModel;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +58,7 @@ public class LikedMenuPanel extends JPanel {
 
 		this.add(resultArea, BorderLayout.CENTER);
 		this.validate();
-		
+
 		// add(new JScrollPane(resultTable));
 		//
 		// JScrollBar scrollBar = new JScrollBar();
@@ -92,7 +89,7 @@ public class LikedMenuPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		setBounds(150, 0, 1000, 600);
 	}
-	
+
 	public static List<Long> getIssues() {
 		Connection connection = null;
 		try {
@@ -110,10 +107,10 @@ public class LikedMenuPanel extends JPanel {
 			List<Long> ComicID = new ArrayList<Long>();
 
 			// Vérifier si l'utilisateur a été trouvé
-				while(resultSet.next()) {
-					ComicID.add(resultSet.getLong("ComicId"));
-				}
-				return ComicID;
+			while (resultSet.next()) {
+				ComicID.add(resultSet.getLong("ComicId"));
+			}
+			return ComicID;
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -131,7 +128,7 @@ public class LikedMenuPanel extends JPanel {
 			}
 		}
 	}
-	
+
 	public List<Comic> getDataList() {
 		return dataList;
 	}

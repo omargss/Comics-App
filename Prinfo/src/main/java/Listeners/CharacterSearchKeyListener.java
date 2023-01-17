@@ -8,7 +8,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
-
 public class CharacterSearchKeyListener extends KeyAdapter {
 
 	CharacterSearchPanel cspanel = null;

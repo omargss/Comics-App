@@ -1,7 +1,6 @@
 package DisplayScreen;
 
 import Objects.Character;
-import Objects.Comic;
 
 import javax.swing.*;
 import javax.swing.table.TableColumnModel;
@@ -69,7 +68,7 @@ public class CharacterSearchPanel extends JPanel {
 	public List<Character> getDataList() {
 		return dataList;
 	}
-	
+
 	/**
 	 * Permet de mettre à jour la table des résultats
 	 * 

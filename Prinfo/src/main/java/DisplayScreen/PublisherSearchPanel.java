@@ -13,7 +13,6 @@ import javax.swing.table.TableColumnModel;
 import Listeners.PublisherSearchKeyListener;
 import Listeners.PublisherSearchListener;
 import Listeners.TableListener;
-import Objects.Comic;
 import Objects.Publisher;
 
 public class PublisherSearchPanel extends JPanel {
@@ -33,7 +32,7 @@ public class PublisherSearchPanel extends JPanel {
 	public JTextField getTextField() {
 		return this.textField;
 	}
-	
+
 	public List<Publisher> getDataList() {
 		return dataList;
 	}
