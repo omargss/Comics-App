@@ -7,6 +7,7 @@ import java.awt.Color;
 import Listeners.*;
 import Objects.User;
 import java.awt.Font;
+import java.net.URL;
 
 public class MainWindow {
 	JFrame window = null;
