@@ -1,8 +1,11 @@
 package Listeners;
 
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+
+
 
 import DisplayScreen.ComicSearchPanel;
 import GetData.GetComicsData;
@@ -30,50 +33,60 @@ public class ComicSearchKeyListener extends KeyAdapter {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) { // Si on appuye sur la touche entrée
 			List<Comic> dataList = null;
 			String search = cspanel.getTextField().getText();
-			String yearMin = cspanel.getDropDownYearsMin();
-			String yearMax = cspanel.getDropDownYearsMax();
-			String limit = "";
+			if (search.equals("")) {
+				System.out.println("enter smtg");
+				return;
+			} else {
 
-			String sort = cspanel.getDropDownSortFieldChoice() + ":" + cspanel.getDropDownSortOrder(); // ex : title:asc
+				String yearMin = cspanel.getDropDownYearsMin();
+				String yearMax = cspanel.getDropDownYearsMax();
+				String limit = "";
 
-			System.out.println(sort);
-			
-			String resultsNumber = this.cspanel.getDropItem();
-			
-			switch (resultsNumber) {
-			case "All results":
-				limit = "null";
-				break;
-			case "5 items":
-				limit = "5";
-				break;
-			case "10 items":
-				limit = "10";
-				break;
-			case "25 items":
-				limit = "25";
-				break;
-			case "50 items":
-				limit = "50";
-				break;
-			case "100 items":
-				limit = "100";
-				break;
+				String sort = cspanel.getDropDownSortFieldChoice() + ":" + cspanel.getDropDownSortOrder(); // ex :
+																											// title:asc
+
+				System.out.println(sort);
+
+				String resultsNumber = this.cspanel.getDropItem();
+
+				switch (resultsNumber) {
+				case "All results":
+					limit = "null";
+					break;
+				case "5 items":
+					limit = "5";
+					break;
+				case "10 items":
+					limit = "10";
+					break;
+				case "25 items":
+					limit = "25";
+					break;
+				case "50 items":
+					limit = "50";
+					break;
+				case "100 items":
+					limit = "100";
+					break;
+				}
+
+				String titleOrPublisherChoice = cspanel.getRadioValue(); // ce string renvoie "Title" ou "Publisher"
+																			// selon le choix
+				switch (titleOrPublisherChoice) {
+				case "Title":
+					dataList = GetComicsData.getComicsDataByName(search, null, limit, yearMin, yearMax);
+					break;
+				case "Publisher":
+					dataList = GetComicsData.getComicsDataByPublisher(search, null, limit, yearMin, yearMax);
+					break;
+				/*
+				 * case "Author": dataList = GetComicsData.getComicsDataByAuthor(search, null,
+				 * null, yearMin, yearMax); break;
+				 */
+				}
+				cspanel.updateResultTable(dataList); // On met à jour
 			}
-			
-			String titleOrPublisherChoice = cspanel.getRadioValue(); // ce string renvoie "Title" ou "Publisher" selon le choix
-			switch(titleOrPublisherChoice) {
-			case "Title":
-				dataList = GetComicsData.getComicsDataByName(search, null, limit, yearMin, yearMax);
-				break;
-			case "Publisher":
-				dataList = GetComicsData.getComicsDataByPublisher(search, null, limit, yearMin, yearMax);
-				break;
-			/*case "Author":
-				dataList = GetComicsData.getComicsDataByAuthor(search, null, null, yearMin, yearMax);
-				break;*/
-			}
-			cspanel.updateResultTable(dataList); // On met à jour
+
 		}
 	}
 }
