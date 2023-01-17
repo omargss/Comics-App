@@ -40,6 +40,9 @@ public class DetailsComic extends JFrame {
 	String description = "null à plus tard";
 	Comic comic;
 	JButton btnLike;
+	JButton btnWantToRead;
+	JButton btnRead;
+	JButton btnInProgress;
 	public DetailsComic(Comic comic) {
 		System.out.println("premium "+User.isPremium());
 		/*
@@ -114,9 +117,9 @@ public class DetailsComic extends JFrame {
 		
 		// Boutons
 			// Création des boutons
-		JButton btnRead = new JButton("Read");
-		JButton btnWantToRead = new JButton("Want to read");
-		JButton btnInProgress = new JButton("In progress");
+		btnRead = new JButton("Read");
+		btnWantToRead = new JButton("Want to read");
+		btnInProgress = new JButton("In progress");
 		btnLike = new JButton("Like");
 			// Création des listeners
 		DetailsButtonsListener mouselistener = new DetailsButtonsListener(this);
@@ -165,9 +168,22 @@ public class DetailsComic extends JFrame {
 		frame.getContentPane().add(info, BorderLayout.CENTER);
 
 	}
-	public void setLikeBtn(String like) {
-		btnLike.setText(like);
+	public void setLikeBtn(String str) {
+		btnLike.setText(str);
 	}
+
+	public void setbtnRead(String str) {
+		btnRead.setText(str);
+	}
+
+	public void setbtnWantToRead(String str) {
+		btnWantToRead.setText(str);
+	}
+
+	public void setbtnInProgress(String str) {
+		btnInProgress.setText(str);
+	}
+	
 	public long getIssue() {
 		return comic.getIssue();
 	}

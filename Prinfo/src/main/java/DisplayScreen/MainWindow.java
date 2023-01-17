@@ -29,7 +29,7 @@ public class MainWindow {
 	JButton registerButton;
 	JButton signOutButton;
 	JButton LikedMenuButton;
-	JButton StateMenuButton;
+	JButton LibraryMenuButton;
 
 	/**
 	 * Constructeur de la classe
@@ -87,10 +87,10 @@ public class MainWindow {
 		LikedMenuButton.setBounds(10, 156, 130, 23);
 		LikedMenuButton.setVisible(false);
 		
-		StateMenuButton = new JButton("State"); // Bouton pour accéder à la page des
-		StateMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		StateMenuButton.setBounds(10, 206, 130, 23);
-		StateMenuButton.setVisible(false);
+		LibraryMenuButton = new JButton("Library"); // Bouton pour accéder à la page des
+		LibraryMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		LibraryMenuButton.setBounds(10, 206, 130, 23);
+		LibraryMenuButton.setVisible(false);
 
 		// Ajout des boutons de navigation au panel principal
 		panel.add(comicSearchButton); // ajout du bouton au panel
@@ -100,7 +100,7 @@ public class MainWindow {
 		panel.add(registerButton); // ajout du bouton panel
 		panel.add(signOutButton); // ajout du bouton au panel
 		panel.add(LikedMenuButton); // ajout du bouton menu
-		panel.add(StateMenuButton); // ajout du boutton state
+		panel.add(LibraryMenuButton); // ajout du boutton state
 
 		userLabel = new JLabel("");
 		userLabel.setEnabled(false);
@@ -117,7 +117,7 @@ public class MainWindow {
 		registerButton.addMouseListener(mouselistener);
 		signOutButton.addMouseListener(mouselistener);
 		LikedMenuButton.addMouseListener(mouselistener);
-		StateMenuButton.addMouseListener(mouselistener);
+		LibraryMenuButton.addMouseListener(mouselistener);
 
 		// Création des panels de recherche
 		comicPanel = new ComicSearchPanel();
@@ -241,7 +241,7 @@ public class MainWindow {
 		publisherSearchButton.setVisible(true);
 		signOutButton.setVisible(true);
 		LikedMenuButton.setVisible(true);
-		StateMenuButton.setVisible(true);
+		LibraryMenuButton.setVisible(true);
 		}
 
 	public void signOut() {
@@ -254,7 +254,7 @@ public class MainWindow {
 		characterSearchButton.setVisible(false);
 		publisherSearchButton.setVisible(false);
 		LikedMenuButton.setVisible(false);
-		StateMenuButton.setVisible(false);
+		LibraryMenuButton.setVisible(false);
 		signOutButton.setVisible(false);
 		setDisplayedPanel(-1);
 	}
