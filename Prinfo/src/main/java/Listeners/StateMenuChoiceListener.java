@@ -1,7 +1,6 @@
 package Listeners;
 
 import DisplayScreen.*;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
