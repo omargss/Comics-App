@@ -62,14 +62,14 @@ public class GetFollowingData {
 		}
 
 		boolean test = false;
-		Comic comicReturn = new Comic();
+		//Comic comicReturn = new Comic();
 
 		for (int i = 0; i < list.size(); i++) {
 			long idIssue = list.get(i).getIssueNumber();
 			if (idIssue == issueNumber - 1) {
 				Comic comic = getComicFromId(list.get(i).getIssue());
 				test = true;
-				comicReturn = getComicFromId(list.get(i).getIssue());
+				//comicReturn = getComicFromId(list.get(i).getIssue());
 				return (comic);
 			}
 		}
@@ -78,7 +78,7 @@ public class GetFollowingData {
 		} else {
 			System.out.println("Comic non trouvé");
 		}
-		return (comicReturn);
+		return (null);
 
 	}
 
@@ -121,14 +121,14 @@ public class GetFollowingData {
 		}
 
 		boolean test = false;
-		Comic comicReturn = new Comic();
+		//Comic comicReturn = new Comic();
 
 		for (int i = 0; i < list.size(); i++) {
 			long idIssue = list.get(i).getIssueNumber();
 			if (idIssue == issueNumber + 1) {
 				Comic comic = getComicFromId(list.get(i).getIssue());
 				test = true;
-				comicReturn = getComicFromId(list.get(i).getIssue());
+				//comicReturn = getComicFromId(list.get(i).getIssue());
 				return (comic);
 			}
 		}
@@ -137,7 +137,7 @@ public class GetFollowingData {
 		} else {
 			System.out.println("Comic non trouvé");
 		}
-		return (comicReturn);
+		return (null);
 	}
 
 	public static Comic getComicFromId(long id) throws ParseException {

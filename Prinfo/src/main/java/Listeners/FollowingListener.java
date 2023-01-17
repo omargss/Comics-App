@@ -4,6 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import org.json.simple.parser.ParseException;
 
@@ -22,7 +24,10 @@ public class FollowingListener extends MouseAdapter {
 		this.comic = comic;
 		// System.out.println(comic);
 	}
-
+	
+	public static void noComicFound() {
+		JOptionPane.showMessageDialog(null, "no comic found");
+	}
 	public void mouseClicked(MouseEvent e) {
 		if ((((JButton) e.getSource()).getText()).equals("Previously in the volume")) {
 			try {
@@ -37,6 +42,12 @@ public class FollowingListener extends MouseAdapter {
 				e1.printStackTrace();
 			}
 		}
-		details = new DetailsComic(comic);
+		if(comic == null) {
+			noComicFound();
+		}
+		else {
+			details = new DetailsComic(comic);
+		}
+		
 	}
 }

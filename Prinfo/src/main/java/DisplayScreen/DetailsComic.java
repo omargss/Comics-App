@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -39,7 +40,7 @@ public class DetailsComic extends JFrame {
 	String description = "null à plus tard";
 	Comic comic;
 	JButton btnLike;
-
+	
 	public DetailsComic(Comic comic) {
 		System.out.println("premium " + User.isPremium());
 		/*
