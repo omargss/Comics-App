@@ -24,7 +24,8 @@ public class LoginButtonListener extends MouseAdapter {
 	 */
 	public LoginButtonListener(LoginPanel lgp) {
 		super();
-		this.lgpanel = lgp;
+		LoginButtonListener.lgpanel = lgp; // The static field LoginButtonListener.lgpanel should be accessed in a
+											// static way
 	}
 
 	public void mouseClicked(MouseEvent e) {

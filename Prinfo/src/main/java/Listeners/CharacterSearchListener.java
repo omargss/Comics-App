@@ -4,7 +4,6 @@ import DisplayScreen.*;
 import GetData.GetCharactersData;
 import Objects.Character;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -33,7 +32,7 @@ public class CharacterSearchListener extends MouseAdapter {
 			// Si on clique sur le bouton de recherche
 			if (b.getText().equals("Search")) {
 				String name = cspanel.getTextField().getText();
-				//GetCharactersData.getCharacters(name);
+				// GetCharactersData.getCharacters(name);
 				dataList = GetCharactersData.getCharacters(name);
 				this.cspanel.updateResultTable(dataList);
 			}

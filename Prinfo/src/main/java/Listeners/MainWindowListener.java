@@ -26,23 +26,23 @@ public class MainWindowListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent e) {
 		if ((((JButton) e.getSource()).getText()).equals("Comic search")) {
 			this.window.setDisplayedPanel(0);
-			//System.out.println("Mode 0");
-			//System.out.println("Affichage de la recherche par comic");
+			// System.out.println("Mode 0");
+			// System.out.println("Affichage de la recherche par comic");
 		}
 		if ((((JButton) e.getSource()).getText()).equals("Character search")) {
 			this.window.setDisplayedPanel(1);
-			//System.out.println("Mode 0");
-			//System.out.println("Affichage de la recherche par personnage");
+			// System.out.println("Mode 0");
+			// System.out.println("Affichage de la recherche par personnage");
 		}
 		if ((((JButton) e.getSource()).getText()).equals("Login")) {
 			this.window.setDisplayedPanel(2);
-			//System.out.println("Mode 2");
-			//System.out.println("Affichage de la page de connexion");
+			// System.out.println("Mode 2");
+			// System.out.println("Affichage de la page de connexion");
 		}
 		if ((((JButton) e.getSource()).getText()).equals("Register")) {
 			this.window.setDisplayedPanel(3);
 			// System.out.println("Mode 3");
-			//System.out.println("Affichage de la page d'enregistrement");
+			// System.out.println("Affichage de la page d'enregistrement");
 		}
 		if ((((JButton) e.getSource()).getText()).equals("Sign out")) {
 			this.window.signOut();
@@ -56,7 +56,7 @@ public class MainWindowListener extends MouseAdapter {
 		if ((((JButton) e.getSource()).getText()).equals("State")) {
 			this.window.setDisplayedPanel(6);
 		}
-		
+
 	}
 
 }

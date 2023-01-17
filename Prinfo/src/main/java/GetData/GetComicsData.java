@@ -12,8 +12,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import Listeners.ComicSearchKeyListener;
-
 public class GetComicsData {
 	private static String apiKey = "f6929d31c63612dd656e42295cc122010ac74c1c";
 
@@ -36,7 +34,8 @@ public class GetComicsData {
 			String yearMax) {
 		HttpClient client = HttpClient.newHttpClient();
 		String APIRequest = "https://comicvine.gamespot.com/api/issues/?api_key=" + apiKey
-				+ "&format=json&field_list=id,name,cover_date,image,volume,description,issue_number&sort=" + sort + "&limit="
+				+ "&format=json&field_list=id,name,cover_date,image,volume,description,issue_number&sort=" + sort
+				+ "&limit="
 				+ limit;
 		String title_formatted = format(title); // permet de formatter le mot afin qu'il soit compréhensible par l'API
 												// pour la recherche
@@ -53,7 +52,7 @@ public class GetComicsData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
 																		// requete auprès de l'API
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
 
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
@@ -62,17 +61,17 @@ public class GetComicsData {
 					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
 					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
 					comic.setName((String) tempComic.get("name")); // On récupère le nom
-					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic					// Publisher subrequest
+					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic // Publisher subrequest
 					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume
 					comic.setVolume((String) volume.get("name")); // On récupère le nom du volume
 					comic.setDescription((String) tempComic.get("description"));
 					comic.setIssue((long) tempComic.get("id"));
-					//System.out.println("Id comic : "+tempComic.get("id"));
-					comic.setIdVolume((long)volume.get("id"));
-					//System.out.println("Id volume : "+volume.get("id"));
-					comic.setIssueNumber((long)Long.parseLong((String) tempComic.get("issue_number")));
+					// System.out.println("Id comic : "+tempComic.get("id"));
+					comic.setIdVolume((long) volume.get("id"));
+					// System.out.println("Id volume : "+volume.get("id"));
+					comic.setIssueNumber((long) Long.parseLong((String) tempComic.get("issue_number")));
 
 					// Publisher subrequest
 					String APIPublisherRequest = "https://comicvine.gamespot.com/api/volumes/?api_key=" + apiKey
@@ -143,7 +142,7 @@ public class GetComicsData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
 																		// requete auprès de l'API
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
 
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
@@ -178,7 +177,7 @@ public class GetComicsData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
 																		// requete auprès de l'API
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
 			if (limit == "null") {
 				limit = "1000";
@@ -190,7 +189,7 @@ public class GetComicsData {
 					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
 					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
 					comic.setName((String) tempComic.get("name")); // On récupère le nom
-					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic					
+					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic
 					// Publisher subrequest
 					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
 					comic.setImage((String) image.get("original_url"));
@@ -235,7 +234,7 @@ public class GetComicsData {
 
 	public static List<Comic> getComicsDataByID(List<Long> ComicIDlist) {
 		String comicsIDs = "";
-		for(int i = 0;i<ComicIDlist.size();i++) {
+		for (int i = 0; i < ComicIDlist.size(); i++) {
 			comicsIDs = comicsIDs + ComicIDlist.get(i) + "%7C";
 		}
 		System.out.println(comicsIDs);
@@ -254,7 +253,7 @@ public class GetComicsData {
 			JSONObject jsonObject = (JSONObject) parser.parse(response.body());
 			JSONArray results = (JSONArray) jsonObject.get("results"); // Permet de récupérer les résultats de la
 																		// requete auprès de l'API
-
+			@SuppressWarnings("unchecked") // Using legacy API
 			Iterator<JSONObject> iterator = results.iterator(); // Création d'un itérateur pour parcourir le JSON
 
 			while (iterator.hasNext()) { // Tant qu'on trouve un résultat
@@ -263,7 +262,7 @@ public class GetComicsData {
 					JSONObject tempComic = iterator.next(); // Récupération du contenu de l'iterator
 					comic.setDate((String) tempComic.get("cover_date")); // On récupère la date
 					comic.setName((String) tempComic.get("name")); // On récupère le nom
-					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic					// Publisher subrequest
+					comic.setIssue((long) tempComic.get("id")); // On récupère l'id du comic // Publisher subrequest
 					JSONObject image = (JSONObject) tempComic.get("image"); // On récupère l'URL de l'image
 					comic.setImage((String) image.get("original_url"));
 					JSONObject volume = (JSONObject) tempComic.get("volume"); // On récupère le volume
@@ -300,7 +299,6 @@ public class GetComicsData {
 		return list; // On retourne la liste des comics trouvés
 	}
 
-	
 	/**
 	 * Permet de formatter un texte pour qu'il soit compréhensible par l'API lors
 	 * d'une recherche
