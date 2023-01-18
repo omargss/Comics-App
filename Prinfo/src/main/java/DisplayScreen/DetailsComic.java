@@ -43,8 +43,9 @@ public class DetailsComic extends JFrame {
 	JButton btnWantToRead;
 	JButton btnRead;
 	JButton btnInProgress;
+
 	public DetailsComic(Comic comic) {
-		System.out.println("premium "+User.isPremium());
+		System.out.println("premium " + User.isPremium());
 		/*
 		 * Contenu d'un comic : - volume
 		 */
@@ -60,7 +61,7 @@ public class DetailsComic extends JFrame {
 		// JPanel window = new JPanel(new BorderLayout());
 
 		// Construction des informations
-		this.comic=comic;
+		this.comic = comic;
 		this.name = comic.getName();
 		this.imageURL = comic.getImage();
 		this.date = comic.getDate();
@@ -85,7 +86,7 @@ public class DetailsComic extends JFrame {
 		JPanel info = new JPanel();
 		BorderLayout panelBorder = new BorderLayout();
 		panelBorder.setVgap(10);
-		info.setBorder(new EmptyBorder(0,0,0,10));
+		info.setBorder(new EmptyBorder(0, 0, 0, 10));
 		info.setLayout(panelBorder);
 
 		JLabel name = new JLabel(this.name);
@@ -114,60 +115,68 @@ public class DetailsComic extends JFrame {
 		header.add(name, BorderLayout.NORTH);
 		header.add(date, BorderLayout.CENTER);
 		header.add(publisher, BorderLayout.SOUTH);
-		
+
 		// Boutons
-			// Création des boutons
-		btnRead = new JButton("Read");
-		btnWantToRead = new JButton("Want to read");
-		btnInProgress = new JButton("In progress");
+		// Création des boutons
+		btnRead = new JButton("Add : Read");
+		btnWantToRead = new JButton("Add : Want to read");
+		btnInProgress = new JButton("Add : In progress");
 		btnLike = new JButton("Like");
-			// Création des listeners
+		// Création des listeners
 		DetailsButtonsListener mouselistener = new DetailsButtonsListener(this);
 		DetailsButtonLikeListener likelistener = new DetailsButtonLikeListener(this);
-			//Ajout des listeners
+		// Ajout des listeners
 		btnRead.addMouseListener(mouselistener);
 		btnWantToRead.addMouseListener(mouselistener);
 		btnInProgress.addMouseListener(mouselistener);
 		btnLike.addMouseListener(likelistener);
-		
+
 		JPanel btn = new JPanel();
-		
-		if(User.isPremium()) {
-			if(checkIfLiked()) {
+
+		if (User.isPremium()) {
+			if (checkIfLiked()) {
 				btnLike.setText("Liked");
+			}
+			if (checkIfRead()) {
+				btnRead.setText("Readed");
+			}
+			if (checkIfInProgress()) {
+				btnInProgress.setText("In progress");
+			}
+			if (checkIfWantToRead()) {
+				btnWantToRead.setText("Want to read");
 			}
 			btn.add(btnRead);
 			btn.add(btnWantToRead);
 			btn.add(btnInProgress);
 			btn.add(btnLike);
 		}
-		
 
 		JPanel buttonFollow = new JPanel();
 		buttonFollow.setLayout(new BorderLayout());
-		FollowingListener fl =new FollowingListener(this,this.comic);
+		FollowingListener fl = new FollowingListener(this, this.comic);
 		JButton next = new JButton("Next in the volume");
 		JButton previous = new JButton("Previously in the volume");
 		next.addMouseListener(fl);
 		previous.addMouseListener(fl);
-		buttonFollow.add(next,BorderLayout.NORTH);
-		buttonFollow.add(previous,BorderLayout.SOUTH);
-		
+		buttonFollow.add(next, BorderLayout.NORTH);
+		buttonFollow.add(previous, BorderLayout.SOUTH);
+
 		JPanel bottom = new JPanel();
 		bottom.setLayout(new BorderLayout());
-		bottom.add(btn,BorderLayout.WEST);
-		bottom.add(buttonFollow,BorderLayout.EAST);
-		bottom.setBorder(new EmptyBorder(0, 0,10,10));
-		
-		
+		bottom.add(btn, BorderLayout.WEST);
+		bottom.add(buttonFollow, BorderLayout.EAST);
+		bottom.setBorder(new EmptyBorder(0, 0, 10, 10));
+
 		info.add(header, BorderLayout.NORTH);
 		info.add(description, BorderLayout.CENTER);
-		info.add(bottom,BorderLayout.SOUTH);
+		info.add(bottom, BorderLayout.SOUTH);
 
 		frame.getContentPane().add(image, BorderLayout.WEST);
 		frame.getContentPane().add(info, BorderLayout.CENTER);
 
 	}
+
 	public void setLikeBtn(String str) {
 		btnLike.setText(str);
 	}
@@ -183,10 +192,11 @@ public class DetailsComic extends JFrame {
 	public void setbtnInProgress(String str) {
 		btnInProgress.setText(str);
 	}
-	
+
 	public long getIssue() {
 		return comic.getIssue();
 	}
+
 	public boolean checkIfLiked() {
 		Connection connection = null;
 		try {
@@ -197,7 +207,119 @@ public class DetailsComic extends JFrame {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "SELECT * FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "+this.issue;
+			String query = "SELECT * FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "
+					+ this.issue;
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			if (resultSet.next()) {
+
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+
+	public boolean checkIfRead() {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "SELECT * FROM Account_comic_state WHERE Login = '" + User.getLogin()
+					+ "' AND State = 'Read' AND comicId = " + this.issue;
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			if (resultSet.next()) {
+
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+
+	public boolean checkIfInProgress() {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "SELECT * FROM Account_comic_state WHERE Login = '" + User.getLogin()
+					+ "' AND State = 'In progress' AND comicId = " + this.issue;
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			if (resultSet.next()) {
+
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+			return false;
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+
+	public boolean checkIfWantToRead() {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "SELECT * FROM Account_comic_state WHERE Login = '" + User.getLogin()
+					+ "' AND State = 'Want to read' AND comicId = " + this.issue;
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			if (resultSet.next()) {

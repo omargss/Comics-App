@@ -215,6 +215,8 @@ public class MainWindow {
 			registerPanel.setVisible(false);
 			likedPanel.setVisible(false);
 			StatePanel.updateResultTable("Read");
+			StatePanel.setbtnReadSelected();
+			StatePanel.setbtnReadSelected();
 			StatePanel.setVisible(true);
 			break;
 		default: // Clear

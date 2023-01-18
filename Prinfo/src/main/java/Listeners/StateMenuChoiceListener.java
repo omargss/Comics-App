@@ -36,7 +36,6 @@ public class StateMenuChoiceListener extends MouseAdapter {
 	public void mouseClicked(MouseEvent e) {
 		if ((((JRadioButton) e.getSource()).getText()).equals("Read")) {
 			if (btnRead.isSelected()) {
-				System.out.println("Read");
 				// Deselectionner les autres boutons
 				btnInProgress.setSelected(false);
 				btnWantToRead.setSelected(false);
@@ -48,7 +47,6 @@ public class StateMenuChoiceListener extends MouseAdapter {
 			}
 		} else if ((((JRadioButton) e.getSource()).getText()).equals("In progress")) {
 			if (btnInProgress.isSelected()) {
-				System.out.println("In progress");
 				// Deselectionner les autres boutons
 				btnRead.setSelected(false);
 				btnWantToRead.setSelected(false);
@@ -60,7 +58,6 @@ public class StateMenuChoiceListener extends MouseAdapter {
 			}
 		} else if ((((JRadioButton) e.getSource()).getText()).equals("Want to read")) {
 			if (btnWantToRead.isSelected()) {
-				System.out.println("Want to read");
 				// Deselectionner les autres boutons
 				btnRead.setSelected(false);
 				btnInProgress.setSelected(false);

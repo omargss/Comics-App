@@ -26,23 +26,34 @@ public class DetailsButtonsListener extends MouseAdapter {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if ((((JButton) e.getSource()).getText()).equals("Read")) {
-			//insertComic("Read");
+		if ((((JButton) e.getSource()).getText()).equals("Readed")) {
+			removeComic("Read");
+			detailspanel.setbtnRead("Add : Read");
+		} else if ((((JButton) e.getSource()).getText()).equals("Add : Read")) {
+			insertComic("Read");
 			detailspanel.setbtnRead("Readed");
-			System.out.println("read");
-		} else if ((((JButton) e.getSource()).getText()).equals("Readed")) {
-			//removeComic("Read");
-			detailspanel.setbtnRead("Read");
+			detailspanel.setbtnWantToRead("Add : Want to read");
+			detailspanel.setbtnInProgress("Add : In progress");
 		}
 
 		if ((((JButton) e.getSource()).getText()).equals("Want to read")) {
-			//insertComic("Want to read");
-			System.out.println("want to read");
+			removeComic("Want to read");
+			detailspanel.setbtnWantToRead("Add : Want to read");
+		} else if ((((JButton) e.getSource()).getText()).equals("Add : Want to read")) {
+			insertComic("Want to read");
+			detailspanel.setbtnWantToRead("Want to read");
+			detailspanel.setbtnRead("Add : Read");
+			detailspanel.setbtnInProgress("Add : In progress");
 		}
 
 		if ((((JButton) e.getSource()).getText()).equals("In progress")) {
-			//insertComic("In progress");
-			System.out.println("in progress");
+			removeComic("In progress");
+			detailspanel.setbtnInProgress("Add : In progress");
+		} else if ((((JButton) e.getSource()).getText()).equals("Add : In progress")) {
+			insertComic("In progress");
+			detailspanel.setbtnInProgress("In progress");
+			detailspanel.setbtnRead("Add : Read");
+			detailspanel.setbtnWantToRead("Add : Want to read");
 		}
 	}
 
@@ -95,8 +106,8 @@ public class DetailsButtonsListener extends MouseAdapter {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "DELETE FROM Account_comic_state WHERE  WHERE Login = '" + User.getLogin()
-					+ "' AND comicId = " + detailspanel.getIssue();
+			String query = "DELETE FROM Account_comic_state WHERE Login = '" + User.getLogin() + "' AND comicId = "
+					+ detailspanel.getIssue();
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);
 		} catch (SQLException e) {
