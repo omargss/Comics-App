@@ -2,6 +2,7 @@ package Listeners;
 
 import DisplayScreen.*;
 import Objects.User;
+import Security.PasswordEncryption;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -51,7 +52,7 @@ public class LoginButtonListener extends MouseAdapter {
 
 			// Création d'une requête
 			String query = "SELECT * FROM Accounts WHERE Login = '" + lgpanel.getLogin() + "' AND Password = '"
-					+ lgpanel.getPassword() + "'";
+					+ PasswordEncryption.hashPassword(lgpanel.getPassword()) + "'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 

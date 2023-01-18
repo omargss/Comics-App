@@ -1,6 +1,7 @@
 package Listeners;
 
 import DisplayScreen.*;
+import Security.PasswordEncryption;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -47,7 +48,7 @@ public class RegisterButtonListener extends MouseAdapter {
 			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
 
 			// Création d'une requête
-			String query = "INSERT INTO Accounts VALUES ('" + rgpanel.getLogin() + "','" + rgpanel.getPassword()
+			String query = "INSERT INTO Accounts VALUES ('" + rgpanel.getLogin() + "','" + PasswordEncryption.hashPassword(rgpanel.getPassword())
 					+ "','0')";
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(query);

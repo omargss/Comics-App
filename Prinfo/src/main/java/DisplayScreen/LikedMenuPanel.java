@@ -45,6 +45,10 @@ public class LikedMenuPanel extends JPanel {
 		resultTable.addMouseListener(new TableListener(this));
 		resultTable.setBounds(0, 50, 1000, 600);
 		TableColumnModel columnModel = resultTable.getColumnModel();
+
+		// make alternating row colors
+		resultTable.setDefaultRenderer(Object.class, new AlternatingColorTableRenderer());
+		
 		columnModel.getColumn(0).setWidth(300);
 		columnModel.getColumn(1).setWidth(75);
 		columnModel.getColumn(2).setWidth(250);

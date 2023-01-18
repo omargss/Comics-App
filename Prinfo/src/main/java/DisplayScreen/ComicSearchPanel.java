@@ -154,6 +154,10 @@ public class ComicSearchPanel extends JPanel {
 		resultTable.setEnabled(false);
 		resultTable.addMouseListener(new TableListener(this));
 		resultTable.setBounds(0, 50, 1000, 600);
+	
+		// make alternating row colors
+		resultTable.setDefaultRenderer(Object.class, new AlternatingColorTableRenderer());
+		
 		TableColumnModel columnModel = resultTable.getColumnModel();
 		columnModel.getColumn(0).setWidth(300);
 		columnModel.getColumn(1).setWidth(75);
