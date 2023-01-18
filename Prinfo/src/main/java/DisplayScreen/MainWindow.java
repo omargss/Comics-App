@@ -29,7 +29,7 @@ public class MainWindow {
 	JButton registerButton;
 	JButton signOutButton;
 	JButton LikedMenuButton;
-	JButton StateMenuButton;
+	JButton LibraryMenuButton;
 
 	/**
 	 * Constructeur de la classe
@@ -87,11 +87,11 @@ public class MainWindow {
 		LikedMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
 		LikedMenuButton.setBounds(10, 156, 130, 23);
 		LikedMenuButton.setVisible(false);
-
-		StateMenuButton = new JButton("State"); // Bouton pour accéder à la page des
-		StateMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		StateMenuButton.setBounds(10, 206, 130, 23);
-		StateMenuButton.setVisible(false);
+		
+		LibraryMenuButton = new JButton("Library"); // Bouton pour accéder à la page des
+		LibraryMenuButton.setFont(new Font("Tahoma", Font.PLAIN, 8));
+		LibraryMenuButton.setBounds(10, 206, 130, 23);
+		LibraryMenuButton.setVisible(false);
 
 		// Ajout des boutons de navigation au panel principal
 		panel.add(comicSearchButton); // ajout du bouton au panel
@@ -101,7 +101,7 @@ public class MainWindow {
 		panel.add(registerButton); // ajout du bouton panel
 		panel.add(signOutButton); // ajout du bouton au panel
 		panel.add(LikedMenuButton); // ajout du bouton menu
-		panel.add(StateMenuButton); // ajout du boutton state
+		panel.add(LibraryMenuButton); // ajout du boutton state
 
 		userLabel = new JLabel("");
 		userLabel.setEnabled(false);
@@ -118,7 +118,7 @@ public class MainWindow {
 		registerButton.addMouseListener(mouselistener);
 		signOutButton.addMouseListener(mouselistener);
 		LikedMenuButton.addMouseListener(mouselistener);
-		StateMenuButton.addMouseListener(mouselistener);
+		LibraryMenuButton.addMouseListener(mouselistener);
 
 		// Création des panels de recherche
 		comicPanel = new ComicSearchPanel();
@@ -158,79 +158,80 @@ public class MainWindow {
 	 */
 	public void setDisplayedPanel(int i) {
 		switch (i) {
-			case 0: // Recherche des comics
-				comicPanel.setVisible(true);
-				loginPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(false);
-				likedPanel.setVisible(false);
-				registerPanel.setVisible(false);
-				StatePanel.setVisible(false);
-				break;
-			case 1: // Recherche des perso
-				comicPanel.setVisible(false);
-				publPanel.setVisible(false);
-				loginPanel.setVisible(false);
-				likedPanel.setVisible(false);
-				registerPanel.setVisible(false);
-				charPanel.setVisible(true);
-				StatePanel.setVisible(false);
-				break;
-			case 2: // Login
-				comicPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(false);
-				loginPanel.setVisible(true);
-				registerPanel.setVisible(false);
-				likedPanel.setVisible(false);
-				StatePanel.setVisible(false);
-				break;
-			case 3: // Register
-				comicPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(false);
-				loginPanel.setVisible(false);
-				registerPanel.setVisible(true);
-				likedPanel.setVisible(false);
-				StatePanel.setVisible(false);
-				break;
-			case 4: // Recherche des publishers
-				comicPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(true);
-				loginPanel.setVisible(false);
-				registerPanel.setVisible(false);
-				likedPanel.setVisible(false);
-				StatePanel.setVisible(false);
-				break;
-			case 5: // Recherche des publishers
-				comicPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(false);
-				loginPanel.setVisible(false);
-				registerPanel.setVisible(false);
-				likedPanel.updateResultTable();
-				likedPanel.setVisible(true);
-				StatePanel.setVisible(false);
-				break;
-			case 6: // Recherche des publishers
-				comicPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(false);
-				loginPanel.setVisible(false);
-				registerPanel.setVisible(false);
-				likedPanel.setVisible(false);
-				StatePanel.updateResultTable("Read");
-				StatePanel.setVisible(true);
-				break;
-			default: // Clear
-				comicPanel.setVisible(false);
-				charPanel.setVisible(false);
-				publPanel.setVisible(false);
-				loginPanel.setVisible(false);
-				registerPanel.setVisible(false);
-				likedPanel.setVisible(false);
-				StatePanel.setVisible(false);
+		case 0: // Recherche des comics
+			comicPanel.setVisible(true);
+			loginPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			StatePanel.setVisible(false);
+			break;
+		case 1: // Recherche des perso
+			comicPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			charPanel.setVisible(true);
+			StatePanel.setVisible(false);
+			break;
+		case 2: // Login
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(true);
+			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			StatePanel.setVisible(false);
+			break;
+		case 3: // Register
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(true);
+			likedPanel.setVisible(false);
+			StatePanel.setVisible(false);
+			break;
+		case 4: // Recherche des publishers
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(true);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			StatePanel.setVisible(false);
+			break;
+		case 5: // Recherche des publishers
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			likedPanel.updateResultTable();
+			likedPanel.setVisible(true);
+			StatePanel.setVisible(false);
+			break;
+		case 6: // Recherche des publishers
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			StatePanel.updateResultTable("Read");
+			StatePanel.setbtnReadSelected();
+			StatePanel.setVisible(true);
+			break;
+		default: // Clear
+			comicPanel.setVisible(false);
+			charPanel.setVisible(false);
+			publPanel.setVisible(false);
+			loginPanel.setVisible(false);
+			registerPanel.setVisible(false);
+			likedPanel.setVisible(false);
+			StatePanel.setVisible(false);
 		}
 
 	}
@@ -247,8 +248,8 @@ public class MainWindow {
 		publisherSearchButton.setVisible(true);
 		signOutButton.setVisible(true);
 		LikedMenuButton.setVisible(true);
-		StateMenuButton.setVisible(true);
-	}
+		LibraryMenuButton.setVisible(true);
+		}
 
 	public void signOut() {
 		User.setLogin(null);
@@ -260,7 +261,7 @@ public class MainWindow {
 		characterSearchButton.setVisible(false);
 		publisherSearchButton.setVisible(false);
 		LikedMenuButton.setVisible(false);
-		StateMenuButton.setVisible(false);
+		LibraryMenuButton.setVisible(false);
 		signOutButton.setVisible(false);
 		setDisplayedPanel(-1);
 	}

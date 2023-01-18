@@ -169,4 +169,22 @@ public class StateMenuPanel extends JPanel {
 	public List<Comic> getDataList() {
 		return dataList;
 	}
+	
+	public void setbtnReadSelected() {
+		rdbtnRead.setSelected(true);
+		rdbtnInProgress.setSelected(false);
+		rdbtnWantToRead.setSelected(false);
+	}
+	
+	public void setbtnInProgressSelected() {
+		rdbtnRead.setSelected(true);
+		rdbtnRead.setSelected(false);
+		rdbtnWantToRead.setSelected(false);
+	}
+	
+	public void setbtnWantToReadSelected() {
+		rdbtnRead.setSelected(true);
+		rdbtnInProgress.setSelected(false);
+		rdbtnRead.setSelected(false);
+	}
 }
