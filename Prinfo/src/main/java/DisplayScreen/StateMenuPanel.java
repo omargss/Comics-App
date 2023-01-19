@@ -31,32 +31,35 @@ public class StateMenuPanel extends JPanel {
 	private JRadioButton rdbtnRead;
 	private JRadioButton rdbtnInProgress;
 	private JRadioButton rdbtnWantToRead;
-
+	private String selectedBtn;
+	
 	public void updateResultTable(String filter) {
 		dataList = new ArrayList<Comic>();
 		dataList = getReadComics(filter);
-		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
-		String[][] list = new String[dataList.size()][5];
+		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page","Remove from library" };
+		String[][] list = new String[dataList.size()][6];
 		for (int i = 0; i < dataList.size(); i++) {
 			list[i][0] = dataList.get(i).getName();
 			list[i][1] = dataList.get(i).getDate();
 			list[i][2] = dataList.get(i).getPublisher();
 			list[i][3] = dataList.get(i).getVolume();
 			list[i][4] = "Details";
+			list[i][5] = "Remove";
 		}
 		resultTable = new JTable(list, columnNames);
 		resultTable.setEnabled(false);
 		resultTable.addMouseListener(new TableListener(this));
 		resultTable.setBounds(0, 50, 1000, 600);
-
-		// make alternating row colors
-		resultTable.setDefaultRenderer(Object.class, new AlternatingColorTableRenderer());
 		
 		TableColumnModel columnModel = resultTable.getColumnModel();
 		columnModel.getColumn(0).setWidth(300);
 		columnModel.getColumn(1).setWidth(75);
 		columnModel.getColumn(2).setWidth(250);
-		columnModel.getColumn(3).setWidth(150);
+		columnModel.getColumn(3).setWidth(100);
+		columnModel.getColumn(4).setWidth(100);
+		// make alternating row colors
+		resultTable.setDefaultRenderer(Object.class, new AlternatingColorTableRenderer());
+		
 
 		resultTable.setFillsViewportHeight(true);
 
@@ -190,5 +193,39 @@ public class StateMenuPanel extends JPanel {
 		rdbtnRead.setSelected(true);
 		rdbtnInProgress.setSelected(false);
 		rdbtnRead.setSelected(false);
+	}
+	
+	public void deleteComic(long issue) {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "DELETE FROM Account_comic_state WHERE Login = '" + User.getLogin() + "' AND comicId = "
+					+ issue;
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+			updateResultTable(selectedBtn);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+
+	public void setSelectedBtn(String string) {
+		selectedBtn = string;
 	}
 }

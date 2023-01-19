@@ -36,6 +36,7 @@ public class StateMenuChoiceListener extends MouseAdapter {
 				btnWantToRead.setSelected(false);
 				// Update les résultats
 				cspanel.updateResultTable("Read");
+				cspanel.setSelectedBtn("Read");
 			} else if (!btnRead.isSelected()) {
 				//Ne pas déselectionner le boutton si il est déjà sélectionné
 				btnRead.setSelected(true);
@@ -46,6 +47,7 @@ public class StateMenuChoiceListener extends MouseAdapter {
 				btnRead.setSelected(false);
 				btnWantToRead.setSelected(false);
 				// Update les résultats
+				cspanel.setSelectedBtn("In progress");
 				cspanel.updateResultTable("In progress");
 			} else if (!btnInProgress.isSelected()) {
 				//Ne pas déselectionner le boutton si il est déjà sélectionné
@@ -58,6 +60,7 @@ public class StateMenuChoiceListener extends MouseAdapter {
 				btnInProgress.setSelected(false);
 				// Update les résultats
 				cspanel.updateResultTable("Want to read");
+				cspanel.setSelectedBtn("Want to read");
 			} else if (!btnWantToRead.isSelected()) {
 				//Ne pas déselectionner le boutton si il est déjà sélectionné
 				btnWantToRead.setSelected(true);

@@ -25,12 +25,12 @@ public class DetailsButtonsListener extends MouseAdapter {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		if ((((JButton) e.getSource()).getText()).equals("Readed")) {
+		if ((((JButton) e.getSource()).getText()).equals("Read")) {
 			removeComic("Read");
 			detailspanel.setbtnRead("Add : Read");
 		} else if ((((JButton) e.getSource()).getText()).equals("Add : Read")) {
 			insertComic("Read");
-			detailspanel.setbtnRead("Readed");
+			detailspanel.setbtnRead("Read");
 			detailspanel.setbtnWantToRead("Add : Want to read");
 			detailspanel.setbtnInProgress("Add : In progress");
 		}

@@ -31,14 +31,15 @@ public class LikedMenuPanel extends JPanel {
 	public void updateResultTable() {
 		dataList = new ArrayList<Comic>();
 		dataList = getLikedComics();
-		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
-		String[][] list = new String[dataList.size()][5];
+		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page","Remove from library" };
+		String[][] list = new String[dataList.size()][6];
 		for (int i = 0; i < dataList.size(); i++) {
 			list[i][0] = dataList.get(i).getName();
 			list[i][1] = dataList.get(i).getDate();
 			list[i][2] = dataList.get(i).getPublisher();
 			list[i][3] = dataList.get(i).getVolume();
 			list[i][4] = "Details";
+			list[i][5] = "Remove";
 		}
 		resultTable = new JTable(list, columnNames);
 		resultTable.setEnabled(false);
@@ -135,5 +136,36 @@ public class LikedMenuPanel extends JPanel {
 
 	public List<Comic> getDataList() {
 		return dataList;
+	}
+	
+
+	public void deleteLikedComic(long issue) {
+		Connection connection = null;
+		try {
+			// Chargement du pilote SQLite
+			Class.forName("org.sqlite.JDBC");
+
+			// Connexion à la base de données
+			connection = DriverManager.getConnection("jdbc:sqlite:Account.db");
+
+			// Création d'une requête
+			String query = "DELETE FROM Account_comic_like WHERE Login = '" + User.getLogin() + "' AND comicId = "
+					+ issue;
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+			updateResultTable();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 }
