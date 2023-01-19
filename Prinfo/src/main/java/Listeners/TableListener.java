@@ -48,6 +48,10 @@ public class TableListener extends MouseAdapter {
 				Comic comic = ((LikedMenuPanel) searchPanel).getDataList().get(row);
 				details = new DetailsComic(comic);
 			}
+			if (col == 5) {
+				Comic comic = ((LikedMenuPanel) searchPanel).getDataList().get(row);
+				((LikedMenuPanel) searchPanel).deleteLikedComic(comic.getIssue());
+			}
 		} else if (searchPanel instanceof StateMenuPanel) {
 			int row = ((StateMenuPanel) searchPanel).getResultTable().rowAtPoint(e.getPoint());
 			int col = ((StateMenuPanel) searchPanel).getResultTable().columnAtPoint(e.getPoint());
@@ -56,6 +60,10 @@ public class TableListener extends MouseAdapter {
 				// System.out.println("Détails comic");
 				Comic comic = ((StateMenuPanel) searchPanel).getDataList().get(row);
 				details = new DetailsComic(comic);
+			}
+			if (col == 5) {
+				Comic comic = ((StateMenuPanel) searchPanel).getDataList().get(row);
+				((StateMenuPanel) searchPanel).deleteComic(comic.getIssue());
 			}
 		} else if (searchPanel instanceof CharacterSearchPanel) {
 			// System.out.println("Character");
