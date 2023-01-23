@@ -34,18 +34,28 @@ public class ComicSearchKeyListener extends KeyAdapter {
 				System.out.println("enter smtg");
 				return;
 			} else {
-
-				String yearMin = cspanel.getDropDownYearsMin();
-				String yearMax = cspanel.getDropDownYearsMax();
+				String yearMin = this.cspanel.getDropDownYearsMin();
+				String yearMax = this.cspanel.getDropDownYearsMax();
+				String sort = "";
 				String limit = "";
-
-				String sort = cspanel.getDropDownSortFieldChoice() + ":" + cspanel.getDropDownSortOrder(); // ex :
-																											// title:asc
-
-				System.out.println(sort);
-
+				// Permet de définir le type de trie que l'on souhaite faire, c'est-à-dire tri
+				// selon la date ou le nom
+				if (cspanel.getDropDownSortFieldChoice().equals("null")) { // Si on a choisi aucun tri
+					sort = null;
+				} else if (this.cspanel.getDropDownSortFieldChoice().equals("date")
+						&& this.cspanel.getRadioValue().equals("Title")) { // Si on a choisi le tri par date et
+																			// qu'on
+																			// recherche par titre
+					sort = "cover_date:" + this.cspanel.getDropDownSortOrder();
+				} else if (this.cspanel.getDropDownSortFieldChoice().equals("date")
+						&& this.cspanel.getRadioValue().equals("Publisher")) { // Si on a choisi le tri par date et
+																				// qu'on
+																				// recherche par publieur
+					sort = "start_year:" + this.cspanel.getDropDownSortOrder();
+				} else {
+					sort = "name:" + this.cspanel.getDropDownSortOrder();
+				}
 				String resultsNumber = this.cspanel.getDropItem();
-
 				switch (resultsNumber) {
 					case "All results":
 						limit = "null";
@@ -65,23 +75,18 @@ public class ComicSearchKeyListener extends KeyAdapter {
 					case "100 items":
 						limit = "100";
 						break;
-				}
 
-				String titleOrPublisherChoice = cspanel.getRadioValue(); // ce string renvoie "Title" ou "Publisher"
-																			// selon le choix
-				switch (titleOrPublisherChoice) {
-					case "Title":
-						dataList = GetComicsData.getComicsDataByName(search, null, limit, yearMin, yearMax);
-						break;
-					case "Publisher":
-						dataList = GetComicsData.getComicsDataByPublisher(search, null, limit, yearMin, yearMax);
-						break;
-					/*
-					 * case "Author": dataList = GetComicsData.getComicsDataByAuthor(search, null,
-					 * null, yearMin, yearMax); break;
-					 */
 				}
-				cspanel.updateResultTable(dataList); // On met à jour
+				System.out.println(sort);
+
+				String titleOrPublisherChoice = this.cspanel.getRadioValue();
+				// ce string renvoie "Title" ou "Publisher" selon le choix
+				if (titleOrPublisherChoice.equals("Title")) { // Si on recherche par titre
+					dataList = GetComicsData.getComicsDataByName(search, sort, limit, yearMin, yearMax);
+				} else { // Si on recherche par publieur
+					dataList = GetComicsData.getComicsDataByPublisher(search, sort, limit, yearMin, yearMax);
+				}
+				this.cspanel.updateResultTable(dataList); // On met à jour
 			}
 
 		}

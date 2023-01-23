@@ -60,17 +60,17 @@ public class ComicSearchPanel extends JPanel {
 	public String getDropDownSortFieldChoice() {
 		String choice;
 		switch (dropDownSortFieldChoice.getSelectedIndex()) {
-			case 1:
-				choice = "name";
-				break;
+		case 1:
+			choice = "name";
+			break;
 
-			case 2:
-				choice = "date";
-				break;
+		case 0:
+			choice = "date";
+			break;
 
-			default:
-				choice = "null";
-				break;
+		default:
+			choice = "null";
+			break;
 		}
 		return choice;
 	}
@@ -83,17 +83,17 @@ public class ComicSearchPanel extends JPanel {
 	public String getDropDownSortOrder() {
 		String choice;
 		switch (dropDownSortOrder.getSelectedIndex()) {
-			case 1:
-				choice = "asc";
-				break;
+		case 1:
+			choice = "asc";
+			break;
 
-			case 2:
-				choice = "desc";
-				break;
+		case 0:
+			choice = "desc";
+			break;
 
-			default:
-				choice = "null";
-				break;
+		default:
+			choice = "null";
+			break;
 		}
 		return choice;
 	}
@@ -140,38 +140,41 @@ public class ComicSearchPanel extends JPanel {
 	 * @param dataList
 	 */
 	public void updateResultTable(List<Comic> dataList) {
-		this.dataList = dataList;
-		String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
-		String[][] list = new String[dataList.size()][5];
-		for (int i = 0; i < dataList.size(); i++) {
-			list[i][0] = dataList.get(i).getName();
-			list[i][1] = dataList.get(i).getDate();
-			list[i][2] = dataList.get(i).getPublisher();
-			list[i][3] = dataList.get(i).getVolume();
-			list[i][4] = "Details";
+		if (Integer.parseInt(getDropDownYearsMax()) - Integer.parseInt(getDropDownYearsMin()) < 0) {
+			JOptionPane.showMessageDialog(null, "Error, you entered publication dates in the wrong order");
+		} else {
+			this.dataList = dataList;
+			String[] columnNames = { "Title", "date", "Publisher", "Volume", "Access page" };
+			String[][] list = new String[dataList.size()][5];
+			for (int i = 0; i < dataList.size(); i++) {
+				list[i][0] = dataList.get(i).getName();
+				list[i][1] = dataList.get(i).getDate();
+				list[i][2] = dataList.get(i).getPublisher();
+				list[i][3] = dataList.get(i).getVolume();
+				list[i][4] = "Details";
+			}
+			resultTable = new JTable(list, columnNames);
+			resultTable.setEnabled(false);
+			resultTable.addMouseListener(new TableListener(this));
+			resultTable.setBounds(0, 50, 1000, 600);
+
+			// make alternating row colors
+			resultTable.setDefaultRenderer(Object.class, new AlternatingColorTableRenderer());
+
+			TableColumnModel columnModel = resultTable.getColumnModel();
+			columnModel.getColumn(0).setWidth(300);
+			columnModel.getColumn(1).setWidth(75);
+			columnModel.getColumn(2).setWidth(250);
+			columnModel.getColumn(3).setWidth(150);
+
+			resultTable.setFillsViewportHeight(true);
+			this.remove(resultArea);
+			this.resultArea = new JScrollPane(resultTable);
+			this.resultArea.setVisible(true);
+
+			this.add(resultArea, BorderLayout.CENTER);
+			this.validate();
 		}
-		resultTable = new JTable(list, columnNames);
-		resultTable.setEnabled(false);
-		resultTable.addMouseListener(new TableListener(this));
-		resultTable.setBounds(0, 50, 1000, 600);
-	
-		// make alternating row colors
-		resultTable.setDefaultRenderer(Object.class, new AlternatingColorTableRenderer());
-		
-		TableColumnModel columnModel = resultTable.getColumnModel();
-		columnModel.getColumn(0).setWidth(300);
-		columnModel.getColumn(1).setWidth(75);
-		columnModel.getColumn(2).setWidth(250);
-		columnModel.getColumn(3).setWidth(150);
-
-		resultTable.setFillsViewportHeight(true);
-		this.remove(resultArea);
-		this.resultArea = new JScrollPane(resultTable);
-		this.resultArea.setVisible(true);
-
-		this.add(resultArea, BorderLayout.CENTER);
-		this.validate();
-
 		// add(new JScrollPane(resultTable));
 		//
 		// JScrollBar scrollBar = new JScrollBar();
@@ -237,15 +240,13 @@ public class ComicSearchPanel extends JPanel {
 
 		// Sélecteur de l'option de tri
 		dropDownSortFieldChoice = new JComboBox<String>();
-		dropDownSortFieldChoice.addItem(""); // Ajout de l'option vide
-		dropDownSortFieldChoice.addItem("Name"); // Ajout de l'option "par nom"
 		dropDownSortFieldChoice.addItem("Date"); // Ajout de l'option "par date"
+		dropDownSortFieldChoice.addItem("Name"); // Ajout de l'option "par nom"
 
 		// Sélecteur de l'ordre de tri
 		dropDownSortOrder = new JComboBox<String>();
-		dropDownSortOrder.addItem(""); // Ajout de l'option vide
-		dropDownSortOrder.addItem("Ascending order"); // Ajout de l'option "croissant"
 		dropDownSortOrder.addItem("Descending order"); // Ajout de l'option "décroissant"
+		dropDownSortOrder.addItem("Ascending order"); // Ajout de l'option "croissant"
 
 		// Sélecteur du nombre de résultat à afficher
 		dropItems = new JComboBox<String>();
