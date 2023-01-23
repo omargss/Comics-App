@@ -35,6 +35,8 @@ public class LoginPanel extends JPanel {
 		JOptionPane.showMessageDialog(null, "Connection successful");
 		mainWindow.setUser(User.getLogin(), User.isPremium());
 		mainWindow.setDisplayedPanel(-1);
+		loginTextField.setText("");
+		passwordTextField.setText("");
 	}
 
 	/**

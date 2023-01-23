@@ -38,6 +38,8 @@ public class RegisterPanel extends JPanel {
 		JOptionPane.showMessageDialog(null, "Registration successful");
 		mainWindow.setUser(getLogin(), false);
 		mainWindow.setDisplayedPanel(-1);
+		loginTextField.setText("");
+		passwordTextField.setText("");
 	}
 
 	/**
